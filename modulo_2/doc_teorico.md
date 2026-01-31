@@ -41,10 +41,10 @@ SELECT * FROM nome_da_tabela;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Desafio 1: Visualizar todos os dados da tabela produtos
+-- Aula 1 - Desafio 1: Visualizar todos os dados da tabela produtos
 
 
--- Desafio 2: Visualizar todos os dados da tabela clientes
+-- Aula 1 - Desafio 2: Visualizar todos os dados da tabela clientes
 
 ```
 
@@ -87,11 +87,10 @@ Sempre especifique as colunas em queries de produção. SELECT * só para explor
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Desafio 1: Mostrar apenas nome e preço dos produtos
+-- Aula 2 - Desafio 1: Mostrar apenas nome e preço dos produtos
 
 
--- Desafio 2: Mostrar apenas nome, email e cidade dos clientes
-
+-- Aula 2 - Desafio 2: Mostrar apenas nome, email e cidade dos clientes
 
 ```
 
@@ -148,11 +147,11 @@ SELECT nome AS NomeProduto FROM produtos;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Desafio 1: Renomear colunas para nomes mais amigáveis
+-- Aula 3 - Desafio 1: Renomear colunas para nomes mais amigáveis
 -- Selecione nome, preco e estoque com aliases "Nome do Produto", "Preço (R$)" e "Quantidade em Estoque"
 
 
--- Desafio 2: Criar um relatório de pedidos
+-- Aula 3 - Desafio 2: Criar um relatório de pedidos
 -- Selecione data_pedido, valor_total e status com aliases "Data da Compra", "Valor Total (R$)" e "Status do Pedido"
 
 ```
@@ -214,10 +213,10 @@ Belo Horizonte
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Desafio 1: Listar todas as cidades únicas dos clientes
+-- Aula 4 - Desafio 1: Listar todas as cidades únicas dos clientes
 
 
--- Desafio 2: Listar todas as marcas únicas de produtos
+-- Aula 4 - Desafio 2: Listar todas as marcas únicas de produtos
 
 
 ```
@@ -277,10 +276,10 @@ LIMIT 10;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Desafio 1: Mostrar apenas os 5 primeiros produtos
+-- Aula 5 - Desafio 1: Mostrar apenas os 5 primeiros produtos
 
 
--- Desafio 2: Mostrar os 10 primeiros clientes cadastrados
+-- Aula 5 - Desafio 2: Mostrar os 10 primeiros clientes cadastrados
 
 ```
 
@@ -340,13 +339,21 @@ WHERE funciona como um "filtro":
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Desafio 1: Mostrar apenas produtos da marca "Nike"
+-- Aula 6 - Desafio 1: Mostrar apenas produtos da marca "Nike"
 
 
--- Desafio 2: Mostrar apenas clientes do estado "SP"
+-- Aula 6 - Desafio 2: Mostrar apenas clientes do estado "SP"
 
 
 ```
+
+</details>
+
+</details>
+
+---
+
+# AULA 7
 
 </details>
 
@@ -409,10 +416,10 @@ WHERE preco >= 100
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Desafio 1: Produtos com preço maior que R$ 500
+-- Aula 7 - Desafio 1: Produtos com preço maior que R$ 500
 
 
--- Desafio 2: Produtos com estoque menor que 20 unidades
+-- Aula 7 - Desafio 2: Produtos com estoque menor que 20 unidades
 
 
 ```
@@ -472,10 +479,10 @@ WHERE telefone IS NOT NULL  ✅
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Desafio 1: Pedidos com status diferente de "Entregue"
+-- Aula 8 - Desafio 1: Pedidos com status diferente de "Entregue"
 
 
--- Desafio 2: Produtos de marcas diferentes de "Nike"
+-- Aula 8 - Desafio 2: Produtos de marcas diferentes de "Nike"
 
 ```
 
@@ -534,10 +541,10 @@ WHERE categoria = 'Eletrônicos'
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Desafio 1: Produtos com preço > R$100 E estoque > 50
+-- Aula 9 - Desafio 1: Produtos com preço > R$100 E estoque > 50
 
 
--- Desafio 2: Clientes do estado "SP" E da cidade "São Paulo"
+-- Aula 9 - Desafio 2: Clientes do estado "SP" E da cidade "São Paulo"
 
 
 ```
@@ -625,10 +632,10 @@ WHERE marca IN ('Nike', 'Adidas', 'Puma')
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Desafio 1: Produtos da marca "Nike" OU "Adidas"
+-- Aula 10 - Desafio 1: Produtos da marca "Nike" OU "Adidas"
 -- Selecione nome e marca
 
--- Desafio 2: Desafio Avançado
+-- Aula 10 - Desafio 2: Desafio Avançado
 -- Encontre produtos que sejam:
 -- (Da marca "Samsung" E preço < 500) OU (Da marca "LG" E estoque > 20)
 
