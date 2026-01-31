@@ -7,6 +7,7 @@ Dominar os fundamentos do SQL através de aulas práticas e desafios progressivo
 
 ## 📖 Módulos Disponíveis
 
+### **Módulo 1 - Configuração do Ambiente**
 ### **Módulo 2 - Fundamentos SELECT**
 
 Dominar os fundamentos da consulta de dados em SQL, aprendendo a selecionar, filtrar e organizar informações de forma eficiente.
