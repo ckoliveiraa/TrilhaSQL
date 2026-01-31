@@ -7,15 +7,15 @@ Dominar os fundamentos do SQL através de aulas práticas e desafios progressivo
 
 ## 📖 Módulos Disponíveis
 
-### **Módulo 1 - Fundamentos SELECT**
+### **Módulo 2 - Fundamentos SELECT**
 
 Dominar os fundamentos da consulta de dados em SQL, aprendendo a selecionar, filtrar e organizar informações de forma eficiente.
 
-📄 **[Acessar Módulo 1 - Fundamentos SELECT](Módulo%201/MODULO-1.md)**
+📄 **[Acessar Módulo 2 - Fundamentos SELECT](modulo_2\doc_teorico.md)**
 
 ---
 
-## 📚 Conteúdo do Módulo 1 - Índice de Aulas
+## 📚 Conteúdo do Módulo 2 - Índice de Aulas
 
 <details>
 <summary><strong>Aula 1: SELECT * - Sua Primeira Consulta SQL</strong></summary>
@@ -24,7 +24,7 @@ Aprenda o comando mais importante do SQL e como visualizar todos os dados de uma
 
 **Conceitos:** SELECT, *, sintaxe básica, boas práticas
 
-📄 [Ir para Aula 1](Módulo%201/MODULO-1.md#aula-1)
+📄 [Ir para Aula 1](modulo_2\doc_teorico.md#aula-1)
 
 </details>
 
@@ -35,7 +35,7 @@ Selecione apenas as colunas que você precisa para otimizar suas consultas.
 
 **Conceitos:** Performance, especificidade, clareza
 
-📄 [Ir para Aula 2](Módulo%201/MODULO-1.md#aula-2)
+📄 [Ir para Aula 2](modulo_2\doc_teorico.md#aula-2)
 
 </details>
 
@@ -46,7 +46,7 @@ Aprenda a renomear colunas para deixar seus resultados mais legíveis.
 
 **Conceitos:** Aliases, AS, aspas, nomenclatura
 
-📄 [Ir para Aula 3](Módulo%201/MODULO-1.md#aula-3)
+📄 [Ir para Aula 3](modulo_2\doc_teorico.md#aula-3)
 
 </details>
 
@@ -57,7 +57,7 @@ Descubra como obter apenas valores únicos em suas consultas.
 
 **Conceitos:** DISTINCT, valores únicos, análise exploratória
 
-📄 [Ir para Aula 4](Módulo%201/MODULO-1.md#aula-4)
+📄 [Ir para Aula 4](modulo_2\doc_teorico.md#aula-4)
 
 </details>
 
@@ -68,7 +68,7 @@ Controle a quantidade de resultados retornados em suas queries.
 
 **Conceitos:** LIMIT, amostragem, performance
 
-📄 [Ir para Aula 5](Módulo%201/MODULO-1.md#aula-5)
+📄 [Ir para Aula 5](modulo_2\doc_teorico.md#aula-5)
 
 </details>
 
@@ -79,7 +79,7 @@ Aprenda a filtrar dados usando o operador de igualdade.
 
 **Conceitos:** WHERE, filtros, igualdade, tipos de dados
 
-📄 [Ir para Aula 6](Módulo%201/MODULO-1.md#aula-6)
+📄 [Ir para Aula 6](modulo_2\doc_teorico.md#aula-6)
 
 </details>
 
@@ -90,7 +90,7 @@ Use operadores de comparação para filtrar valores numéricos e datas.
 
 **Conceitos:** Operadores de comparação, filtros numéricos, datas
 
-📄 [Ir para Aula 7](Módulo%201/MODULO-1.md#aula-7)
+📄 [Ir para Aula 7](modulo_2\doc_teorico.md#aula-7)
 
 </details>
 
@@ -101,7 +101,7 @@ Filtre valores que são diferentes de um valor específico.
 
 **Conceitos:** Diferença, exclusão, NULL
 
-📄 [Ir para Aula 8](Módulo%201/MODULO-1.md#aula-8)
+📄 [Ir para Aula 8](modulo_2\doc_teorico.md#aula-8)
 
 </details>
 
@@ -112,7 +112,7 @@ Combine múltiplas condições que devem ser todas verdadeiras.
 
 **Conceitos:** AND, lógica booleana, múltiplas condições
 
-📄 [Ir para Aula 9](Módulo%201/MODULO-1.md#aula-9)
+📄 [Ir para Aula 9](modulo_2\doc_teorico.md#aula-9)
 
 </details>
 
@@ -123,7 +123,7 @@ Use OR quando pelo menos uma condição precisa ser verdadeira.
 
 **Conceitos:** OR, lógica booleana, parênteses, IN
 
-📄 [Ir para Aula 10](Módulo%201/MODULO-1.md#aula-10)
+📄 [Ir para Aula 10](modulo_2\doc_teorico.md#aula-10)
 
 </details>
 
