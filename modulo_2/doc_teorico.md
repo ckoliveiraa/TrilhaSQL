@@ -257,7 +257,7 @@ LIMIT é executado DEPOIS de buscar os dados, então:
 
 ```sql
 -- Isso ainda processa 1 milhão de linhas!
-SELECT * FROM tabela_gigante WHERE condicao LIMIT 10;
+SELECT * FROM tabela_gigante LIMIT 10;
 ```
 
 ## 🎯 Desafio
