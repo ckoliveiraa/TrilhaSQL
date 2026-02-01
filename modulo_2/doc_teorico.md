@@ -260,26 +260,16 @@ LIMIT é executado DEPOIS de buscar os dados, então:
 SELECT * FROM tabela_gigante WHERE condicao LIMIT 10;
 ```
 
-## 💭 Dica: Combinando com ORDER BY
-
-```sql
--- Top 10 produtos mais caros
-SELECT nome, preco 
-FROM produtos 
-ORDER BY preco DESC 
-LIMIT 10;
-```
-
 ## 🎯 Desafio
 
 <details>
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 5 - Desafio 1: Mostrar apenas os 5 primeiros produtos
+-- Aula 5 - Desafio 1: Mostrar uma amostra de 5 produtos (todas as colunas)
 
 
--- Aula 5 - Desafio 2: Mostrar os 10 primeiros clientes cadastrados
+-- Aula 5 - Desafio 2: Mostrar apenas 3 clientes, exibindo nome e email
 
 ```
 
@@ -293,6 +283,85 @@ LIMIT 10;
 
 <details>
 <summary><strong>Expandir Aula 6</strong></summary>
+
+## ORDER BY - Ordenando Resultados
+
+## 📝 O que é?
+
+ORDER BY permite **ordenar** os resultados da consulta em ordem crescente ou decrescente.
+
+## 💡 Sintaxe
+
+```sql
+-- Ordem crescente (padrão)
+SELECT colunas FROM tabela ORDER BY coluna;
+
+-- Ordem crescente (explícita)
+SELECT colunas FROM tabela ORDER BY coluna ASC;
+
+-- Ordem decrescente
+SELECT colunas FROM tabela ORDER BY coluna DESC;
+```
+
+## 🔤 ASC vs DESC
+
+- **ASC** (Ascending): Ordem crescente (A→Z, 1→100, mais antigo→mais novo)
+- **DESC** (Descending): Ordem decrescente (Z→A, 100→1, mais novo→mais antigo)
+
+## 📊 Ordenando por Múltiplas Colunas
+
+```sql
+-- Ordena por categoria, depois por preço dentro de cada categoria
+SELECT nome, categoria, preco
+FROM produtos
+ORDER BY categoria ASC, preco DESC;
+```
+
+## 💭 Combinando com LIMIT
+
+```sql
+-- Top 10 produtos mais caros
+SELECT nome, preco
+FROM produtos
+ORDER BY preco DESC
+LIMIT 10;
+
+-- 5 clientes mais recentes
+SELECT nome, data_cadastro
+FROM clientes
+ORDER BY data_cadastro DESC
+LIMIT 5;
+```
+
+## ⚠️ Atenção
+
+- ORDER BY vem **ANTES** do LIMIT
+- Sem ORDER BY, a ordem dos resultados não é garantida
+- Ordenar dados grandes pode impactar a performance
+
+## 🎯 Desafio
+
+<details>
+<summary><strong>Ver Desafios</strong></summary>
+
+```sql
+-- Aula 6 - Desafio 1: Listar produtos ordenados por preço do mais barato ao mais caro
+
+
+-- Aula 6 - Desafio 2: Listar os 5 produtos mais caros (ordenar por preço decrescente e limitar a 5)
+
+```
+
+</details>
+
+</details>
+
+---
+
+# AULA 7
+
+<details>
+<summary><strong>Expandir Aula 7</strong></summary>
 
 ## WHERE - Filtrando com Igualdade
 
@@ -339,10 +408,10 @@ WHERE funciona como um "filtro":
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 6 - Desafio 1: Mostrar apenas produtos da marca "Nike"
+-- Aula 7 - Desafio 1: Mostrar apenas produtos da marca "Nike"
 
 
--- Aula 6 - Desafio 2: Mostrar apenas clientes do estado "SP"
+-- Aula 7 - Desafio 2: Mostrar apenas clientes do estado "SP"
 
 
 ```
@@ -353,18 +422,10 @@ WHERE funciona como um "filtro":
 
 ---
 
-# AULA 7
-
-</details>
-
-</details>
-
----
-
-# AULA 7
+# AULA 8
 
 <details>
-<summary><strong>Expandir Aula 7</strong></summary>
+<summary><strong>Expandir Aula 8</strong></summary>
 
 ## WHERE com Maior e Menor (>, <, >=, <=)
 
@@ -416,10 +477,10 @@ WHERE preco >= 100
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 7 - Desafio 1: Produtos com preço maior que R$ 500
+-- Aula 8 - Desafio 1: Produtos com preço maior que R$ 500
 
 
--- Aula 7 - Desafio 2: Produtos com estoque menor que 20 unidades
+-- Aula 8 - Desafio 2: Produtos com estoque menor que 20 unidades
 
 
 ```
@@ -430,10 +491,10 @@ WHERE preco >= 100
 
 ---
 
-# AULA 8
+# AULA 9
 
 <details>
-<summary><strong>Expandir Aula 8</strong></summary>
+<summary><strong>Expandir Aula 9</strong></summary>
 
 ## WHERE com Diferente (<> ou !=)
 
@@ -479,10 +540,10 @@ WHERE telefone IS NOT NULL  ✅
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 8 - Desafio 1: Pedidos com status diferente de "Entregue"
+-- Aula 9 - Desafio 1: Pedidos com status diferente de "Entregue"
 
 
--- Aula 8 - Desafio 2: Produtos de marcas diferentes de "Nike"
+-- Aula 9 - Desafio 2: Produtos de marcas diferentes de "Nike"
 
 ```
 
@@ -492,10 +553,10 @@ WHERE telefone IS NOT NULL  ✅
 
 ---
 
-# AULA 9
+# AULA 10
 
 <details>
-<summary><strong>Expandir Aula 9</strong></summary>
+<summary><strong>Expandir Aula 10</strong></summary>
 
 ## AND - Combinando Condições
 
@@ -541,10 +602,10 @@ WHERE categoria = 'Eletrônicos'
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 9 - Desafio 1: Produtos com preço > R$100 E estoque > 50
+-- Aula 10 - Desafio 1: Produtos com preço > R$100 E estoque > 50
 
 
--- Aula 9 - Desafio 2: Clientes do estado "SP" E da cidade "São Paulo"
+-- Aula 10 - Desafio 2: Clientes do estado "SP" E da cidade "São Paulo"
 
 
 ```
@@ -555,10 +616,10 @@ WHERE categoria = 'Eletrônicos'
 
 ---
 
-# AULA 10
+# AULA 11
 
 <details>
-<summary><strong>Expandir Aula 10</strong></summary>
+<summary><strong>Expandir Aula 11</strong></summary>
 
 ## OR - Condições Alternativas
 
@@ -632,10 +693,10 @@ WHERE marca IN ('Nike', 'Adidas', 'Puma')
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 10 - Desafio 1: Produtos da marca "Nike" OU "Adidas"
+-- Aula 11 - Desafio 1: Produtos da marca "Nike" OU "Adidas"
 -- Selecione nome e marca
 
--- Aula 10 - Desafio 2: Desafio Avançado
+-- Aula 11 - Desafio 2: Desafio Avançado
 -- Encontre produtos que sejam:
 -- (Da marca "Samsung" E preço < 500) OU (Da marca "LG" E estoque > 20)
 
@@ -656,6 +717,7 @@ WHERE marca IN ('Nike', 'Adidas', 'Puma')
 | `AS` | Renomeia colunas | `SELECT nome AS "Produto"` |
 | `DISTINCT` | Remove duplicatas | `SELECT DISTINCT cidade FROM clientes` |
 | `LIMIT` | Limita quantidade de resultados | `SELECT * FROM produtos LIMIT 10` |
+| `ORDER BY` | Ordena resultados | `ORDER BY preco DESC` |
 | `WHERE =` | Filtra por igualdade | `WHERE marca = 'Nike'` |
 | `WHERE >, <` | Filtra por comparação | `WHERE preco > 100` |
 | `WHERE <>` | Filtra por diferença | `WHERE status <> 'Entregue'` |
@@ -670,8 +732,9 @@ WHERE marca IN ('Nike', 'Adidas', 'Puma')
 - [ ] Consigo renomear colunas com AS
 - [ ] Entendo como DISTINCT remove duplicatas
 - [ ] Uso LIMIT para controlar resultados
+- [ ] Sei usar ORDER BY para ordenar resultados
 - [ ] Domino WHERE com = para filtrar
-- [ ] Sei usar operadores >, <, >=, <= 
+- [ ] Sei usar operadores >, <, >=, <=
 - [ ] Entendo quando usar <> (diferente)
 - [ ] Combino múltiplas condições com AND
 - [ ] Uso OR para condições alternativas
