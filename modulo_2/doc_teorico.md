@@ -691,31 +691,19 @@ WHERE marca = 'Nike' OR (marca = 'Adidas' AND preco > 100)
 
 **Importante:** Os parênteses controlam a ordem de avaliação, como na matemática!
 
-## 💡 Dica: Use IN para múltiplos OR
-
-```sql
--- Em vez de:
-WHERE marca = 'Nike' OR marca = 'Adidas' OR marca = 'Puma'
-
--- Use:
-WHERE marca IN ('Nike', 'Adidas', 'Puma')
--- Mais limpo e fácil de ler!
-```
-
-*Nota: Você aprenderá IN em detalhes no próximo módulo!*
-
 ## 🎯 Desafio
 
 <details>
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 11 - Desafio 1: Produtos da marca "Nike" OU "Adidas"
--- Selecione nome e marca
+-- Aula 11 - Desafio 1: Produtos premium de marcas específicas
+-- Encontre produtos que sejam: marca "Samsung" OU marca "Sony" E preço maior que 2000
+-- Traga somente as colunas necessárias
 
--- Aula 11 - Desafio 2: Desafio Avançado
--- Encontre produtos que sejam:
--- (Da marca "Samsung" E preço < 500) OU (Da marca "LG" E estoque > 20)
+-- Aula 11 - Desafio 2: Pagamentos problemáticos
+-- Encontre pagamentos que sejam  Pix ou boleto e não tenham sido aprovados
+-- Traga somente as colunas necessárias
 
 ```
 
