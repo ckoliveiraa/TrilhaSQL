@@ -402,16 +402,34 @@ WHERE funciona como um "filtro":
 - Se a condição for verdadeira, a linha aparece no resultado
 - Se for falsa, a linha é ignorada
 
+## 🔗 Combinando com ORDER BY
+
+```sql
+-- Produtos da Nike ordenados por preço (mais barato primeiro)
+SELECT nome, preco
+FROM produtos
+WHERE marca = 'Nike'
+ORDER BY preco ASC;
+
+-- Clientes de SP ordenados por nome
+SELECT nome, cidade
+FROM clientes
+WHERE estado = 'SP'
+ORDER BY nome;
+```
+
+**Lembre-se:** A ordem é sempre `SELECT → FROM → WHERE → ORDER BY`
+
 ## 🎯 Desafio
 
 <details>
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 7 - Desafio 1: Mostrar apenas produtos da marca "Nike"
+-- Aula 7 - Desafio 1: Mostrar apenas pedidos em separação
 
 
--- Aula 7 - Desafio 2: Mostrar apenas clientes do estado "SP"
+-- Aula 7 - Desafio 2: Mostrar as últimas 5 avaliações nota 1
 
 
 ```
