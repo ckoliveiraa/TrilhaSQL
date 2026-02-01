@@ -31,3 +31,9 @@ SELECT * FROM produtos LIMIT 5
 
 -- Aula 5 - Desafio 2: Mostrar apenas 3 clientes, exibindo nome e email
 SELECT nome, email FROM clientes LIMIT 3
+
+-- Aula 6 - Desafio 1: Listar produtos ordenados por preço do mais barato ao mais caro
+SELECT * FROM produtos ORDER BY preco ASC
+
+-- Aula 6 - Desafio 2: Listar os 10 últimos pagamentos
+SELECT * FROM pagamentos ORDER BY data_pagamento DESC LIMIT 10

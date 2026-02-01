@@ -769,6 +769,138 @@ WHERE marca IN ('Nike', 'Adidas', 'Puma')
 
 ---
 
+## 🔢 Ordem dos Comandos SQL
+
+Ao escrever uma query SQL, os comandos devem seguir uma **ordem específica**. Aqui está a ordem correta de todos os comandos aprendidos neste módulo:
+
+```sql
+SELECT [DISTINCT] colunas [AS alias]
+FROM tabela
+WHERE condição [AND/OR condição]
+ORDER BY coluna [ASC/DESC]
+LIMIT número;
+```
+
+### Por que essa ordem?
+
+O SQL foi projetado para ser lido de forma **declarativa** (você diz O QUE quer, não COMO fazer). A ordem reflete a lógica de processamento:
+
+| Ordem | Comando | O que faz | Por que nessa posição? |
+|-------|---------|-----------|------------------------|
+| 1º | `SELECT` | Define quais colunas você quer | Sempre primeiro - é o objetivo da query |
+| 2º | `FROM` | Define de qual tabela buscar | Precisa saber DE ONDE vêm os dados |
+| 3º | `WHERE` | Filtra as linhas | Filtra ANTES de ordenar (mais eficiente) |
+| 4º | `ORDER BY` | Ordena os resultados | Ordena só o que passou pelo filtro |
+| 5º | `LIMIT` | Limita a quantidade | Sempre por último - corta o resultado final |
+
+### Exemplo Completo
+
+```sql
+SELECT DISTINCT nome AS "Produto", preco AS "Preço"
+FROM produtos
+WHERE marca = 'Nike' AND preco > 100
+ORDER BY preco DESC
+LIMIT 10;
+```
+
+**Leitura:** "Selecione nome e preço (sem duplicatas) dos produtos, onde a marca seja Nike E o preço maior que 100, ordenado por preço decrescente, limitado a 10 resultados."
+
+### ⚠️ Erros Comuns
+
+```sql
+-- ❌ ERRADO: LIMIT antes de ORDER BY
+SELECT * FROM produtos LIMIT 10 ORDER BY preco;
+
+-- ❌ ERRADO: WHERE depois de ORDER BY
+SELECT * FROM produtos ORDER BY preco WHERE marca = 'Nike';
+
+-- ✅ CORRETO: Ordem certa
+SELECT * FROM produtos WHERE marca = 'Nike' ORDER BY preco LIMIT 10;
+```
+
+---
+
+## 🏆 Desafio Final do Módulo 2
+
+<details>
+<summary><strong>Expandir Desafio Final</strong></summary>
+
+Parabéns por chegar até aqui! Agora é hora de testar tudo que você aprendeu em um cenário real de e-commerce.
+
+### 📋 Contexto
+
+Você é analista de dados de um e-commerce e precisa gerar relatórios para diferentes áreas da empresa. Use as tabelas disponíveis: `produtos`, `clientes`, `pedidos`, `pagamentos` e `avaliacoes`.
+
+### 🎯 Desafios
+
+```sql
+-- Desafio Final 1: Catálogo de Produtos Premium
+-- Liste nome, marca e preço dos produtos com preço maior que R$ 2000
+-- Ordene do mais caro para o mais barato
+-- Renomeie as colunas para "Produto", "Fabricante" e "Valor (R$)"
+
+
+-- Desafio Final 2: Análise de Estoque Crítico
+-- Encontre produtos com estoque menor que 50 unidades OU preço menor que R$ 200
+-- Mostre nome, estoque e preço, ordenados por estoque (menor primeiro)
+-- Limite a 10 resultados
+
+
+-- Desafio Final 3: Clientes por Região
+-- Liste todos os estados únicos onde há clientes cadastrados
+-- Ordene em ordem alfabética
+
+
+-- Desafio Final 4: Relatório de Pedidos
+-- Mostre os 15 pedidos mais recentes com status "entregue"
+-- Exiba data_pedido (como "Data"), valor_total (como "Total") e status
+-- Ordene pela data mais recente primeiro
+
+
+-- Desafio Final 5: Produtos em Destaque (Desafio Avançado)
+-- Encontre produtos que sejam:
+-- (marca "Samsung" E preço > 1000) OU (marca "Sony" E estoque > 100)
+-- Mostre nome, marca, preço e estoque
+-- Ordene por preço decrescente
+
+
+-- Desafio Final 6: Análise de Avaliações
+-- Liste as 10 piores avaliações (nota = 1 ou nota = 2)
+-- Mostre nota (como "Estrelas") e comentario (como "Feedback")
+-- Ordene pela nota (menor primeiro)
+
+
+-- Desafio Final 7: Pagamentos Pendentes
+-- Encontre pagamentos com status diferente de "aprovado"
+-- Mostre metodo (como "Forma de Pagamento"), valor e status
+-- Ordene pelo valor (maior primeiro), limitado a 20 resultados
+
+
+-- Desafio Final 8: Relatório Completo (Boss Final!)
+-- Crie uma consulta que mostre:
+-- - Nome do produto (como "Produto")
+-- - Marca (como "Fabricante")
+-- - Preço (como "Preço (R$)")
+-- - Estoque (como "Qtd Disponível")
+-- Filtros: marca = "Samsung" OU marca = "LG" OU marca = "Sony"
+--          E preço entre 1000 e 5000 (use >= e <=)
+--          E estoque > 0
+-- Ordenado por marca (A-Z), depois por preço (menor para maior)
+-- Limitado aos 20 primeiros resultados
+
+```
+
+### 💡 Dicas
+
+- Lembre-se da ordem: `SELECT → FROM → WHERE → ORDER BY → LIMIT`
+- Use aspas simples para textos: `'Samsung'`
+- Use parênteses para agrupar condições com AND e OR
+- Aspas duplas são para aliases com espaços: `AS "Nome do Produto"`
+
+</details>
+
+---
+
 ## 📖 Como Usar Este Material
 
 1. Estude uma aula por vez
