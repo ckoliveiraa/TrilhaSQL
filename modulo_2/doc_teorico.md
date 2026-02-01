@@ -348,7 +348,7 @@ LIMIT 5;
 -- Aula 6 - Desafio 1: Listar produtos ordenados por preço do mais barato ao mais caro
 
 
--- Aula 6 - Desafio 2: Listar os 5 produtos mais caros (ordenar por preço decrescente e limitar a 5)
+-- Aula 6 - Desafio 2: Listar os 10 últimos pagamentos
 
 ```
 
