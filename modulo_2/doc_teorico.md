@@ -561,7 +561,7 @@ WHERE telefone IS NOT NULL  ✅
 -- Aula 9 - Desafio 1: Pedidos com status diferente de "Entregue"
 
 
--- Aula 9 - Desafio 2: Listar as avaliações 5* sem comentários
+-- Aula 9 - Desafio 2: Listar as avaliações sem comentários
 
 ```
 
