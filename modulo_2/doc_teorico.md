@@ -620,11 +620,10 @@ WHERE categoria = 'Eletrônicos'
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 10 - Desafio 1: Produtos com preço > R$100 E estoque > 50
+-- Aula 10 - Desafio 1: Produtos da marca "Samsung" com preço maior que R$ 1000
 
 
--- Aula 10 - Desafio 2: Clientes do estado "SP" E da cidade "São Paulo"
-
+-- Aula 10 - Desafio 2: Pedidos entregues que possuem data de entrega registrada
 
 ```
 
