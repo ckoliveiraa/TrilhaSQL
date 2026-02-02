@@ -1,14 +1,17 @@
--- =====================================================
--- RESPOSTAS DOS DESAFIOS FINAIS - MÓDULO 2
--- Fundamentos SELECT
--- =====================================================
+-- ============================================
+-- MÓDULO 2 - FUNDAMENTOS SELECT
+-- Respostas do Desafio Final
+-- ============================================
 
 -- Desafio Final 1: Catálogo de Produtos Premium
 -- Liste nome, marca e preço dos produtos com preço maior que R$ 2000
 -- Ordene do mais caro para o mais barato
 -- Renomeie as colunas para "Produto", "Fabricante" e "Valor (R$)"
 
-SELECT nome AS "Produto", marca AS "Fabricante", preco AS "Valor (R$)"
+SELECT
+    nome AS "Produto",
+    marca AS "Fabricante",
+    preco AS "Valor (R$)"
 FROM produtos
 WHERE preco > 2000
 ORDER BY preco DESC;
@@ -40,7 +43,10 @@ ORDER BY estado ASC;
 -- Exiba data_pedido (como "Data"), valor_total (como "Total") e status
 -- Ordene pela data mais recente primeiro
 
-SELECT data_pedido AS "Data", valor_total AS "Total", status
+SELECT
+    data_pedido AS "Data",
+    valor_total AS "Total",
+    status
 FROM pedidos
 WHERE status = 'entregue'
 ORDER BY data_pedido DESC
@@ -55,7 +61,8 @@ LIMIT 15;
 
 SELECT nome, marca, preco, estoque
 FROM produtos
-WHERE (marca = 'Samsung' AND preco > 1000) OR (marca = 'Sony' AND estoque > 100)
+WHERE (marca = 'Samsung' AND preco > 1000)
+   OR (marca = 'Sony' AND estoque > 100)
 ORDER BY preco DESC;
 
 
@@ -64,7 +71,9 @@ ORDER BY preco DESC;
 -- Mostre nota (como "Estrelas") e comentario (como "Feedback")
 -- Ordene pela nota (menor primeiro)
 
-SELECT nota AS "Estrelas", comentario AS "Feedback"
+SELECT
+    nota AS "Estrelas",
+    comentario AS "Feedback"
 FROM avaliacoes
 WHERE nota = 1 OR nota = 2
 ORDER BY nota ASC
@@ -76,7 +85,10 @@ LIMIT 10;
 -- Mostre metodo (como "Forma de Pagamento"), valor e status
 -- Ordene pelo valor (maior primeiro), limitado a 20 resultados
 
-SELECT metodo AS "Forma de Pagamento", valor, status
+SELECT
+    metodo AS "Forma de Pagamento",
+    valor,
+    status
 FROM pagamentos
 WHERE status <> 'aprovado'
 ORDER BY valor DESC
@@ -102,8 +114,8 @@ SELECT
     estoque AS "Qtd Disponível"
 FROM produtos
 WHERE (marca = 'Samsung' OR marca = 'LG' OR marca = 'Sony')
-    AND preco >= 1000
-    AND preco <= 5000
-    AND estoque > 0
+  AND preco >= 1000
+  AND preco <= 5000
+  AND estoque > 0
 ORDER BY marca ASC, preco ASC
 LIMIT 20;
