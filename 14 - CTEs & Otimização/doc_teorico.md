@@ -103,6 +103,8 @@ INNER JOIN vendas_por_cliente v ON c.cliente_id = v.cliente_id
 CROSS JOIN media_geral m;
 ```
 
+**Nota sobre CROSS JOIN:** O `CROSS JOIN` combina cada linha de uma tabela com todas as linhas de outra tabela (produto cartesiano). No exemplo acima, como `media_geral` retorna apenas uma linha, usamos `CROSS JOIN` para adicionar essa linha a todos os resultados. Isso é útil quando queremos comparar valores individuais com um valor agregado único (como uma média geral).
+
 ## CTEs que Referenciam Outras CTEs
 
 ```sql

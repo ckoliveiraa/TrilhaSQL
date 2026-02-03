@@ -359,20 +359,18 @@ FROM clientes;
 ## Calculando Atrasos
 
 ```sql
--- Verificar entregas atrasadas (prazo de 7 dias)
+-- Verificar dias de entrega vs prazo (7 dias)
 SELECT
     pedido_id,
     data_pedido,
     data_entrega,
     data_entrega - data_pedido AS dias_reais,
-    CASE
-        WHEN data_entrega - data_pedido > 7 THEN 'Atrasado'
-        ELSE 'No Prazo'
-    END AS status_entrega
+    data_pedido + INTERVAL '7 days' AS prazo_estimado
 FROM pedidos
 WHERE data_entrega IS NOT NULL;
 
--- Calcular dias de atraso
+-- Calcular dias de atraso (se houver)
+-- GREATEST retorna o maior valor entre os argumentos
 SELECT
     pedido_id,
     data_pedido,
@@ -381,6 +379,8 @@ SELECT
 FROM pedidos
 WHERE data_entrega IS NOT NULL;
 ```
+
+> **Nota:** Para classificar entregas como "Atrasado" ou "No Prazo", você usará `CASE WHEN` no **Módulo 6 - Condicionais**.
 
 ## Funções Úteis
 
@@ -489,24 +489,20 @@ SELECT TO_CHAR(CURRENT_TIMESTAMP, 'DD/MM/YYYY HH12:MI AM') AS agora;
 
 ## Mês por Extenso em Português
 
+> **Nota:** Para exibir o mês por extenso em português, você precisará usar `CASE WHEN`, que será ensinado no **Módulo 6 - Condicionais**. Por enquanto, use o número do mês ou o nome em inglês com `TMMonth`.
+
 ```sql
--- Para exibir em português, use CASE ou uma tabela auxiliar
+-- Exemplo usando o nome do mês (em inglês)
 SELECT
     pedido_id,
-    CASE EXTRACT(MONTH FROM data_pedido)
-        WHEN 1 THEN 'Janeiro'
-        WHEN 2 THEN 'Fevereiro'
-        WHEN 3 THEN 'Março'
-        WHEN 4 THEN 'Abril'
-        WHEN 5 THEN 'Maio'
-        WHEN 6 THEN 'Junho'
-        WHEN 7 THEN 'Julho'
-        WHEN 8 THEN 'Agosto'
-        WHEN 9 THEN 'Setembro'
-        WHEN 10 THEN 'Outubro'
-        WHEN 11 THEN 'Novembro'
-        WHEN 12 THEN 'Dezembro'
-    END AS mes_extenso
+    TO_CHAR(data_pedido, 'DD "de" TMMonth "de" YYYY') AS data_extenso
+FROM pedidos;
+-- Resultado: "15 de July de 2024"
+
+-- Ou apenas o número do mês
+SELECT
+    pedido_id,
+    EXTRACT(MONTH FROM data_pedido) AS numero_mes
 FROM pedidos;
 ```
 
@@ -581,8 +577,8 @@ Use seus conhecimentos de funções de data para resolver estes desafios.
 -- Crie um relatório que mostre:
 -- - pedido_id
 -- - data_pedido formatada como "DD/MM/YYYY"
--- - dia da semana do pedido (nome ou número)
--- - mês do pedido por extenso
+-- - dia da semana do pedido (número: 0=Dom, 6=Sáb)
+-- - mês do pedido (número)
 
 
 -- Desafio Final 2: Análise de Tempo de Entrega
@@ -590,32 +586,34 @@ Use seus conhecimentos de funções de data para resolver estes desafios.
 -- - pedido_id
 -- - data_pedido
 -- - data_entrega
--- - dias para entrega
--- - status: "Rápido" (até 3 dias), "Normal" (4-7 dias), "Lento" (mais de 7 dias)
+-- - dias para entrega (data_entrega - data_pedido)
+-- Dica: Use WHERE data_entrega IS NOT NULL
 
 
--- Desafio Final 3: Pedidos por Período
--- Mostre a quantidade de pedidos por:
--- - Ano
--- - Mês (número)
--- Ordene por ano e mês
+-- Desafio Final 3: Pedidos Recentes
+-- Mostre os pedidos dos últimos 30 dias:
+-- - pedido_id
+-- - data_pedido formatada como "DD/MM/YYYY"
+-- - data_pedido formatada como "Dia da semana, DD de Mês"
+-- Dica: Use WHERE data_pedido >= CURRENT_DATE - INTERVAL '30 days'
 
 
 -- Desafio Final 4: Clientes e Idades
 -- Crie um relatório de clientes com:
 -- - nome
--- - data_nascimento formatada
--- - idade em anos
--- - classificação: "Jovem" (< 30), "Adulto" (30-50), "Sênior" (> 50)
+-- - data_nascimento formatada como "DD/MM/YYYY"
+-- - idade em anos (use EXTRACT com AGE)
+-- Ordene pelos mais velhos primeiro
 
 
--- Desafio Final 5 (Boss Final!): Dashboard de Vendas Mensal
--- Crie um relatório que agrupe pedidos por mês/ano e mostre:
--- - Mês/Ano formatado (ex: "Janeiro/2024")
--- - Total de pedidos
--- - Valor total vendido
--- - Primeiro pedido do mês
--- - Último pedido do mês
+-- Desafio Final 5 (Boss Final!): Análise de Prazos
+-- Para cada pedido com data_entrega preenchida, mostre:
+-- - pedido_id
+-- - data_pedido e data_entrega formatadas
+-- - dias para entrega
+-- - prazo estimado (data_pedido + 7 dias)
+-- - diferença entre entrega real e prazo estimado
+-- Dica: Use operações com INTERVAL e subtração de datas
 
 ```
 

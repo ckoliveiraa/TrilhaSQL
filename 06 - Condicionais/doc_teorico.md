@@ -228,77 +228,80 @@ SELECT
 FROM produtos p;
 ```
 
-**4. CASE com agregação - Contagem condicional:**
+**4. CASE em cálculos condicionais:**
 ```sql
+-- Calcular preço com desconto baseado no valor
 SELECT
-    COUNT(*) AS total_produtos,
-    COUNT(CASE WHEN preco < 100 THEN 1 END) AS baratos,
-    COUNT(CASE WHEN preco BETWEEN 100 AND 500 THEN 1 END) AS medios,
-    COUNT(CASE WHEN preco > 500 THEN 1 END) AS caros
+    nome,
+    preco,
+    CASE
+        WHEN preco >= 1000 THEN preco * 0.85  -- 15% desconto para caros
+        WHEN preco >= 500 THEN preco * 0.90   -- 10% desconto para médios
+        ELSE preco * 0.95                      -- 5% desconto para baratos
+    END AS preco_com_desconto
 FROM produtos;
 ```
 
-**5. CASE com SUM - Soma condicional:**
+**5. CASE para criar flags (indicadores):**
 ```sql
+-- Indicar se produto precisa de reposição
 SELECT
-    c.nome AS categoria,
-    SUM(p.estoque) AS estoque_total,
-    SUM(CASE WHEN p.preco < 100 THEN p.estoque ELSE 0 END) AS estoque_baratos,
-    SUM(CASE WHEN p.preco >= 100 THEN p.estoque ELSE 0 END) AS estoque_demais
-FROM categorias c
-INNER JOIN produtos p ON c.categoria_id = p.categoria_id
-GROUP BY c.categoria_id, c.nome;
-```
-
-**6. Relatório de vendas por período:**
-```sql
-SELECT
-    EXTRACT(YEAR FROM data_pedido) AS ano,
-    COUNT(*) AS total_pedidos,
-    SUM(CASE WHEN status = 'entregue' THEN 1 ELSE 0 END) AS entregues,
-    SUM(CASE WHEN status = 'cancelado' THEN 1 ELSE 0 END) AS cancelados,
-    ROUND(
-        100.0 * SUM(CASE WHEN status = 'entregue' THEN 1 ELSE 0 END) / COUNT(*),
-        2
-    ) AS taxa_entrega_percentual
-FROM pedidos
-GROUP BY EXTRACT(YEAR FROM data_pedido)
-ORDER BY ano;
-```
-
-**7. Classificação de clientes por comportamento:**
-```sql
-SELECT
-    c.nome,
-    COUNT(p.pedido_id) AS total_pedidos,
-    COALESCE(SUM(p.valor_total), 0) AS total_gasto,
+    nome,
+    estoque,
     CASE
-        WHEN COUNT(p.pedido_id) = 0 THEN 'Inativo'
-        WHEN COUNT(p.pedido_id) < 3 THEN 'Ocasional'
-        WHEN COUNT(p.pedido_id) < 10 THEN 'Regular'
-        ELSE 'VIP'
-    END AS tipo_cliente
-FROM clientes c
-LEFT JOIN pedidos p ON c.cliente_id = p.cliente_id
-GROUP BY c.cliente_id, c.nome
-ORDER BY total_gasto DESC;
+        WHEN estoque = 0 THEN 'SIM - URGENTE'
+        WHEN estoque < 10 THEN 'SIM'
+        ELSE 'NÃO'
+    END AS precisa_repor
+FROM produtos;
 ```
 
-**8. Pivot simples com CASE:**
+**6. CASE com datas:**
 ```sql
+-- Classificar pedidos por antiguidade
 SELECT
-    c.nome AS categoria,
-    SUM(CASE WHEN p.status = 'entregue' THEN 1 ELSE 0 END) AS entregues,
-    SUM(CASE WHEN p.status = 'enviado' THEN 1 ELSE 0 END) AS enviados,
-    SUM(CASE WHEN p.status = 'processando' THEN 1 ELSE 0 END) AS processando,
-    SUM(CASE WHEN p.status = 'pendente' THEN 1 ELSE 0 END) AS pendentes,
-    SUM(CASE WHEN p.status = 'cancelado' THEN 1 ELSE 0 END) AS cancelados
-FROM categorias c
-INNER JOIN produtos prod ON c.categoria_id = prod.categoria_id
-INNER JOIN itens_pedido ip ON prod.produto_id = ip.produto_id
-INNER JOIN pedidos p ON ip.pedido_id = p.pedido_id
-GROUP BY c.categoria_id, c.nome;
+    pedido_id,
+    data_pedido,
+    CASE
+        WHEN data_pedido >= CURRENT_DATE - INTERVAL '7 days' THEN 'Recente'
+        WHEN data_pedido >= CURRENT_DATE - INTERVAL '30 days' THEN 'Este mês'
+        WHEN data_pedido >= CURRENT_DATE - INTERVAL '90 days' THEN 'Último trimestre'
+        ELSE 'Antigo'
+    END AS classificacao_tempo
+FROM pedidos;
 ```
+
+**7. CASE para formatar saída:**
+```sql
+-- Formatar telefone ou mostrar mensagem
+SELECT
+    nome,
+    CASE
+        WHEN telefone IS NOT NULL THEN telefone
+        ELSE 'Telefone não cadastrado'
+    END AS contato
+FROM clientes;
+```
+
+**8. CASE aninhado (CASE dentro de CASE):**
+```sql
+-- Classificação detalhada de produtos
+SELECT
+    nome,
+    preco,
+    estoque,
+    CASE
+        WHEN estoque = 0 THEN 'Indisponível'
+        ELSE CASE
+            WHEN preco > 1000 THEN 'Premium disponível'
+            WHEN preco > 500 THEN 'Intermediário disponível'
+            ELSE 'Econômico disponível'
+        END
+    END AS disponibilidade
+FROM produtos;
+```
+
+> **Nota:** Exemplos mais avançados combinando CASE com funções de agregação (COUNT, SUM) e agrupamentos (GROUP BY) serão vistos nos **Módulos 7 e 8**. Exemplos com JOINs serão vistos no **Módulo 9**.
 
 ## COALESCE vs CASE
 
@@ -344,8 +347,8 @@ FROM resumo;
 | **CASE WHEN** | Condicional básico | `CASE WHEN x > 10 THEN 'Alto' ELSE 'Baixo' END` |
 | **CASE simples** | Comparação direta | `CASE status WHEN 'A' THEN 'Ativo' END` |
 | **Múltiplas condições** | AND/OR no WHEN | `WHEN preco > 100 AND estoque < 5 THEN ...` |
-| **CASE com COUNT** | Contagem condicional | `COUNT(CASE WHEN x THEN 1 END)` |
-| **CASE com SUM** | Soma condicional | `SUM(CASE WHEN x THEN valor ELSE 0 END)` |
+| **CASE em ORDER BY** | Ordenação personalizada | `ORDER BY CASE status WHEN 'A' THEN 1 END` |
+| **CASE com cálculos** | Valores condicionais | `CASE WHEN preco > 100 THEN preco * 0.9 END` |
 | **COALESCE** | Tratar NULL | `COALESCE(valor, 0)` |
 | **NULLIF** | Retornar NULL se igual | `NULLIF(divisor, 0)` |
 
@@ -369,8 +372,8 @@ CASE avalia condições de CIMA para BAIXO
 - [ ] Sei usar CASE WHEN com condições simples
 - [ ] Entendo a diferença entre CASE completo e CASE simples
 - [ ] Sei combinar múltiplas condições com AND/OR
-- [ ] Consigo usar CASE dentro de funções de agregação (COUNT, SUM)
 - [ ] Sei criar colunas calculadas condicionalmente
+- [ ] Consigo usar CASE com ORDER BY para ordenação personalizada
 - [ ] Entendo quando usar COALESCE vs CASE para NULLs
 - [ ] Sei usar NULLIF para evitar divisão por zero
 
@@ -379,10 +382,9 @@ CASE avalia condições de CIMA para BAIXO
 ## Próximos Passos
 
 No próximo módulo, você aprenderá sobre:
-- Subconsultas no WHERE
-- Subconsultas no FROM (Derived Tables)
-- Subconsultas no SELECT
-- EXISTS e NOT EXISTS
+- **Funções de Agregação**: COUNT, SUM, AVG, MIN, MAX
+- Como contar, somar e calcular médias de dados
+- Estatísticas básicas em SQL
 
 ---
 
@@ -397,11 +399,11 @@ Usando seus conhecimentos de CASE WHEN, resolva os seguintes problemas:
 - Preço: "Econômico" (< R$100), "Padrão" (R$100-500), "Premium" (> R$500)
 - Estoque: "Crítico" (< 10), "Baixo" (10-29), "Normal" (30-99), "Alto" (>= 100)
 
-**Desafio 2:** Para cada categoria, mostre:
-- Total de produtos
-- Quantidade de produtos "caros" (> R$500)
-- Quantidade de produtos com estoque crítico (< 10)
-- Percentual de produtos caros
+**Desafio 2:** Crie uma coluna que mostre a "prioridade de reposição":
+- "URGENTE" - estoque = 0 E preço > 500
+- "ALTA" - estoque < 5
+- "MÉDIA" - estoque < 20
+- "BAIXA" - estoque >= 20
 
 **Desafio 3:** Classifique os clientes em:
 - "Novo" - cadastrado há menos de 6 meses
@@ -413,11 +415,13 @@ Usando seus conhecimentos de CASE WHEN, resolva os seguintes problemas:
 - Classificação do valor: "Pequeno" (< R$200), "Médio" (R$200-500), "Grande" (> R$500)
 - Se teve frete grátis ou não
 
-**Desafio 5 (Boss Final!):** Crie um dashboard de vendas que mostre por mês:
-- Total de pedidos
-- Pedidos entregues
-- Pedidos cancelados
-- Taxa de sucesso (% entregues)
-- Classificação do mês: "Ruim" (< 70% sucesso), "Bom" (70-90%), "Excelente" (> 90%)
+**Desafio 5 (Boss Final!):** Crie um relatório completo de pedidos que mostre:
+- pedido_id
+- valor_total
+- status traduzido para português
+- Classificação do valor: "Pequeno" (< R$200), "Médio" (R$200-1000), "Grande" (> R$1000)
+- Tipo de frete: "Grátis" (frete = 0), "Econômico" (< R$30), "Normal" (>= R$30)
+- Indicador de desconto: "Com desconto" (desconto > 0), "Sem desconto"
+- Ordene por valor_total decrescente
 
 </details>
