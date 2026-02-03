@@ -81,19 +81,16 @@ WHERE data_pagamento BETWEEN '2025-01-01' AND '2025-12-31';
 -- AULA 16 - LIKE - Buscando Padroes de Texto
 -- =================================================================
 
--- Aula 16 - Desafio 1: Mostrar categorias cuja descricao contenha a palavra 'acessorios'
+-- Aula 16 - Desafio 1: Mostrar categorias cuja descricao contenha a palavra 'casa'
 -- Nota: Use ILIKE para busca case-insensitive no PostgreSQL
 SELECT *
 FROM categorias
-WHERE descricao ILIKE '%acessorio%';
+WHERE descricao ILIKE '%casa%';
 
-
--- Aula 16 - Desafio 2: Mostrar avaliacoes cujo comentario contenha a palavra "rapida"
--- Nota: Use ILIKE para busca case-insensitive no PostgreSQL
+-- Aula 16 - Desafio 2: Mostrar avaliacoes cujo comentario contenha a palavra "qualidade"
 SELECT *
 FROM avaliacoes
-WHERE comentario ILIKE '%rapida%';
-
+WHERE comentario LIKE '%qualidade%';
 
 -- =================================================================
 -- AULA 17 - LIKE com % e _ - Padroes Avancados
