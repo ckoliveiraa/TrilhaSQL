@@ -456,10 +456,10 @@ SELECT * FROM clientes WHERE email NOT LIKE '%@gmail.com';
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 16 - Desafio 1: Mostrar categorias cuja descrição contenha a palavra 'acessórios'
+-- Aula 16 - Desafio 1: Mostrar categorias cuja descrição contenha a palavra 'casa'
 
 
--- Aula 16 - Desafio 2: Mostrar avaliações cujo comentário contenha a palavra "rápida"
+-- Aula 16 - Desafio 2: Mostrar avaliações cujo comentário contenha a palavra "qualidade"
 
 ```
 
