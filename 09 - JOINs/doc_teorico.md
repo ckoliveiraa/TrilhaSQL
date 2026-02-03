@@ -1,13 +1,13 @@
-# Módulo 6 - JOINs - Material Didático
+# Módulo 9 - JOINs - Material Didático
 
 ## Objetivo do Módulo
 Dominar as técnicas de junção de tabelas em SQL, aprendendo a combinar dados de múltiplas tabelas usando INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN e SELF JOIN.
 
 ---
-# AULA 29
+# AULA 42
 
 <details>
-<summary><strong>Expandir Aula 29</strong></summary>
+<summary><strong>Expandir Aula 42</strong></summary>
 
 ## INNER JOIN - Juntando Tabelas
 
@@ -144,11 +144,11 @@ INNER JOIN resultado:
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 29 - Desafio 1: Listar todos os produtos com o nome de suas categorias
+-- Aula 42 - Desafio 1: Listar todos os produtos com o nome de suas categorias
 -- Mostre: nome do produto, preço, nome da categoria
 
 
--- Aula 29 - Desafio 2: Listar todos os pedidos com o nome dos clientes
+-- Aula 42 - Desafio 2: Listar todos os pedidos com o nome dos clientes
 -- Mostre: pedido_id, data_pedido, valor_total, nome do cliente, email do cliente
 
 ```
@@ -159,10 +159,10 @@ INNER JOIN resultado:
 
 ---
 
-# AULA 30
+# AULA 43
 
 <details>
-<summary><strong>Expandir Aula 30</strong></summary>
+<summary><strong>Expandir Aula 43</strong></summary>
 
 ## LEFT JOIN - Mantendo Todos à Esquerda
 
@@ -292,12 +292,12 @@ LEFT JOIN pagamentos pg ON p.pedido_id = pg.pedido_id;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 30 - Desafio 1: Listar todos os produtos, incluindo os que nunca foram vendidos
+-- Aula 43 - Desafio 1: Listar todos os produtos, incluindo os que nunca foram vendidos
 -- Mostre: nome do produto, preço, quantidade vendida (ou NULL se nunca vendido)
 -- Dica: Use a tabela itens_pedido para verificar vendas
 
 
--- Aula 30 - Desafio 2: Listar todos os clientes, incluindo os que nunca fizeram pedidos
+-- Aula 43 - Desafio 2: Listar todos os clientes, incluindo os que nunca fizeram pedidos
 -- Mostre: nome do cliente, email, quantidade de pedidos (0 se nunca fez)
 -- Dica: Use COUNT() que conta 0 para NULL
 
@@ -309,10 +309,10 @@ LEFT JOIN pagamentos pg ON p.pedido_id = pg.pedido_id;
 
 ---
 
-# AULA 31
+# AULA 44
 
 <details>
-<summary><strong>Expandir Aula 31</strong></summary>
+<summary><strong>Expandir Aula 44</strong></summary>
 
 ## RIGHT JOIN - Mantendo Todos à Direita
 
@@ -412,12 +412,12 @@ SELECT * FROM B LEFT JOIN A ON B.id = A.id;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 31 - Desafio 1: Listar todos os pedidos e seus pagamentos (mantendo pedidos sem pagamento)
+-- Aula 44 - Desafio 1: Listar todos os pedidos e seus pagamentos (mantendo pedidos sem pagamento)
 -- Mostre: pedido_id, valor_total do pedido, método de pagamento, valor do pagamento
 -- Use RIGHT JOIN com pedidos à direita
 
 
--- Aula 31 - Desafio 2: Reescreva o desafio anterior usando LEFT JOIN
+-- Aula 44 - Desafio 2: Reescreva o desafio anterior usando LEFT JOIN
 -- O resultado deve ser idêntico
 
 ```
@@ -428,10 +428,10 @@ SELECT * FROM B LEFT JOIN A ON B.id = A.id;
 
 ---
 
-# AULA 32
+# AULA 45
 
 <details>
-<summary><strong>Expandir Aula 32</strong></summary>
+<summary><strong>Expandir Aula 45</strong></summary>
 
 ## FULL OUTER JOIN - Mantendo Todos os Registros
 
@@ -532,12 +532,12 @@ SELECT * FROM tabela1 RIGHT JOIN tabela2 ON ...
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 32 - Desafio 1: Listar todos os produtos e todas as avaliações
+-- Aula 45 - Desafio 1: Listar todos os produtos e todas as avaliações
 -- Mostre produtos sem avaliação E avaliações (se houver alguma órfã)
 -- Mostre: produto_id, nome do produto, avaliacao_id, nota
 
 
--- Aula 32 - Desafio 2: Identificar inconsistências entre categorias e produtos
+-- Aula 45 - Desafio 2: Identificar inconsistências entre categorias e produtos
 -- Encontre: categorias sem produtos OU produtos sem categoria válida
 -- Mostre: categoria_id, nome da categoria, produto_id, nome do produto
 
@@ -549,10 +549,10 @@ SELECT * FROM tabela1 RIGHT JOIN tabela2 ON ...
 
 ---
 
-# AULA 33
+# AULA 46
 
 <details>
-<summary><strong>Expandir Aula 33</strong></summary>
+<summary><strong>Expandir Aula 46</strong></summary>
 
 ## SELF JOIN - Juntando Tabela com Ela Mesma
 
@@ -664,12 +664,12 @@ LEFT JOIN funcionarios g ON f.gerente_id = g.funcionario_id;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 33 - Desafio 1: Encontrar clientes que moram na mesma cidade
+-- Aula 46 - Desafio 1: Encontrar clientes que moram na mesma cidade
 -- Mostre: nome do cliente 1, nome do cliente 2, cidade
 -- Evite duplicatas e auto-comparação
 
 
--- Aula 33 - Desafio 2: Encontrar produtos da mesma categoria com preços similares
+-- Aula 46 - Desafio 2: Encontrar produtos da mesma categoria com preços similares
 -- Considere "similar" uma diferença menor que R$ 100
 -- Mostre: produto1, preco1, produto2, preco2, categoria_id, diferença de preço
 
@@ -681,10 +681,10 @@ LEFT JOIN funcionarios g ON f.gerente_id = g.funcionario_id;
 
 ---
 
-# AULA 34
+# AULA 47
 
 <details>
-<summary><strong>Expandir Aula 34</strong></summary>
+<summary><strong>Expandir Aula 47</strong></summary>
 
 ## Múltiplos JOINs na Mesma Consulta
 
@@ -835,12 +835,12 @@ LIMIT número                    -- 9º
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 34 - Desafio 1: Listar pedidos com nome do cliente, produtos comprados e categoria
+-- Aula 47 - Desafio 1: Listar pedidos com nome do cliente, produtos comprados e categoria
 -- Mostre: pedido_id, data_pedido, nome do cliente, nome do produto, categoria, quantidade
 -- Ordene por pedido_id
 
 
--- Aula 34 - Desafio 2: Criar relatório completo de vendas
+-- Aula 47 - Desafio 2: Criar relatório completo de vendas
 -- Mostre: pedido_id, cliente, cidade do cliente, produto, categoria,
 --         quantidade, valor unitário, subtotal (qtd * valor), forma de pagamento
 -- Apenas pedidos com status 'entregue'
@@ -908,7 +908,7 @@ LIMIT número                    -- 9º
 
 ---
 
-## Desafio Final do Módulo 6
+## Desafio Final do Módulo 9
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>

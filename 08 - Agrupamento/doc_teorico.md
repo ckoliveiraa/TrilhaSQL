@@ -1,13 +1,13 @@
-# Módulo 5 - Agrupamento - Material Didático
+# Módulo 8 - Agrupamento - Material Didático
 
 ## Objetivo do Módulo
 Dominar as técnicas de agrupamento de dados em SQL, aprendendo a usar GROUP BY para criar relatórios agregados e HAVING para filtrar grupos de resultados.
 
 ---
-# AULA 26
+# AULA 39
 
 <details>
-<summary><strong>Expandir Aula 26</strong></summary>
+<summary><strong>Expandir Aula 39</strong></summary>
 
 ## GROUP BY - Agrupando Dados
 
@@ -146,10 +146,10 @@ GROUP BY marca;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 26 - Desafio 1: Contar quantos produtos existem por categoria
+-- Aula 39 - Desafio 1: Contar quantos produtos existem por categoria
 
 
--- Aula 26 - Desafio 2: Calcular o valor total de pedidos por cliente
+-- Aula 39 - Desafio 2: Calcular o valor total de pedidos por cliente
 
 ```
 
@@ -159,10 +159,10 @@ GROUP BY marca;
 
 ---
 
-# AULA 27
+# AULA 40
 
 <details>
-<summary><strong>Expandir Aula 27</strong></summary>
+<summary><strong>Expandir Aula 40</strong></summary>
 
 ## GROUP BY com Múltiplas Colunas
 
@@ -302,10 +302,10 @@ Mas a ordem no ORDER BY afeta a visualização!
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 27 - Desafio 1: Contar quantos clientes existem por estado e cidade
+-- Aula 40 - Desafio 1: Contar quantos clientes existem por estado e cidade
 
 
--- Aula 27 - Desafio 2: Calcular o valor médio de pedidos por mês e ano
+-- Aula 40 - Desafio 2: Calcular o valor médio de pedidos por mês e ano
 
 ```
 
@@ -315,10 +315,10 @@ Mas a ordem no ORDER BY afeta a visualização!
 
 ---
 
-# AULA 28
+# AULA 41
 
 <details>
-<summary><strong>Expandir Aula 28</strong></summary>
+<summary><strong>Expandir Aula 41</strong></summary>
 
 ## HAVING - Filtrando Grupos
 
@@ -482,10 +482,10 @@ ORDER BY total_clientes DESC;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 28 - Desafio 1: Mostrar apenas categorias que tenham mais de 5 produtos
+-- Aula 41 - Desafio 1: Mostrar apenas categorias que tenham mais de 5 produtos
 
 
--- Aula 28 - Desafio 2: Mostrar apenas clientes que fizeram mais de 2 pedidos
+-- Aula 41 - Desafio 2: Mostrar apenas clientes que fizeram mais de 2 pedidos
 
 ```
 
@@ -573,7 +573,7 @@ HAVING AVG(nota) >= 4
 
 ---
 
-## Desafio Final do Módulo 5
+## Desafio Final do Módulo 8
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>

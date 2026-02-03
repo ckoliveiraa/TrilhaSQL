@@ -1,13 +1,13 @@
-# Módulo 4 - Funções de Agregação - Material Didático
+# Módulo 7 - Funções de Agregação - Material Didático
 
 ## Objetivo do Módulo
 Dominar as funções de agregação em SQL, aprendendo a contar, somar, calcular médias e encontrar valores mínimos e máximos em conjuntos de dados.
 
 ---
-# AULA 20
+# AULA 33
 
 <details>
-<summary><strong>Expandir Aula 20</strong></summary>
+<summary><strong>Expandir Aula 33</strong></summary>
 
 ## COUNT - Contando Registros
 
@@ -70,10 +70,10 @@ SELECT COUNT(*) FROM produtos WHERE preco > 500;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 20 - Desafio 1: Contar quantos produtos existem no banco
+-- Aula 33 - Desafio 1: Contar quantos produtos existem no banco
 
 
--- Aula 20 - Desafio 2: Contar quantos pedidos foram feitos em 2024
+-- Aula 33 - Desafio 2: Contar quantos pedidos foram feitos em 2024
 
 ```
 
@@ -83,10 +83,10 @@ SELECT COUNT(*) FROM produtos WHERE preco > 500;
 
 ---
 
-# AULA 21
+# AULA 34
 
 <details>
-<summary><strong>Expandir Aula 21</strong></summary>
+<summary><strong>Expandir Aula 34</strong></summary>
 
 ## COUNT DISTINCT - Contando Valores Únicos
 
@@ -151,10 +151,10 @@ SELECT COUNT(DISTINCT data_pedido) FROM pedidos;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 21 - Desafio 1: Contar quantas marcas diferentes de produtos existem
+-- Aula 34 - Desafio 1: Contar quantas marcas diferentes de produtos existem
 
 
--- Aula 21 - Desafio 2: Contar em quantas cidades diferentes temos clientes
+-- Aula 34 - Desafio 2: Contar em quantas cidades diferentes temos clientes
 
 ```
 
@@ -164,10 +164,10 @@ SELECT COUNT(DISTINCT data_pedido) FROM pedidos;
 
 ---
 
-# AULA 22
+# AULA 35
 
 <details>
-<summary><strong>Expandir Aula 22</strong></summary>
+<summary><strong>Expandir Aula 35</strong></summary>
 
 ## SUM - Somando Valores
 
@@ -241,10 +241,10 @@ SELECT SUM(valor_total) AS "Faturamento Total" FROM pedidos;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 22 - Desafio 1: Calcular o valor total de todos os pedidos
+-- Aula 35 - Desafio 1: Calcular o valor total de todos os pedidos
 
 
--- Aula 22 - Desafio 2: Calcular o estoque total de todos os produtos
+-- Aula 35 - Desafio 2: Calcular o estoque total de todos os produtos
 
 ```
 
@@ -254,10 +254,10 @@ SELECT SUM(valor_total) AS "Faturamento Total" FROM pedidos;
 
 ---
 
-# AULA 23
+# AULA 36
 
 <details>
-<summary><strong>Expandir Aula 23</strong></summary>
+<summary><strong>Expandir Aula 36</strong></summary>
 
 ## AVG - Calculando Média
 
@@ -341,10 +341,10 @@ SELECT AVG(valor_total) FROM pedidos WHERE status = 'entregue';
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 23 - Desafio 1: Calcular o preço médio dos produtos
+-- Aula 36 - Desafio 1: Calcular o preço médio dos produtos
 
 
--- Aula 23 - Desafio 2: Calcular o valor médio dos pedidos
+-- Aula 36 - Desafio 2: Calcular o valor médio dos pedidos
 
 ```
 
@@ -354,10 +354,10 @@ SELECT AVG(valor_total) FROM pedidos WHERE status = 'entregue';
 
 ---
 
-# AULA 24
+# AULA 37
 
 <details>
-<summary><strong>Expandir Aula 24</strong></summary>
+<summary><strong>Expandir Aula 37</strong></summary>
 
 ## MIN - Encontrando Mínimo
 
@@ -430,10 +430,10 @@ SELECT nome, preco FROM produtos ORDER BY preco ASC LIMIT 1;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 24 - Desafio 1: Encontrar o produto mais barato
+-- Aula 37 - Desafio 1: Encontrar o produto mais barato
 
 
--- Aula 24 - Desafio 2: Encontrar o pedido de menor valor
+-- Aula 37 - Desafio 2: Encontrar o pedido de menor valor
 
 ```
 
@@ -443,10 +443,10 @@ SELECT nome, preco FROM produtos ORDER BY preco ASC LIMIT 1;
 
 ---
 
-# AULA 25
+# AULA 38
 
 <details>
-<summary><strong>Expandir Aula 25</strong></summary>
+<summary><strong>Expandir Aula 38</strong></summary>
 
 ## MAX - Encontrando Máximo
 
@@ -527,10 +527,10 @@ FROM pedidos;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 25 - Desafio 1: Encontrar o produto mais caro
+-- Aula 38 - Desafio 1: Encontrar o produto mais caro
 
 
--- Aula 25 - Desafio 2: Encontrar o pedido de maior valor
+-- Aula 38 - Desafio 2: Encontrar o pedido de maior valor
 
 ```
 
@@ -594,7 +594,7 @@ FROM produtos;
 
 ---
 
-## Desafio Final do Módulo 4
+## Desafio Final do Módulo 7
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>

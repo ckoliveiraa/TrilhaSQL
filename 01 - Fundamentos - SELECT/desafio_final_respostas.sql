@@ -1,5 +1,5 @@
 -- ============================================
--- MÓDULO 2 - FUNDAMENTOS SELECT
+-- MÓDULO 1 - FUNDAMENTOS SELECT
 -- Respostas do Desafio Final
 -- ============================================
 

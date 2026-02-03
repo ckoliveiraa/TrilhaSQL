@@ -1,0 +1,26 @@
+### **Módulo 13: Window Functions (5 aulas)**
+
+**Aula 65: ROW_NUMBER - Numerando Linhas**
+
+- Desafio 1: Numerar produtos ordenados por preço
+- Desafio 2: Numerar pedidos de cada cliente por data
+
+**Aula 66: RANK - Ranking com Empates**
+
+- Desafio 1: Rankear produtos por preço (empatados ficam com mesmo número)
+- Desafio 2: Rankear clientes por total gasto
+
+**Aula 67: DENSE_RANK - Ranking Denso**
+
+- Desafio 1: Rankear produtos por avaliação média (sem pular números)
+- Desafio 2: Rankear categorias por número de produtos
+
+**Aula 68: PARTITION BY - Dividindo em Grupos**
+
+- Desafio 1: Numerar produtos dentro de cada categoria
+- Desafio 2: Rankear vendas por mês
+
+**Aula 69: LEAD e LAG - Acessando Linhas Adjacentes**
+
+- Desafio 1: Comparar preço de cada produto com o próximo produto
+- Desafio 2: Calcular diferença de valor entre pedidos consecutivos

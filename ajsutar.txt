@@ -1,0 +1,20 @@
+Excelente análise! Encontrei 11 problemas de sequência pedagógica. Aqui está o resumo:
+
+Problemas Críticos Identificados
+Gravidade	Módulo	Problema	Comando Usado	Deveria estar em
+🔴 CRÍTICO	M04	Mês por extenso	CASE WHEN	M06
+🔴 CRÍTICO	M06	Exemplos avançados	GROUP BY, INNER JOIN	M08, M09
+🟠 ALTO	M06	CASE com agregação	COUNT, SUM	M07
+🟠 ALTO	M08	Exemplos com JOINs	INNER JOIN	M09
+🟡 MÉDIO	M07	Desafios combinados	LEFT JOIN	M09
+Principais Correções Necessárias
+M04 (Funções de Data): Remove exemplos que usam CASE WHEN para traduzir mês (isso só é ensinado em M06)
+
+M06 (Condicionais): Remove ou marca como "avançado" os exemplos que usam:
+
+GROUP BY (ensinado em M08)
+INNER JOIN (ensinado em M09)
+Funções de agregação COUNT, SUM (ensinadas em M07)
+M08 (Agrupamento): Remove exemplos com INNER JOIN (ensinado apenas em M09)
+
+Quer que eu faça essas correções nos arquivos doc_teorico.md?

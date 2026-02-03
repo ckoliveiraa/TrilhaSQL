@@ -1,14 +1,14 @@
-# Módulo 8 - Subconsultas - Material Didático
+# Módulo 11 - Subconsultas - Material Didático
 
 ## Objetivo do Módulo
 Aprender a usar consultas dentro de outras consultas, uma técnica poderosa para resolver problemas complexos em SQL.
 
 ---
 
-# AULA 39
+# AULA 50
 
 <details>
-<summary><strong>Expandir Aula 39</strong></summary>
+<summary><strong>Expandir Aula 50</strong></summary>
 
 ## Subconsulta no WHERE
 
@@ -113,10 +113,10 @@ WHERE preco > (
 
 ---
 
-# AULA 40
+# AULA 51
 
 <details>
-<summary><strong>Expandir Aula 40</strong></summary>
+<summary><strong>Expandir Aula 51</strong></summary>
 
 ## Subconsulta no FROM (Derived Tables)
 
@@ -258,10 +258,10 @@ WHERE total_gasto > media_geral;
 
 ---
 
-# AULA 41
+# AULA 52
 
 <details>
-<summary><strong>Expandir Aula 41</strong></summary>
+<summary><strong>Expandir Aula 52</strong></summary>
 
 ## Subconsulta no SELECT (Scalar Subqueries)
 
@@ -415,10 +415,10 @@ FROM produtos p;
 
 ---
 
-# AULA 42
+# AULA 53
 
 <details>
-<summary><strong>Expandir Aula 42</strong></summary>
+<summary><strong>Expandir Aula 53</strong></summary>
 
 ## EXISTS - Verificando Existência
 

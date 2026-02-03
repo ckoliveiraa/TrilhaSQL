@@ -1,14 +1,14 @@
-# Módulo 7 - Condicionais - Material Didático
+# Módulo 6 - Condicionais - Material Didático
 
 ## Objetivo do Módulo
 Dominar o uso de expressões condicionais em SQL com CASE WHEN, permitindo criar lógica condicional diretamente nas consultas.
 
 ---
 
-# AULA 35
+# AULA 31
 
 <details>
-<summary><strong>Expandir Aula 35</strong></summary>
+<summary><strong>Expandir Aula 31</strong></summary>
 
 ## CASE WHEN - Condicionais Simples
 
@@ -162,10 +162,10 @@ ORDER BY
 
 ---
 
-# AULA 36
+# AULA 32
 
 <details>
-<summary><strong>Expandir Aula 36</strong></summary>
+<summary><strong>Expandir Aula 32</strong></summary>
 
 ## CASE WHEN com Múltiplas Condições
 

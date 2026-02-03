@@ -1,5 +1,5 @@
 -- ============================================
--- MÓDULO 3 - FILTROS AVANÇADOS
+-- MÓDULO 2 - FILTROS AVANÇADOS
 -- Respostas do Desafio Final
 -- ============================================
 
