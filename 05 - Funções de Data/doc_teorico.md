@@ -1,4 +1,4 @@
-# Módulo 4 - Funções de Data - Material Didático
+# Módulo 5 - Funções de Data - Material Didático
 
 ## Objetivo do Módulo
 Dominar as funções de manipulação de datas em SQL, aprendendo a extrair partes de datas, calcular diferenças entre datas, adicionar intervalos de tempo e formatar datas para exibição.
@@ -563,7 +563,7 @@ No próximo módulo, você aprenderá sobre:
 
 ---
 
-## Desafio Final do Módulo 4
+## Desafio Final do Módulo 5
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>
