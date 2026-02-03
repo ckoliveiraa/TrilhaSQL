@@ -1,4 +1,4 @@
-# Módulo 2 - Filtros Avançados - Material Didático
+# Módulo 3 - Filtros Avançados - Material Didático
 
 ## Objetivo do Módulo
 Aprofundar nas técnicas de filtragem de dados, utilizando operadores avançados como NOT, IN, BETWEEN e LIKE para criar consultas mais precisas e poderosas.
@@ -625,7 +625,7 @@ WHERE marca IN ('Samsung', 'Apple')
 
 ---
 
-## Desafio Final do Módulo 2
+## Desafio Final do Módulo 3
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>

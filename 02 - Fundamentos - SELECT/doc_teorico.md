@@ -1,4 +1,4 @@
-# Módulo 1 - Fundamentos SELECT - Material Didático
+# Módulo 2 - Fundamentos SELECT - Material Didático
 
 ## 🎯 Objetivo do Módulo
 Dominar os fundamentos da consulta de dados em SQL, aprendendo a selecionar, filtrar e organizar informações de forma eficiente.
@@ -807,7 +807,7 @@ SELECT * FROM produtos WHERE marca = 'Nike' ORDER BY preco LIMIT 10;
 
 ---
 
-## 🏆 Desafio Final do Módulo 1
+## 🏆 Desafio Final do Módulo 2
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>
