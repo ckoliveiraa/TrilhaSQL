@@ -395,7 +395,6 @@ SELECT colunas FROM tabela WHERE coluna LIKE 'padrão';
 | Caractere | Significado | Exemplo |
 |-----------|-------------|---------|
 | `%` | Zero ou mais caracteres | `'%ana%'` encontra "Banana", "Ana", "Cabana" |
-| `_` | Exatamente um caractere | `'_asa'` encontra "Casa", "Masa", "Rasa" |
 
 ## Padrões com %
 
@@ -480,17 +479,6 @@ SELECT * FROM clientes WHERE email NOT LIKE '%@gmail.com';
 
 Combinando os wildcards `%` e `_`, você pode criar padrões de busca muito específicos e poderosos.
 
-## O caractere % (porcentagem)
-
-Representa **zero, um ou múltiplos caracteres** em qualquer posição.
-
-| Padrão | Descrição | Exemplos que correspondem |
-|--------|-----------|---------------------------|
-| `'Ana%'` | Começa com "Ana" | Ana, Anabel, Anastacia |
-| `'%silva'` | Termina com "silva" | Silva, Da Silva, José silva |
-| `'%art%'` | Contém "art" em qualquer lugar | Artigo, Cartão,Epartida |
-| `'%'` | Qualquer texto (inclusive vazio) | Tudo |
-
 ## O caractere _ (underline)
 
 Representa **exatamente um único caractere** na posição especificada.
@@ -529,27 +517,6 @@ SELECT * FROM clientes WHERE email LIKE '%.___.%';
 SELECT * FROM veiculos WHERE placa LIKE '___-____';
 ```
 
-## Escapando caracteres especiais
-
-```sql
--- Se precisar buscar o próprio % ou _
--- Use ESCAPE para definir um caractere de escape
-
--- Buscar textos que contêm "50%"
-SELECT * FROM produtos WHERE descricao LIKE '%50\%%' ESCAPE '\';
-```
-
-## Dicas de Performance
-
-```sql
--- BOM: Padrão no final (usa índice)
-WHERE nome LIKE 'João%'
-
--- RUIM: Padrão no início (não usa índice, mais lento)
-WHERE nome LIKE '%Silva'
-
--- Se precisar buscar no meio, considere Full-Text Search para tabelas grandes
-```
 
 ## Desafio
 
@@ -557,10 +524,11 @@ WHERE nome LIKE '%Silva'
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 17 - Desafio 1: Mostrar todos os métodos de pagamento que comecem com 'cartao'
+
+-- Aula 17 - Desafio 1: Mostrar clientes cujo estado comece com a letra 'S'
 
 
--- Aula 17 - Desafio 2: Mostrar os status de pedido que terminem com a letra 'o'
+-- Aula 17 - Desafio 2: Mostrar clientes com email de dominio 'example' ou 'exemple' com o final .net.
 
 ```
 
