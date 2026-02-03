@@ -486,7 +486,7 @@ Representa **exatamente um único caractere** na posição especificada.
 | Padrão | Descrição | Exemplos que correspondem |
 |--------|-----------|---------------------------|
 | `'_asa'` | 4 letras, terminando em "asa" | Casa, Masa, Rasa |
-| `'A__a'` | 4 letras, A no início, a no fim | Ana, Aula, Área |
+| `'A__a'` | 4 letras, A no início, a no fim | Anna, Aula, Área |
 | `'___'` | Exatamente 3 caracteres | São, Rio, Abc |
 | `'S_o Paulo'` | S + 1 char + o Paulo | São Paulo |
 
