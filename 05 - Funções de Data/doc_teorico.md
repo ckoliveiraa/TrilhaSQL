@@ -1,4 +1,4 @@
-# Módulo 5 - Funções de Data - Material Didático
+# Módulo 5 - Funções de Data
 
 ## Objetivo do Módulo
 Dominar as funções de manipulação de datas em SQL, aprendendo a extrair partes de datas, calcular diferenças entre datas, adicionar intervalos de tempo e formatar datas para exibição.
