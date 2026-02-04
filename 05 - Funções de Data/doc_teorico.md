@@ -606,14 +606,12 @@ Use seus conhecimentos de funções de data para resolver estes desafios.
 -- Ordene pelos mais velhos primeiro
 
 
--- Desafio Final 5 (Boss Final!): Análise de Prazos
--- Para cada pedido com data_entrega preenchida, mostre:
+-- Desafio Final 5 (Boss Final!): Relatório Completo de Pedidos
+-- Crie um relatório detalhado que mostre:
 -- - pedido_id
--- - data_pedido e data_entrega formatadas
--- - dias para entrega
--- - prazo estimado (data_pedido + 7 dias)
--- - diferença entre entrega real e prazo estimado
--- Dica: Use operações com INTERVAL e subtração de datas
+-- - data_pedido formatada como "Dia da semana, DD de Mês de YYYY"
+-- - há quantos dias o pedido foi realizado
+-- - data_entrega formatada (se existir)
 
 ```
 
