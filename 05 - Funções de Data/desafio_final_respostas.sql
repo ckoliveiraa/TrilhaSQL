@@ -64,7 +64,33 @@ SELECT
 FROM clientes;
 
 
--- Desafio Final 5 (Boss Final!): Relatório Completo de Pedidos
+-- Exiba o nome do cliente, a data de nascimento, o mês atual e o mês de aniversário.
+-- Em seguida, calcule a diferença em meses entre o mês atual e o mês de nascimento do cliente.
+SELECT
+    nome,
+    data_nascimento,
+    EXTRACT(MONTH FROM data_nascimento) AS mes_niver,
+    EXTRACT(MONTH FROM current_date) AS mes_atual,
+    EXTRACT(MONTH FROM data_nascimento)
+      - EXTRACT(MONTH FROM current_date) AS diferenca_meses
+FROM clientes;
+
+-- alternativa
+SELECT
+    nome,
+    data_nascimento,
+    EXTRACT(
+        MONTH FROM AGE(
+            date_trunc('month', data_nascimento),
+            date_trunc('month', current_date)
+        )
+    ) * -1 AS meses_para_aniversario
+FROM clientes;
+
+
+
+
+-- Desafio Final 6 (Boss Final!): Relatório Completo de Pedidos
 -- Crie um relatório detalhado que mostre:
 -- - pedido_id
 -- - data_pedido formatada como "Dia da semana, DD de Mês de YYYY"

@@ -433,8 +433,8 @@ FROM pedidos;
 -- Exiba pedido_id, data_pedido, data_entrega e dias_para_entrega
 
 
--- Aula 27 - Desafio 2: Calcular atraso nas entregas
--- Considere prazo de 7 dias. Mostre apenas pedidos atrasados e quantos dias de atraso
+-- Aula 27 - Desafio 2: Calcular quantos dias após o início do mês o pedido foi feito
+-- Exiba pedido_id, data_pedido, início do mês e dias desde o início do mês
 
 ```
 
@@ -633,6 +633,8 @@ Use seus conhecimentos de funções de data para resolver estes desafios.
 -- - idade em anos (use EXTRACT com AGE)
 -- Ordene pelos mais velhos primeiro
 
+-- Exiba o nome do cliente, a data de nascimento, o mês atual e o mês de aniversário.
+-- Em seguida, calcule a diferença em meses entre o mês atual e o mês de nascimento do cliente.
 
 -- Desafio Final 5 (Boss Final!): Relatório Completo de Pedidos
 -- Crie um relatório detalhado que mostre:

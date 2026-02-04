@@ -86,16 +86,14 @@ FROM pedidos
 WHERE status = 'entregue';
 
 
--- Aula 27 - Desafio 2: Calcular atraso nas entregas
--- Considere prazo de 7 dias. Mostre apenas pedidos possivelmente atrasados
+-- Aula 27 - Desafio 2: Calcular quantos dias após o início do mês o pedido foi feito
+-- Exiba pedido_id, data_pedido, início do mês e dias desde o início do mês
 SELECT
     pedido_id,
     data_pedido,
-    data_pedido + INTERVAL '7 days' AS prazo_maximo,
-    CURRENT_DATE - (data_pedido + INTERVAL '7 days')::DATE AS dias_atraso
-FROM pedidos
-WHERE status NOT IN ('entregue', 'cancelado')
-  AND (data_pedido + INTERVAL '7 days')::DATE < CURRENT_DATE;
+    DATE_TRUNC('month', data_pedido) AS inicio_mes,
+    data_pedido - DATE_TRUNC('month', data_pedido) AS dias_desde_inicio_mes
+FROM pedidos;
 
 
 -- =================================================================
