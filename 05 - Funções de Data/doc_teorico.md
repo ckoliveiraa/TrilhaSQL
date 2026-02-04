@@ -84,8 +84,8 @@ SELECT AGE(CURRENT_DATE, '1990-05-20');
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 24 - Desafio 1: Calcular quantos dias se passaram desde o primeiro pedido
--- Dica: Use MIN(data_pedido) e CURRENT_DATE
+-- Aula 24 - Desafio 1: Calcular quantos dias se passaram desde cada pedido
+-- Exiba pedido_id, data_pedido, data atual e dias desde o pedido
 
 
 -- Aula 24 - Desafio 2: Mostrar idade aproximada dos clientes

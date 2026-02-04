@@ -6,21 +6,24 @@
 -- AULA 24 - CURRENT_DATE - Data Atual
 -- =================================================================
 
--- Aula 24 - Desafio 1: Calcular quantos dias se passaram desde o primeiro pedido
--- Dica: Use MIN(data_pedido) e CURRENT_DATE
+-- Aula 24 - Desafio 1: Calcular quantos dias se passaram desde cada pedido
+-- Exiba pedido_id, data_pedido, data atual e dias desde o pedido
 SELECT
-    MIN(data_pedido) AS primeiro_pedido,
+    pedido_id,
+    data_pedido,
     CURRENT_DATE AS data_atual,
-    CURRENT_DATE - MIN(data_pedido) AS dias_desde_primeiro_pedido
+    CURRENT_DATE - data_pedido AS dias_desde_pedido
 FROM pedidos;
 
 
 -- Aula 24 - Desafio 2: Mostrar idade aproximada dos clientes
--- Exiba o nome e data atual (tabela nao possui data_nascimento)
+-- Exiba o nome e data atual e a idade aproximada (em anos)
 SELECT
     nome,
-    CURRENT_DATE AS data_atual
-FROM clientes;
+    CURRENT_DATE AS data_atual,
+    AGE(CURRENT_DATE, data_nascimento) AS idade_aproximada
+FROM clientes
+WHERE data_nascimento IS NOT NULL;
 
 
 -- =================================================================
