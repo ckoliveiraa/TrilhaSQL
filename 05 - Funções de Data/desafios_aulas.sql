@@ -47,8 +47,7 @@ SELECT
     EXTRACT(YEAR FROM data_pedido) AS ano,
     EXTRACT(MONTH FROM data_pedido) AS mes,
     EXTRACT(DAY FROM data_pedido) AS dia
-FROM pedidos
-ORDER BY data_pedido;
+FROM pedidos;
 
 
 -- =================================================================

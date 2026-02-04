@@ -202,11 +202,11 @@ WHERE EXTRACT(DOW FROM data_pedido) IN (0, 6);
 <details>
 <summary><strong>Expandir Aula 26</strong></summary>
 
-## Adicionando e Subtraindo Tempo
+## Interval - Adicionando e Subtraindo Tempo
 
 ## O que é?
 
-Em PostgreSQL, você pode adicionar ou subtrair intervalos de tempo de datas usando **INTERVAL** ou operadores aritméticos.
+Em PostgreSQL, você pode adicionar ou subtrair intervalos de tempo de datas usando `INTERVAL` ou operadores aritméticos.
 
 ## Sintaxe
 
