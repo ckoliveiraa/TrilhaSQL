@@ -380,20 +380,48 @@ FROM pedidos
 WHERE data_entrega IS NOT NULL;
 ```
 
-> **Nota:** Para classificar entregas como "Atrasado" ou "No Prazo", você usará `CASE WHEN` no **Módulo 6 - Condicionais**.
+> **Nota:** Para classificar entregas como "Atrasado" ou "No Prazo", você usará `CASE WHEN` no **Módulo 7 - Condicionais**.
 
-## Funções Úteis
+## Função Útil: DATE_TRUNC
+
+A função `DATE_TRUNC` "trunca" uma data para o início de um período específico. Pense nela como um "arredondamento para baixo" da data.
+
+### Sintaxe
 
 ```sql
--- DATE_TRUNC - Truncar para início do período
+DATE_TRUNC('período', coluna_data)
+```
+
+### Períodos Disponíveis
+
+| Período | Descrição | Exemplo (2024-07-15) |
+|---------|-----------|----------------------|
+| `'day'` | Início do dia | 2024-07-15 00:00:00 |
+| `'week'` | Início da semana (segunda) | 2024-07-15 |
+| `'month'` | Início do mês | 2024-07-01 |
+| `'year'` | Início do ano | 2024-01-01 |
+
+### Exemplos Práticos
+
+```sql
+-- Truncar para o início do mês
 SELECT DATE_TRUNC('month', data_pedido) AS inicio_mes
 FROM pedidos;
 -- 2024-07-15 → 2024-07-01
+-- 2024-07-28 → 2024-07-01
 
+-- Truncar para o início do ano
 SELECT DATE_TRUNC('year', data_pedido) AS inicio_ano
 FROM pedidos;
 -- 2024-07-15 → 2024-01-01
+-- 2024-03-10 → 2024-01-01
 ```
+
+### Quando usar?
+
+- Para agrupar datas por mês ou ano em relatórios
+- Para comparar se duas datas estão no mesmo período
+- Para calcular o início de um período a partir de qualquer data
 
 ## Desafio
 

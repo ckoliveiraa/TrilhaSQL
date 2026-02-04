@@ -67,8 +67,8 @@ FROM pedidos;
 -- Exiba nome e a data daqui a 30 dias
 SELECT
     nome,
-    CURRENT_DATE AS data_atual,
-    CURRENT_DATE + INTERVAL '30 days' AS data_mais_30_dias
+    data_nascimento,
+    data_nascimento + INTERVAL '30 days' AS data_mais_30_dias
 FROM clientes;
 
 
