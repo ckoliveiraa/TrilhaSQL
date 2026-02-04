@@ -479,6 +479,84 @@ SELECT TO_CHAR(data_coluna, 'formato') FROM tabela;
 | `SS` | Segundos | 45 |
 | `AM`/`PM` | Indicador AM/PM | PM |
 
+## Exibindo Nomes de Meses e Dias
+
+Os códigos `Month` e `Day` permitem exibir o nome por extenso (em inglês) ao invés de números.
+
+### Month - Nome do Mês
+
+```sql
+-- Exibir o nome do mês
+SELECT TO_CHAR(data_pedido, 'Month') AS nome_mes FROM pedidos;
+-- Resultado: "January", "February", "March", etc.
+
+-- Combinando com dia e ano
+SELECT TO_CHAR(data_pedido, 'DD Month YYYY') FROM pedidos;
+-- Resultado: "15 July 2024"
+```
+
+### Day - Nome do Dia da Semana
+
+```sql
+-- Exibir o nome do dia da semana
+SELECT TO_CHAR(data_pedido, 'Day') AS dia_semana FROM pedidos;
+-- Resultado: "Monday", "Tuesday", "Wednesday", etc.
+
+-- Combinando com data
+SELECT TO_CHAR(data_pedido, 'Day, DD/MM/YYYY') FROM pedidos;
+-- Resultado: "Monday, 15/07/2024"
+```
+
+### Variações de Month e Day
+
+| Código | Descrição | Exemplo |
+|--------|-----------|---------|
+| `Month` | Mês completo | January |
+| `Mon` | Mês abreviado (3 letras) | Jan |
+| `Day` | Dia da semana completo | Monday |
+| `Dy` | Dia abreviado (3 letras) | Mon |
+
+## O Prefixo TM (Trim Mode)
+
+O prefixo `TM` remove os espaços extras que o PostgreSQL adiciona automaticamente aos nomes de meses e dias.
+
+### Por que usar TM?
+
+Por padrão, `Month` e `Day` retornam strings com tamanho fixo (9 caracteres), preenchidas com espaços:
+
+```sql
+-- Sem TM: adiciona espaços para completar 9 caracteres
+SELECT TO_CHAR(data_pedido, 'Month') FROM pedidos;
+-- Resultado: "July     " (com 5 espaços extras)
+
+-- Com TM: remove os espaços extras
+SELECT TO_CHAR(data_pedido, 'TMMonth') FROM pedidos;
+-- Resultado: "July" (sem espaços)
+```
+
+### Códigos com TM
+
+| Código | Descrição | Exemplo |
+|--------|-----------|---------|
+| `TMMonth` | Mês sem espaços extras | July |
+| `TMDay` | Dia da semana sem espaços | Monday |
+| `TMMon` | Mês abreviado sem espaços | Jul |
+| `TMDy` | Dia abreviado sem espaços | Mon |
+
+### Exemplo Prático
+
+```sql
+-- Sem TM: espaços aparecem no resultado
+SELECT TO_CHAR(data_pedido, 'Day, DD Month YYYY') FROM pedidos;
+-- Resultado: "Monday   , 15 July      2024"
+
+-- Com TM: resultado limpo
+SELECT TO_CHAR(data_pedido, 'TMDay, DD TMMonth YYYY') FROM pedidos;
+-- Resultado: "Monday, 15 July 2024"
+```
+
+> **Dica:** Sempre use o prefixo `TM` quando precisar concatenar nomes de meses ou dias com outros textos para evitar espaços indesejados.
+
 ## Exemplos Práticos
 
 ```sql

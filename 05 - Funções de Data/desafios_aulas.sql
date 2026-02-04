@@ -81,7 +81,8 @@ FROM clientes;
 SELECT
     pedido_id,
     data_pedido,
-    CURRENT_DATE - data_pedido AS dias_desde_pedido
+    data_entrega_realizada AS data_entrega,
+    data_entrega_realizada - data_pedido AS dias_para_entrega
 FROM pedidos
 WHERE status = 'entregue';
 
@@ -105,7 +106,7 @@ FROM pedidos;
 SELECT
     pedido_id,
     data_pedido,
-    TO_CHAR(data_pedido, 'DD/MM/YYYY') AS data_formatada
+    TO_CHAR(data_pedido, 'DD-MM-YYYY') AS data_formatada
 FROM pedidos;
 
 

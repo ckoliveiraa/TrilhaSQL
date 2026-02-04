@@ -87,9 +87,6 @@ SELECT
     ) * -1 AS meses_para_aniversario
 FROM clientes;
 
-
-
-
 -- Desafio Final 6 (Boss Final!): Relatório Completo de Pedidos
 -- Crie um relatório detalhado que mostre:
 -- - pedido_id
