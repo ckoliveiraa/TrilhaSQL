@@ -1,4 +1,4 @@
-# Módulo 3 - Funções de String - Material Didático
+# Módulo 4 - Funções de String - Material Didático
 
 ## Objetivo do Módulo
 Dominar as principais funções de manipulação de texto em SQL para limpar, formatar e extrair informações de strings.
@@ -295,7 +295,38 @@ SELECT LENGTH(coluna_texto) AS quantidade_caracteres FROM tabela;
 
 ---
 
-## Desafio Final do Módulo 3
+
+## Resumo das Aulas
+
+| Aula | Função | Descrição | Sintaxe Básica |
+|------|--------|-----------|----------------|
+| 18 | `CONCAT` | Une duas ou mais strings em uma única string | `CONCAT(string1, string2, ...)` |
+| 19 | `UPPER` | Converte todos os caracteres para maiúsculas | `UPPER(coluna_texto)` |
+| 20 | `LOWER` | Converte todos os caracteres para minúsculas | `LOWER(coluna_texto)` |
+| 21 | `SUBSTRING` | Extrai uma parte específica de uma string | `SUBSTRING(coluna FROM pos FOR qtd)` |
+| 22 | `TRIM` | Remove espaços do início e/ou fim da string | `TRIM(coluna)` |
+| 23 | `LENGTH` | Retorna o número de caracteres da string | `LENGTH(coluna_texto)` |
+
+---
+
+## Checklist de Aprendizado
+
+Antes de avançar, verifique se você consegue responder às seguintes perguntas:
+
+- [ ] Qual função uso para juntar o nome e sobrenome de um cliente em uma única coluna?
+- [ ] Como faço para padronizar todos os emails em letras minúsculas?
+- [ ] Qual função converte texto para MAIÚSCULAS?
+- [ ] Como extraio apenas os 5 primeiros caracteres de uma string?
+- [ ] Qual função remove espaços em branco no início e no fim de um texto?
+- [ ] Como descubro quantos caracteres tem o nome de um produto?
+- [ ] Qual a diferença entre `LTRIM`, `RTRIM` e `TRIM`?
+- [ ] A posição inicial do `SUBSTRING` começa em 0 ou 1?
+- [ ] Consigo combinar múltiplas funções de string em uma única consulta?
+- [ ] Sei quando usar cada função para limpar e formatar dados?
+
+---
+
+## Desafio Final do Módulo 4
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>
