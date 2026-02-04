@@ -618,7 +618,7 @@ FROM pedidos;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 28 - Desafio 1: Formatar data_pedido como "DD/MM/YYYY"
+-- Aula 28 - Desafio 1: Formatar data_pedido como "DD-MM-YYYY"
 -- Exiba pedido_id e a data formatada
 
 
