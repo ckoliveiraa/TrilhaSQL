@@ -186,8 +186,8 @@ WHERE EXTRACT(DOW FROM data_pedido) IN (0, 6);
 -- Exiba o pedido_id, data_pedido e o mês
 
 
--- Aula 25 - Desafio 2: Contar pedidos por ano
--- Agrupe os pedidos por ano e conte quantos foram feitos em cada ano
+-- Aula 25 - Desafio 2: Extrair ano, mes e dia de cada pedido
+-- Exiba pedido_id, data_pedido, ano, mes e dia separadamente
 
 ```
 
