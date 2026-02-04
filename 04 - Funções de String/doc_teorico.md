@@ -237,7 +237,9 @@ SELECT RTRIM(coluna) FROM tabela; -- Ou TRIM(TRAILING ' ' FROM coluna)
 
 
 -- Aula 22 - Desafio 2: Remover espaços de emails antes de comparar
--- Encontre clientes cujo email, após a limpeza de espaços, seja 'exemplo@email.com'.
+-- Encontre os clientes cujo email, após a remoção dos espaços em branco
+-- no início e no final do texto, comece com a letra 'c' e termine com '.com'.
+
 
 
 ```

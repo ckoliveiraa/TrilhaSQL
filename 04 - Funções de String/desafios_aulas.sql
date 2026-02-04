@@ -70,29 +70,23 @@ FROM categorias;
 -- AULA 21 - SUBSTRING - Extraindo Parte do Texto
 -- =================================================================
 
--- Aula 21 - Desafio 1: Extrair os primeiros 10 caracteres do nome dos clientes
--- Usando SUBSTRING com posicao fixa
+-- Aula 21 - Desafio 1: Extrair apenas o primeiro nome dos clientes
+-- Dica: Use a função POSITION(' ' IN nome) para encontrar o primeiro espaço.
 SELECT
     nome AS nome_completo,
-    SUBSTRING(nome FROM 1 FOR 10) AS inicio_nome
+    SUBSTRING(nome FROM 1 FOR POSITION(' ' IN nome) - 1) AS primeiro_nome
 FROM clientes;
-
--- Alternativa: Extrair caracteres a partir de uma posicao especifica
-SELECT
-    nome AS nome_completo,
-    SUBSTRING(nome FROM 1 FOR 5) AS primeiros_5_chars
-FROM clientes;
-
 
 -- Aula 21 - Desafio 2: Extrair o DDD dos telefones dos clientes
--- Considerando formato '(XX) YYYYY-ZZZZ'
+-- Considerando formato '(XXX) YYYYY-ZZZZ'
 SELECT
     nome,
     telefone,
-    SUBSTRING(telefone FROM 2 FOR 2) AS ddd
+    SUBSTRING(telefone FROM 2 FOR 3) AS ddd
 FROM clientes
 WHERE telefone IS NOT NULL
   AND telefone LIKE '(%)%';
+
 
 
 -- =================================================================
@@ -103,17 +97,17 @@ WHERE telefone IS NOT NULL
 -- Suponha que alguns produtos foram cadastrados com espacos no inicio ou fim.
 SELECT
     nome AS nome_original,
-    TRIM(nome) AS nome_limpo,
-    LENGTH(nome) AS tamanho_original,
-    LENGTH(TRIM(nome)) AS tamanho_limpo
+    TRIM(nome) AS nome_limpo
 FROM produtos;
 
 
--- Aula 22 - Desafio 2: Remover espacos de emails antes de comparar
--- Encontre clientes cujo email, apos a limpeza de espacos, seja 'exemplo@email.com'.
+-- Aula 22 - Desafio 2: Remover espaços de emails antes de comparar
+-- Encontre os clientes cujo email, após a remoção dos espaços em branco
+-- no início e no final do texto, comece com a letra 'c' e termine com '.com'.
+
 SELECT *
 FROM clientes
-WHERE TRIM(email) = 'exemplo@email.com';
+WHERE TRIM(email) LIKE 'c%.com';
 
 
 -- =================================================================
