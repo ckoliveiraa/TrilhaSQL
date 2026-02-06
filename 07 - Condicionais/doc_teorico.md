@@ -345,8 +345,6 @@ CASE avalia condições de CIMA para BAIXO
 - [ ] Sei combinar múltiplas condições com AND/OR
 - [ ] Sei criar colunas calculadas condicionalmente
 - [ ] Consigo usar CASE com ORDER BY para ordenação personalizada
-- [ ] Entendo quando usar COALESCE vs CASE para NULLs
-- [ ] Sei usar NULLIF para evitar divisão por zero
 
 ---
 
