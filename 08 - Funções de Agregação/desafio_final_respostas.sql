@@ -1,5 +1,5 @@
 -- ============================================
--- MÓDULO 7 - FUNÇÕES DE AGREGAÇÃO
+-- MÓDULO 8 - FUNÇÕES DE AGREGAÇÃO
 -- Respostas do Desafio Final
 -- ============================================
 

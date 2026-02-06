@@ -1,4 +1,4 @@
-# Módulo 7 - Funções de Agregação - Material Didático
+# Módulo 8 - Funções de Agregação - Material Didático
 
 ## Objetivo do Módulo
 Dominar as funções de agregação em SQL, aprendendo a contar, somar, calcular médias e encontrar valores mínimos e máximos em conjuntos de dados.
@@ -594,7 +594,7 @@ FROM produtos;
 
 ---
 
-## Desafio Final do Módulo 7
+## Desafio Final do Módulo 8
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>
