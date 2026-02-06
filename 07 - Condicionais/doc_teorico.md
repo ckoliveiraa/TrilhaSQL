@@ -43,7 +43,7 @@ CASE avalia as condições em ORDEM:
 
 ## Exemplos Práticos
 
-**1. Classificar produtos por preço:**
+**Classificar produtos por preço:**
 ```sql
 SELECT
     nome,
@@ -53,65 +53,6 @@ SELECT
         WHEN preco <= 500 THEN 'Médio'
         ELSE 'Caro'
     END AS classificacao
-FROM produtos;
-```
-
-**2. Status legível dos pedidos:**
-```sql
-SELECT
-    pedido_id,
-    data_pedido,
-    status,
-    CASE
-        WHEN status = 'pendente' THEN 'Aguardando Processamento'
-        WHEN status = 'processando' THEN 'Em Preparação'
-        WHEN status = 'enviado' THEN 'A Caminho'
-        WHEN status = 'entregue' THEN 'Entregue com Sucesso'
-        WHEN status = 'cancelado' THEN 'Pedido Cancelado'
-        ELSE 'Status Desconhecido'
-    END AS status_descritivo
-FROM pedidos;
-```
-
-**3. Calcular idade a partir da data de nascimento:**
-```sql
-SELECT
-    nome,
-    data_nascimento,
-    EXTRACT(YEAR FROM AGE(data_nascimento)) AS idade,
-    CASE
-        WHEN EXTRACT(YEAR FROM AGE(data_nascimento)) < 18 THEN 'Menor de idade'
-        WHEN EXTRACT(YEAR FROM AGE(data_nascimento)) < 30 THEN 'Jovem'
-        WHEN EXTRACT(YEAR FROM AGE(data_nascimento)) < 50 THEN 'Adulto'
-        ELSE 'Sênior'
-    END AS faixa_etaria
-FROM clientes;
-```
-
-**4. Indicador de estoque:**
-```sql
-SELECT
-    nome,
-    estoque,
-    CASE
-        WHEN estoque = 0 THEN 'Sem Estoque'
-        WHEN estoque < 10 THEN 'Estoque Baixo'
-        WHEN estoque < 50 THEN 'Estoque Normal'
-        ELSE 'Estoque Alto'
-    END AS situacao_estoque
-FROM produtos;
-```
-
-**5. CASE com cálculos:**
-```sql
-SELECT
-    nome,
-    preco,
-    CASE
-        WHEN preco < 100 THEN preco * 0.95  -- 5% desconto
-        WHEN preco < 500 THEN preco * 0.90  -- 10% desconto
-        ELSE preco * 0.85                    -- 15% desconto
-    END AS preco_promocional
 FROM produtos;
 ```
 
