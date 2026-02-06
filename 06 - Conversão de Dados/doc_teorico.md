@@ -98,8 +98,8 @@ FROM produtos;
 ```sql
 -- Número para texto em consultas
 SELECT
-    'Produto #' || CAST(produto_id AS VARCHAR) AS codigo,
-    'R$ ' || CAST(preco AS VARCHAR) AS preco_formatado
+    CONCAT('Produto #', CAST(produto_id AS VARCHAR)) AS codigo,
+    CONCAT('R$ ', CAST(preco AS VARCHAR)) AS preco_formatado
 FROM produtos;
 -- Resultado: 'Produto #15' | 'R$ 199.90'
 
@@ -371,11 +371,11 @@ FROM clientes;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 30 - Desafio 2: Substituir comentários nulos por "Sem comentarios"
+-- Aula 30 - Desafio 1: Substituir comentários nulos por "Sem comentarios"
 -- Exiba o ID da avaliação, o ID do cliente e o comentário tratado
 
 
--- Aula 30 - Desafio 4: Simular correção de pedido com erro de sistema
+-- Aula 30 - Desafio 2: Simular correção de pedido com erro de sistema
 -- Exiba o pedido 7 com status "cancelado" e data de entrega realizada ajustada para NULL
 
 ```

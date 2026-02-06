@@ -11,7 +11,7 @@
 -- - email (ou "Não informado" se nulo)
 
 SELECT
-    'CLI-' || CAST(cliente_id AS VARCHAR) AS codigo_cliente,
+    CONCAT('CLI-', CAST(cliente_id AS VARCHAR)) AS codigo_cliente,
     nome,
     COALESCE(telefone, 'Não informado') AS telefone,
     COALESCE(email, 'Não informado') AS email
@@ -29,7 +29,7 @@ SELECT
     nome,
     preco AS preco_original,
     CAST(preco AS INTEGER) AS preco_inteiro,
-    'R$ ' || CAST(preco AS VARCHAR) AS preco_formatado
+    CONCAT('R$ ', CAST(preco AS VARCHAR)) AS preco_formatado
 FROM produtos;
 
 
