@@ -1,4 +1,4 @@
-# Módulo 6 - Condicionais - Material Didático
+# Módulo 7 - Condicionais - Material Didático
 
 ## Objetivo do Módulo
 Dominar o uso de expressões condicionais em SQL com CASE WHEN, permitindo criar lógica condicional diretamente nas consultas.
@@ -153,8 +153,22 @@ ORDER BY
 <details>
 <summary><strong>Ver Desafios</strong></summary>
 
-1. Classificar produtos como "Barato" (< R$100), "Médio" (R$100-500) ou "Caro" (> R$500)
-2. Classificar clientes por faixa etária: "Jovem" (< 30), "Adulto" (30-50), "Sênior" (> 50)
+
+```sql
+
+ -- Aula 31 - Desafio 1: Classificar produtos como "Barato" (< R$250), "Medio" (R$250-1000) ou "Caro" (> R$1000)
+
+
+-- Aula 31 - Desafio 2: Classificação de clientes por faixa etária
+-- Utilize a data de nascimento para calcular a idade dos clientes
+-- e classifique cada um em uma faixa etária, conforme as regras abaixo:
+--
+-- Jovem   → idade menor que 30 anos
+-- Adulto  → idade entre 30 e 50 anos
+-- Senior  → idade maior que 50 anos
+--
+-- Exiba: nome, data_nascimento, idade calculada e faixa_etaria.
+```
 
 </details>
 
@@ -331,8 +345,41 @@ FROM resumo;
 <details>
 <summary><strong>Ver Desafios</strong></summary>
 
-1. Criar coluna "Urgência" baseado em: estoque < 10 = "Crítico", < 30 = "Baixo", >= 30 = "OK"
-2. Classificar pedidos por frete: 0 = "Grátis", < 20 = "Econômico", >= 20 = "Normal"
+
+```sql
+-- Aula 32 - Desafio 1: Definir status de produtos (Liquidação ou Reposição)
+--
+-- Neste desafio, você deve analisar os produtos com base
+-- no preço e na quantidade em estoque.
+--
+-- Regras:
+-- 1. Se o estoque for alto E o preço for alto,
+--    o produto deve receber o status "Liquidação".
+-- 2. Caso contrário, o produto deve receber o status "Reposição".
+--
+-- Considere:
+-- estoque alto → estoque >= 100
+-- preço alto   → preco >= 2000
+--
+-- Utilize a estrutura CASE para criar a coluna status_produto.
+-- Exiba: produto_id, nome, preco, estoque e status_produto.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-- Aula 32 - Desafio 2: Verificando o status de entrega dos pedidos
+--
+-- Neste desafio, você deve analisar os pedidos e identificar
+-- se eles foram entregues, não entregues ou cancelados.
+--
+-- Regras:
+-- 1. Se o status do pedido for 'cancelado', o resultado deve ser "Cancelado".
+-- 2. Se o status estiver em ('em_separacao', 'pendente', 'confirmado', 'enviado')
+--    E a coluna data_entrega_realizada for NULL, o pedido deve ser classificado como "Não entregue".
+-- 3. Se o status for 'entregue' OU a data_entrega_realizada não for NULL,
+--    o pedido deve ser classificado como "Entregue".
+--
+-- Utilize a estrutura CASE para criar a coluna status_entrega.
+-- Exiba: pedido_id, status, data_entrega_prevista, data_entrega_realizada e status_entrega.
+```
 
 </details>
 
@@ -399,29 +446,28 @@ Usando seus conhecimentos de CASE WHEN, resolva os seguintes problemas:
 - Preço: "Econômico" (< R$100), "Padrão" (R$100-500), "Premium" (> R$500)
 - Estoque: "Crítico" (< 10), "Baixo" (10-29), "Normal" (30-99), "Alto" (>= 100)
 
-**Desafio 2:** Crie uma coluna que mostre a "prioridade de reposição":
-- "URGENTE" - estoque = 0 E preço > 500
-- "ALTA" - estoque < 5
-- "MÉDIA" - estoque < 20
-- "BAIXA" - estoque >= 20
+**Desafio 2:** Crie um relatório de produtos com classificação combinada:
+- Se o produto é de "Alta Prioridade" (preço > R$300 E estoque < 20)
+- Se é "Promoção Possível" (preço > R$200 E estoque > 50)
+- Se está em categoria específica (categoria_id IN (1, 2, 3))
+- Adicione uma observação combinando essas condições usando AND/OR
 
 **Desafio 3:** Classifique os clientes em:
 - "Novo" - cadastrado há menos de 6 meses
 - "Regular" - cadastrado entre 6 meses e 2 anos
 - "Veterano" - cadastrado há mais de 2 anos
 
-**Desafio 4:** Crie um relatório de pedidos mostrando:
-- Status traduzido para português
-- Classificação do valor: "Pequeno" (< R$200), "Médio" (R$200-500), "Grande" (> R$500)
-- Se teve frete grátis ou não
+**Desafio 4:** Crie um relatório de análise de custos e descontos dos pedidos:
+- **Classificação de Frete**: "Frete Grátis" (0), "Frete Econômico" (R$0.01-10.00), "Frete Padrão" (R$10.01-25.00), "Frete Premium" (R$25.01-49.96), "Frete Especial" (>R$49.96)
+- **Classificação de Desconto**: "Sem Desconto" (0), "Desconto Básico" (R$0.24-20.00), "Desconto Bom" (R$20.01-50.00), "Desconto Excelente" (R$50.01-99.85), "Desconto Excepcional" (>R$99.85)
+- Use CASE WHEN com BETWEEN para criar as classificações
 
-**Desafio 5 (Boss Final!):** Crie um relatório completo de pedidos que mostre:
-- pedido_id
-- valor_total
-- status traduzido para português
-- Classificação do valor: "Pequeno" (< R$200), "Médio" (R$200-1000), "Grande" (> R$1000)
-- Tipo de frete: "Grátis" (frete = 0), "Econômico" (< R$30), "Normal" (>= R$30)
-- Indicador de desconto: "Com desconto" (desconto > 0), "Sem desconto"
-- Ordene por valor_total decrescente
+**Desafio 5 (Boss Final!):** Crie um relatório de análise temporal de pedidos combinando múltiplos conceitos:
+- **Extraia informações da data** usando EXTRACT: ano, mês e dia da semana
+- **Classifique o semestre**: "1º Semestre" (meses 1-6), "2º Semestre" (meses 7-12)
+- **Identifique o tipo de dia**: "Final de Semana" (sábado/domingo), "Dia de Semana" (segunda-sexta)
+- **Crie análise de prioridade**: "CRÍTICO" (cancelado E valor > 500), "ATENÇÃO" (pendente E valor > 300), "SUCESSO" (entregue E valor > 400), "NORMAL" (demais casos)
+- Use EXTRACT, CASE WHEN, IN, AND/OR e BETWEEN para resolver
+- Status disponíveis: cancelado, confirmado, em_separacao, entregue, enviado, pendente
 
 </details>

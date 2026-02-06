@@ -1,5 +1,5 @@
 -- ============================================
--- MÓDULO 6 - CONDICIONAIS
+-- MÓDULO 7 - CONDICIONAIS
 -- Respostas do Desafio Final
 -- ============================================
 
@@ -25,24 +25,35 @@ SELECT
 FROM produtos;
 
 
--- Desafio 2: Para cada categoria, mostre:
--- - Total de produtos
--- - Quantidade de produtos "caros" (> R$500)
--- - Quantidade de produtos com estoque crítico (< 10)
--- - Percentual de produtos caros
+-- Desafio 2: Crie um relatório de produtos com classificação combinada:
+-- - Se o produto é de "Alta Prioridade" (preço > R$300 E estoque < 20)
+-- - Se é "Promoção Possível" (preço > R$200 E estoque > 50)
+-- - Se está em categoria específica (categoria_id IN (1, 2, 3))
+-- - Adicione uma observação combinando essas condições
 
 SELECT
-    c.nome AS categoria,
-    COUNT(*) AS total_produtos,
-    COUNT(CASE WHEN p.preco > 500 THEN 1 END) AS produtos_caros,
-    COUNT(CASE WHEN p.estoque < 10 THEN 1 END) AS estoque_critico,
-    ROUND(
-        100.0 * COUNT(CASE WHEN p.preco > 500 THEN 1 END) / COUNT(*),
-        2
-    ) AS percentual_caros
-FROM categorias c
-INNER JOIN produtos p ON c.categoria_id = p.categoria_id
-GROUP BY c.categoria_id, c.nome;
+    produto_id,
+    nome,
+    preco,
+    estoque,
+    categoria_id,
+    CASE
+        WHEN preco > 300 AND estoque < 20 THEN 'Alta Prioridade'
+        WHEN preco > 200 AND estoque > 50 THEN 'Promoção Possível'
+        WHEN preco < 100 AND estoque < 10 THEN 'Atenção: Baixo Valor e Estoque'
+        ELSE 'Normal'
+    END AS status_produto,
+    CASE
+        WHEN categoria_id IN (1, 2, 3) THEN 'Categoria Principal'
+        WHEN categoria_id IN (4, 5) THEN 'Categoria Secundária'
+        ELSE 'Outras Categorias'
+    END AS grupo_categoria,
+    CASE
+        WHEN (preco > 300 AND estoque < 20) OR (preco < 100 AND estoque < 10) THEN 'REQUER ATENÇÃO'
+        WHEN preco > 200 AND estoque > 50 THEN 'OPORTUNIDADE DE VENDA'
+        ELSE 'SITUAÇÃO NORMAL'
+    END AS observacao
+FROM produtos;
 
 
 -- Desafio 3: Classifique os clientes em:
@@ -61,65 +72,95 @@ SELECT
 FROM clientes;
 
 
--- Desafio 4: Crie um relatório de pedidos mostrando:
--- - Status traduzido para português
--- - Classificação do valor: "Pequeno" (< R$200), "Médio" (R$200-500), "Grande" (> R$500)
--- - Se teve frete grátis ou não
+-- Desafio 4: Crie um relatório de análise de custos e descontos dos pedidos.
+-- Classifique cada pedido considerando:
+--
+-- A) Classificação de Frete (campo 'frete'):
+--    - "Frete Grátis" = 0
+--    - "Frete Econômico" = R$ 0.01 até R$ 10.00
+--    - "Frete Padrão" = R$ 10.01 até R$ 25.00
+--    - "Frete Premium" = R$ 25.01 até R$ 49.96
+--    - "Frete Especial" = acima de R$ 49.96
+--
+-- B) Classificação de Desconto (campo 'desconto'):
+--    - "Sem Desconto" = 0
+--    - "Desconto Básico" = R$ 0.24 até R$ 20.00
+--    - "Desconto Bom" = R$ 20.01 até R$ 50.00
+--    - "Desconto Excelente" = R$ 50.01 até R$ 99.85
+--    - "Desconto Excepcional" = acima de R$ 99.85
+--
+-- Use CASE WHEN com BETWEEN para criar as classificações.
+
+SELECT
+    pedido_id,
+    data_pedido,
+    valor_total,
+    frete,
+    desconto,
+    CASE
+        WHEN frete = 0 THEN 'Frete Grátis'
+        WHEN frete BETWEEN 0.01 AND 10 THEN 'Frete Econômico'
+        WHEN frete BETWEEN 10.01 AND 25 THEN 'Frete Padrão'
+        WHEN frete BETWEEN 25.01 AND 49.96 THEN 'Frete Premium'
+        WHEN frete > 49.96 THEN 'Frete Especial'
+        ELSE 'Sem Frete'
+    END AS classificacao_frete,
+    CASE
+        WHEN desconto = 0 THEN 'Sem Desconto'
+        WHEN desconto BETWEEN 0.24 AND 20 THEN 'Desconto Básico'
+        WHEN desconto BETWEEN 20.01 AND 50 THEN 'Desconto Bom'
+        WHEN desconto BETWEEN 50.01 AND 99.85 THEN 'Desconto Excelente'
+        WHEN desconto > 99.85 THEN 'Desconto Excepcional'
+        ELSE 'Sem Desconto'
+    END AS classificacao_desconto
+FROM pedidos;
+
+
+-- Desafio 5 (Boss Final!): Crie um relatório de análise temporal de pedidos.
+-- Combine múltiplos conceitos aprendidos no módulo:
+--
+-- A) Extraia informações da data usando EXTRACT:
+--    - Ano, mês e dia da semana
+--
+-- B) Classifique o semestre:
+--    - "1º Semestre" = meses 1 a 6
+--    - "2º Semestre" = meses 7 a 12
+--
+-- C) Identifique o tipo de dia:
+--    - "Final de Semana" = sábado (6) ou domingo (0)
+--    - "Dia de Semana" = segunda a sexta
+--
+-- D) Crie uma análise de prioridade combinando valor e status:
+--    Status disponíveis: cancelado, confirmado, em_separacao, entregue, enviado, pendente
+--    - "CRÍTICO" = cancelado E valor > 500
+--    - "ATENÇÃO" = pendente E valor > 300
+--    - "SUCESSO" = entregue E valor > 400
+--    - "NORMAL" = demais casos
+--
+-- Use EXTRACT, CASE WHEN, IN, AND/OR para resolver.
 
 SELECT
     pedido_id,
     data_pedido,
     status,
-    CASE status
-        WHEN 'pending' THEN 'Pendente'
-        WHEN 'pendente' THEN 'Pendente'
-        WHEN 'processing' THEN 'Processando'
-        WHEN 'processando' THEN 'Processando'
-        WHEN 'shipped' THEN 'Enviado'
-        WHEN 'enviado' THEN 'Enviado'
-        WHEN 'delivered' THEN 'Entregue'
-        WHEN 'entregue' THEN 'Entregue'
-        WHEN 'cancelled' THEN 'Cancelado'
-        WHEN 'cancelado' THEN 'Cancelado'
-        ELSE 'Status Desconhecido'
-    END AS status_portugues,
     valor_total,
-    CASE
-        WHEN valor_total < 200 THEN 'Pequeno'
-        WHEN valor_total <= 500 THEN 'Médio'
-        ELSE 'Grande'
-    END AS classificacao_valor,
-    CASE
-        WHEN COALESCE(frete, 0) = 0 THEN 'Frete Grátis'
-        ELSE 'Com Frete'
-    END AS tipo_frete
-FROM pedidos;
-
-
--- Desafio 5 (Boss Final!): Crie um dashboard de vendas que mostre por mês:
--- - Total de pedidos
--- - Pedidos entregues
--- - Pedidos cancelados
--- - Taxa de sucesso (% entregues)
--- - Classificação do mês: "Ruim" (< 70% sucesso), "Bom" (70-90%), "Excelente" (> 90%)
-
-SELECT
     EXTRACT(YEAR FROM data_pedido) AS ano,
     EXTRACT(MONTH FROM data_pedido) AS mes,
-    COUNT(*) AS total_pedidos,
-    SUM(CASE WHEN status = 'entregue' THEN 1 ELSE 0 END) AS pedidos_entregues,
-    SUM(CASE WHEN status = 'cancelado' THEN 1 ELSE 0 END) AS pedidos_cancelados,
-    ROUND(
-        100.0 * SUM(CASE WHEN status = 'entregue' THEN 1 ELSE 0 END) / COUNT(*),
-        2
-    ) AS taxa_sucesso,
+    EXTRACT(DOW FROM data_pedido) AS dia_semana,
     CASE
-        WHEN 100.0 * SUM(CASE WHEN status = 'entregue' THEN 1 ELSE 0 END) / COUNT(*) < 70 THEN 'Ruim'
-        WHEN 100.0 * SUM(CASE WHEN status = 'entregue' THEN 1 ELSE 0 END) / COUNT(*) <= 90 THEN 'Bom'
-        ELSE 'Excelente'
-    END AS classificacao_mes
+        WHEN EXTRACT(MONTH FROM data_pedido) BETWEEN 1 AND 6 THEN '1º Semestre'
+        ELSE '2º Semestre'
+    END AS semestre,
+    CASE
+        WHEN EXTRACT(DOW FROM data_pedido) IN (0, 6) THEN 'Final de Semana'
+        ELSE 'Dia de Semana'
+    END AS tipo_dia,
+    CASE
+        WHEN status = 'cancelado' AND valor_total > 500 THEN 'CRÍTICO'
+        WHEN status = 'pendente' AND valor_total > 300 THEN 'ATENÇÃO'
+        WHEN status = 'entregue' AND valor_total > 400 THEN 'SUCESSO'
+        ELSE 'NORMAL'
+    END AS prioridade
 FROM pedidos
-GROUP BY
-    EXTRACT(YEAR FROM data_pedido),
-    EXTRACT(MONTH FROM data_pedido)
-ORDER BY ano, mes;
+ORDER BY
+    valor_total DESC;
