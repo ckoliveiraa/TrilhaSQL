@@ -36,6 +36,21 @@ expressão::tipo_destino
 | `DATE` | Data | '2024-01-15' |
 | `BOOLEAN` | Verdadeiro/Falso | TRUE, FALSE |
 
+## Tipos Numéricos Detalhados
+
+| Nome | Tamanho de armazenamento | Descrição | Intervalo dos valores |
+|------|-------------------------|-----------|----------------------|
+| `smallint` | 2 bytes | inteiro com intervalo de valores pequeno | -32768 a +32767 |
+| `integer` | 4 bytes | escolha usual para inteiro | -2147483648 a +2147483647 |
+| `bigint` | 8 bytes | inteiro com intervalo de valores grande | -9223372036854775808 a +9223372036854775807 |
+| `decimal` | variável | precisão especificada pelo usuário, exato | até 131072 dígitos antes do ponto decimal; até 16383 dígitos após o ponto decimal |
+| `numeric` | variável | precisão especificada pelo usuário, exato | até 131072 dígitos antes do ponto decimal; até 16383 dígitos após o ponto decimal |
+| `real` | 4 bytes | precisão variável, inexato | precisão de 6 dígitos decimais |
+| `double precision` | 8 bytes | precisão variável, inexato | precisão de 15 dígitos decimais |
+| `smallserial` | 2 bytes | inteiro pequeno com autoincremento | 1 a 32767 |
+| `serial` | 4 bytes | inteiro com autoincremento | 1 a 2147483647 |
+| `bigserial` | 8 bytes | inteiro grande com autoincremento | 1 a 9223372036854775807 |
+
 ## Exemplos Práticos
 
 ```sql
