@@ -320,8 +320,6 @@ FROM produtos;
 | **Múltiplas condições** | AND/OR no WHEN | `WHEN preco > 100 AND estoque < 5 THEN ...` |
 | **CASE em ORDER BY** | Ordenação personalizada | `ORDER BY CASE status WHEN 'A' THEN 1 END` |
 | **CASE com cálculos** | Valores condicionais | `CASE WHEN preco > 100 THEN preco * 0.9 END` |
-| **COALESCE** | Tratar NULL | `COALESCE(valor, 0)` |
-| **NULLIF** | Retornar NULL se igual | `NULLIF(divisor, 0)` |
 
 ### Ordem de Avaliação
 
