@@ -173,17 +173,17 @@ FROM pedidos;
 **3. Múltiplas condições combinadas:**
 ```sql
 SELECT
-    p.nome,
-    p.preco,
-    p.estoque,
+    nome,
+    preco,
+    estoque,
     CASE
-        WHEN p.preco > 1000 AND p.estoque < 5 THEN 'Premium em Falta'
-        WHEN p.preco > 1000 THEN 'Premium'
-        WHEN p.estoque < 5 THEN 'Reposição Urgente'
-        WHEN p.estoque < 20 THEN 'Estoque Baixo'
+        WHEN preco > 1000 AND estoque < 5 THEN 'Premium em Falta'
+        WHEN preco > 1000 THEN 'Premium'
+        WHEN estoque < 5 THEN 'Reposição Urgente'
+        WHEN estoque < 20 THEN 'Estoque Baixo'
         ELSE 'Normal'
     END AS situacao
-FROM produtos p;
+FROM produtos;
 ```
 
 **4. CASE em cálculos condicionais com múltiplas condições:**
@@ -286,6 +286,7 @@ FROM produtos;
 --
 -- Utilize a estrutura CASE para criar a coluna status_produto.
 -- Exiba: produto_id, nome, preco, estoque e status_produto.
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- Aula 32 - Desafio 2: Verificando o status de entrega dos pedidos
