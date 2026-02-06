@@ -1,4 +1,4 @@
-# Módulo 5 - Conversão de Dados - Material Didático
+# Módulo 6- Conversão de Dados - Material Didático
 
 ## Objetivo do Módulo
 Dominar a conversão de tipos de dados em SQL e o tratamento de valores nulos, habilidades essenciais para manipular e formatar dados corretamente.
@@ -206,26 +206,6 @@ SELECT
     COALESCE(email_corporativo, email_pessoal, 'sem_email@empresa.com') AS email
 FROM funcionarios;
 ```
-
-## COALESCE vs CASE WHEN
-
-```sql
--- Usando CASE WHEN (mais verboso)
-SELECT
-    nome,
-    CASE
-        WHEN telefone IS NULL THEN 'Não informado'
-        ELSE telefone
-    END AS telefone
-FROM clientes;
-
--- Usando COALESCE (mais simples)
-SELECT
-    nome,
-    COALESCE(telefone, 'Não informado') AS telefone
-FROM clientes;
-```
-
 ## NULLIF - O Inverso
 
 `NULLIF(a, b)` retorna NULL se `a = b`, senão retorna `a`.
@@ -286,12 +266,12 @@ FROM clientes;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 30 - Desafio 1: Substituir telefones nulos por "Não informado"
--- Exiba nome e telefone de todos os clientes
+-- Aula 30 - Desafio 2: Substituir comentários nulos por "Sem comentarios"
+-- Exiba o ID da avaliação, o ID do cliente e o comentário tratado
 
 
--- Aula 30 - Desafio 2: Substituir descontos nulos por 0
--- Exiba nome do produto, preco, desconto (tratado) e preco final
+-- Aula 30 - Desafio 4: Simular correção de pedido com erro de sistema
+-- Exiba o pedido 7 com status "cancelado" e data de entrega realizada ajustada para NULL
 
 ```
 
@@ -388,17 +368,6 @@ Use seus conhecimentos de conversão e tratamento de nulos para resolver estes d
 -- - frete (pode ser NULL, tratar como 0)
 -- - desconto (pode ser NULL, tratar como 0)
 -- - valor_final = valor_total + frete - desconto
-
-
--- Desafio Final 4 (Boss Final!): Dashboard de Vendas
--- Crie um relatório que mostre para cada pedido:
--- - "Pedido #" + pedido_id (como texto)
--- - Data formatada como texto
--- - Nome do cliente (ou "Cliente não identificado" se não encontrar)
--- - Valor total formatado como "R$ X.XX"
--- - Frete tratado (0 se nulo)
--- - Status do pedido (ou "Indefinido" se nulo)
-
 ```
 
 </details>

@@ -1,5 +1,5 @@
 -- ============================================
--- MÓDULO 5 - CONVERSÃO DE DADOS
+-- MÓDULO 6 - CONVERSÃO DE DADOS
 -- Respostas do Desafio Final
 -- ============================================
 
@@ -48,22 +48,3 @@ SELECT
     valor_total + COALESCE(frete, 0) - COALESCE(desconto, 0) AS valor_final
 FROM pedidos;
 
-
--- Desafio Final 4 (Boss Final!): Dashboard de Vendas
--- Crie um relatório que mostre para cada pedido:
--- - "Pedido #" + pedido_id (como texto)
--- - Data formatada como texto
--- - Nome do cliente (ou "Cliente não identificado" se não encontrar)
--- - Valor total formatado como "R$ X.XX"
--- - Frete tratado (0 se nulo)
--- - Status do pedido (ou "Indefinido" se nulo)
-
-SELECT
-    'Pedido #' || CAST(p.pedido_id AS VARCHAR) AS identificador,
-    CAST(p.data_pedido AS VARCHAR) AS data_texto,
-    COALESCE(c.nome, 'Cliente não identificado') AS cliente,
-    'R$ ' || CAST(ROUND(p.valor_total, 2) AS VARCHAR) AS valor_formatado,
-    COALESCE(p.frete, 0) AS frete,
-    COALESCE(p.status, 'Indefinido') AS status
-FROM pedidos p
-LEFT JOIN clientes c ON p.cliente_id = c.cliente_id;
