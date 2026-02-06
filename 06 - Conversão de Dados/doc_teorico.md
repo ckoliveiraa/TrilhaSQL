@@ -18,12 +18,23 @@ A função `CAST` permite **converter um valor de um tipo de dado para outro**. 
 ## Sintaxe
 
 ```sql
--- Sintaxe padrão SQL
+-- Sintaxe padrão (recomendada - funciona em todos os bancos de dados)
 CAST(expressão AS tipo_destino)
 
--- Sintaxe PostgreSQL (atalho)
+-- Exemplo prático com alias de coluna
+CAST(coluna AS TIPO) AS nova_coluna
+```
+
+### Sintaxe Alternativa do PostgreSQL
+
+O PostgreSQL também oferece uma sintaxe mais curta usando o operador `::`:
+
+```sql
+-- Sintaxe específica do PostgreSQL (atalho)
 expressão::tipo_destino
 ```
+
+**Ambas produzem o mesmo resultado**, mas neste curso usaremos `CAST` por ser o padrão SQL universal.
 
 ## Tipos de Dados Comuns
 
@@ -53,34 +64,48 @@ expressão::tipo_destino
 
 ## Exemplos Práticos
 
+### Conversões Numéricas
+
 ```sql
--- Converter número para texto
+-- Número para texto
 SELECT CAST(123 AS VARCHAR);
 -- Resultado: '123'
 
--- Sintaxe alternativa PostgreSQL
-SELECT 123::VARCHAR;
--- Resultado: '123'
-
--- Converter texto para número
+-- Texto para número inteiro
 SELECT CAST('456' AS INTEGER);
 -- Resultado: 456
 
--- Converter preço para inteiro (remove centavos)
-SELECT
-    nome,
-    preco,
-    CAST(preco AS INTEGER) AS preco_inteiro
-FROM produtos;
--- 199.90 → 199
+-- Decimal para inteiro (trunca os decimais)
+SELECT CAST(99.99 AS INTEGER);
+-- Resultado: 99
 
--- Arredondar antes de converter
+-- Inteiro para decimal
+SELECT CAST(10 AS NUMERIC(10,2));
+-- Resultado: 10.00
+
+-- Conversão em consultas reais
 SELECT
     nome,
     preco,
-    CAST(ROUND(preco) AS INTEGER) AS preco_arredondado
+    CAST(preco AS INTEGER) AS preco_inteiro,           -- Remove centavos
+    CAST(ROUND(preco) AS INTEGER) AS preco_arredondado -- Arredonda antes
 FROM produtos;
--- 199.90 → 200
+-- Exemplo: 199.90 → preco_inteiro: 199 | preco_arredondado: 200
+```
+
+### Conversões de Texto
+
+```sql
+-- Número para texto em consultas
+SELECT
+    'Produto #' || CAST(produto_id AS VARCHAR) AS codigo,
+    'R$ ' || CAST(preco AS VARCHAR) AS preco_formatado
+FROM produtos;
+-- Resultado: 'Produto #15' | 'R$ 199.90'
+
+-- Conversão de tipos de texto
+SELECT CAST('Olá Mundo' AS TEXT);       -- VARCHAR para TEXT
+SELECT CAST('POSTGRESQL' AS CHAR(5));   -- Resultado: 'POSTG' (trunca)
 ```
 
 ## Convertendo Datas
@@ -97,6 +122,18 @@ SELECT CAST('2024-12-25' AS DATE);
 -- Timestamp para data (remove a hora)
 SELECT CAST(CURRENT_TIMESTAMP AS DATE);
 -- Resultado: 2024-01-15
+
+-- Data para timestamp (adiciona hora 00:00:00)
+SELECT CAST('2024-01-15' AS TIMESTAMP);
+-- Resultado: 2024-01-15 00:00:00
+
+-- Exemplos em consultas reais
+SELECT
+    pedido_id,
+    data_pedido,
+    CAST(data_pedido AS VARCHAR) AS data_texto,
+    CAST(EXTRACT(YEAR FROM data_pedido) AS INTEGER) AS ano
+FROM pedidos;
 ```
 
 ## Casos de Uso Comuns
@@ -105,6 +142,7 @@ SELECT CAST(CURRENT_TIMESTAMP AS DATE);
 -- Concatenar número com texto
 SELECT 'Pedido #' || CAST(pedido_id AS VARCHAR) AS descricao
 FROM pedidos;
+-- Resultado: 'Pedido #1001'
 
 -- Comparar texto numérico com número
 SELECT * FROM produtos
@@ -113,20 +151,72 @@ WHERE CAST(codigo AS INTEGER) > 100;
 -- Formatar valores monetários
 SELECT
     nome,
-    'R$ ' || CAST(preco AS VARCHAR) AS preco_formatado
+    'R$ ' || CAST(preco AS VARCHAR) AS preco_formatado,
+    'R$ ' || CAST(preco * 0.9 AS NUMERIC(10,2)) AS preco_com_desconto
 FROM produtos;
+-- Resultado: 'R$ 199.90' | 'R$ 179.91'
+
+-- Calcular com conversão de tipos
+SELECT
+    CAST(cliente_id AS VARCHAR) || '-' || CAST(pedido_id AS VARCHAR) AS codigo_rastreio,
+    CAST(valor_total AS INTEGER) AS valor_aproximado
+FROM pedidos;
+-- Resultado: '5-1001' | 450
 ```
 
-## Cuidados com CAST
+## ⚠️ Cuidados com CAST
 
 ```sql
--- Erro: texto inválido para número
+-- ❌ ERRO: texto inválido para número
 SELECT CAST('abc' AS INTEGER);
--- ERRO: invalid input syntax for integer
+-- ERRO: invalid input syntax for type integer: "abc"
 
--- Perda de dados ao converter para inteiro
+-- ❌ ERRO: formato de data inválido
+SELECT CAST('15/01/2024' AS DATE);
+-- ERRO: date/time field value out of range
+-- ✅ Correto: CAST('2024-01-15' AS DATE) -- formato: YYYY-MM-DD
+
+-- ⚠️ PERDA DE DADOS ao converter para inteiro
 SELECT CAST(9.99 AS INTEGER);
--- Resultado: 9 (centavos perdidos!)
+-- Resultado: 9 (os centavos são perdidos!)
+
+-- ✅ Melhor: arredondar antes de converter
+SELECT CAST(ROUND(9.99) AS INTEGER);
+-- Resultado: 10
+
+-- ⚠️ CUIDADO com conversões em cálculos
+SELECT
+    preco,
+    quantidade,
+    CAST(preco AS INTEGER) * quantidade AS total_errado,        -- Perde precisão!
+    CAST(preco * quantidade AS NUMERIC(10,2)) AS total_certo    -- Mantém precisão
+FROM itens_pedido;
+-- Exemplo: preco=19.99, qtd=3
+-- total_errado: 57 (19 * 3)
+-- total_certo: 59.97 (19.99 * 3)
+```
+
+## 💡 CAST vs :: - Qual usar?
+
+| Aspecto | `CAST(x AS tipo)` | `x::tipo` |
+|---------|------------------|-----------|
+| **Compatibilidade** | ✅ Funciona em todos os SGBDs (MySQL, Oracle, SQL Server, PostgreSQL) | ❌ Apenas PostgreSQL |
+| **Legibilidade** | ✅ Mais explícito e claro | Mais conciso |
+| **Portabilidade** | ✅ Código funciona em qualquer banco | Código "preso" ao PostgreSQL |
+| **Performance** | Idêntica | Idêntica |
+| **Padrão SQL** | ✅ Sim (SQL ANSI) | Não (extensão PostgreSQL) |
+
+**Recomendação:** Use `CAST` como padrão! É mais portável e legível.
+
+```sql
+-- ✅ RECOMENDADO: Use CAST (padrão SQL)
+SELECT CAST('123' AS INTEGER), CAST(preco AS NUMERIC(10,2));
+
+-- ✅ ALTERNATIVA (PostgreSQL): Sintaxe :: também funciona
+SELECT '123'::INTEGER, preco::NUMERIC(10,2);
+
+-- ❌ EVITE: Misturar os dois estilos no mesmo código
+SELECT CAST('123' AS INTEGER), preco::NUMERIC(10,2);  -- Inconsistente
 ```
 
 ## Desafio
@@ -300,47 +390,67 @@ FROM clientes;
 
 | Função | O que faz | Exemplo |
 |--------|-----------|---------|
-| `CAST(x AS tipo)` | Converte tipo de dado | `CAST(123 AS VARCHAR)` |
-| `x::tipo` | Atalho PostgreSQL para CAST | `123::VARCHAR` |
+| `CAST(x AS tipo)` | Converte tipo de dado (padrão SQL) | `CAST(123 AS VARCHAR)` |
+| `x::tipo` | Sintaxe alternativa do PostgreSQL | `123::VARCHAR` |
 | `COALESCE(a, b, c)` | Primeiro valor não nulo | `COALESCE(telefone, 'N/A')` |
 | `NULLIF(a, b)` | NULL se a = b | `NULLIF(quantidade, 0)` |
 
 ---
 
-## Conversões Comuns
+## Conversões Comuns (Guia Rápido)
 
 ```sql
--- Número → Texto
+-- 📊 Número → Texto
 CAST(preco AS VARCHAR)
-preco::VARCHAR
+-- Exemplo: 199.90 → '199.90'
 
--- Texto → Número
+-- 🔢 Texto → Número
 CAST('123' AS INTEGER)
-'123'::INTEGER
+-- Exemplo: '123' → 123
 
--- Data → Texto
-CAST(data AS VARCHAR)
-TO_CHAR(data, 'DD/MM/YYYY')
+-- 📝 Texto → Decimal
+CAST('99.99' AS NUMERIC(10,2))
+-- Exemplo: '99.99' → 99.99
 
--- Texto → Data
+-- 📅 Data → Texto
+CAST(data AS VARCHAR)                   -- Formato padrão: 2024-01-15
+TO_CHAR(data, 'DD/MM/YYYY')            -- Formato personalizado: 15/01/2024
+-- Exemplo: 2024-01-15 → '2024-01-15'
+
+-- 📆 Texto → Data
 CAST('2024-01-15' AS DATE)
-'2024-01-15'::DATE
+-- Exemplo: '2024-01-15' → 2024-01-15
+-- ⚠️ IMPORTANTE: Use formato YYYY-MM-DD (ISO 8601)
 
--- Decimal → Inteiro
-CAST(preco AS INTEGER)
-ROUND(preco)::INTEGER
+-- 🔄 Decimal → Inteiro
+CAST(preco AS INTEGER)                  -- Trunca (9.99 → 9)
+CAST(ROUND(preco) AS INTEGER)           -- Arredonda (9.99 → 10)
+-- ⚠️ CUIDADO: Perda de precisão ao truncar!
+
+-- ⏰ Timestamp → Data (remove hora)
+CAST(CURRENT_TIMESTAMP AS DATE)
+-- Exemplo: 2024-01-15 14:30:00 → 2024-01-15
+
+-- 📦 Conversões com cálculos
+CAST(preco * quantidade AS NUMERIC(10,2))      -- Converte resultado
+CAST(pedido_id AS VARCHAR) || '-2024'          -- Concatena após converter
+-- Exemplo: 1001 → '1001-2024'
 ```
 
 ---
 
 ## Checklist de Domínio
 
-- [ ] Sei converter números para texto com CAST
-- [ ] Sei converter texto para números
-- [ ] Entendo a sintaxe alternativa `::tipo` do PostgreSQL
+- [ ] Sei usar CAST para converter números para texto
+- [ ] Sei usar CAST para converter texto para números
+- [ ] Conheço a sintaxe alternativa `::` do PostgreSQL
+- [ ] Entendo que CAST é o padrão SQL recomendado
+- [ ] Sei converter datas e timestamps com CAST
+- [ ] Evito perda de precisão ao converter decimais para inteiros
 - [ ] Uso COALESCE para tratar valores NULL
 - [ ] Sei usar NULLIF para evitar divisão por zero
 - [ ] Consigo combinar COALESCE com NULLIF para tratar vazios e nulos
+- [ ] Faço conversões dentro de cálculos corretamente
 
 ---
 
