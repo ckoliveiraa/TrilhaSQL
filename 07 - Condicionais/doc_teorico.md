@@ -140,27 +140,30 @@ END
 
 ## Exemplos Práticos
 
-**1. Urgência baseada em estoque E vendas:**
+**1. Urgência baseada em estoque E preço (usando AND):**
 ```sql
 SELECT
     nome,
     estoque,
+    preco,
     CASE
-        WHEN estoque < 10 THEN 'Crítico'
+        WHEN estoque < 10 AND preco > 500 THEN 'Crítico - Produto Caro'
+        WHEN estoque < 10 AND preco <= 500 THEN 'Crítico - Produto Barato'
         WHEN estoque < 30 THEN 'Baixo'
         ELSE 'OK'
     END AS urgencia
 FROM produtos;
 ```
 
-**2. Classificação de pedidos por frete:**
+**2. Classificação de pedidos por frete E valor (usando OR):**
 ```sql
 SELECT
     pedido_id,
     valor_total,
     frete,
     CASE
-        WHEN frete = 0 THEN 'Grátis'
+        WHEN frete = 0 OR valor_total > 500 THEN 'Frete Grátis'
+        WHEN frete < 20 AND valor_total > 200 THEN 'Frete Reduzido'
         WHEN frete < 20 THEN 'Econômico'
         ELSE 'Normal'
     END AS tipo_frete
@@ -183,31 +186,35 @@ SELECT
 FROM produtos p;
 ```
 
-**4. CASE em cálculos condicionais:**
+**4. CASE em cálculos condicionais com múltiplas condições:**
 ```sql
--- Calcular preço com desconto baseado no valor
+-- Calcular desconto baseado em preço E estoque
 SELECT
     nome,
     preco,
+    estoque,
     CASE
-        WHEN preco >= 1000 THEN preco * 0.85  -- 15% desconto para caros
-        WHEN preco >= 500 THEN preco * 0.90   -- 10% desconto para médios
-        ELSE preco * 0.95                      -- 5% desconto para baratos
+        WHEN preco >= 1000 AND estoque > 50 THEN preco * 0.80  -- 20% desconto: caro com alto estoque
+        WHEN preco >= 1000 OR estoque < 5 THEN preco * 0.85    -- 15% desconto: ou é caro ou tem pouco estoque
+        WHEN preco >= 500 AND estoque > 20 THEN preco * 0.90   -- 10% desconto: médio com bom estoque
+        ELSE preco * 0.95                                       -- 5% desconto: demais casos
     END AS preco_com_desconto
 FROM produtos;
 ```
 
-**5. CASE para criar flags (indicadores):**
+**5. CASE para criar flags com condições combinadas (usando OR):**
 ```sql
--- Indicar se produto precisa de reposição
+-- Indicar se produto precisa de atenção urgente
 SELECT
     nome,
     estoque,
+    preco,
     CASE
-        WHEN estoque = 0 THEN 'SIM - URGENTE'
-        WHEN estoque < 10 THEN 'SIM'
-        ELSE 'NÃO'
-    END AS precisa_repor
+        WHEN estoque = 0 OR (estoque < 5 AND preco > 1000) THEN 'URGENTE'
+        WHEN estoque < 10 OR preco > 2000 THEN 'ATENÇÃO'
+        WHEN estoque < 20 AND preco > 500 THEN 'MONITORAR'
+        ELSE 'NORMAL'
+    END AS prioridade
 FROM produtos;
 ```
 
@@ -254,31 +261,6 @@ SELECT
         END
     END AS disponibilidade
 FROM produtos;
-```
-
-> **Nota:** Exemplos mais avançados combinando CASE com funções de agregação (COUNT, SUM) e agrupamentos (GROUP BY) serão vistos nos **Módulos 7 e 8**. Exemplos com JOINs serão vistos no **Módulo 9**.
-
-## COALESCE vs CASE
-
-Para valores nulos simples, `COALESCE` é mais conciso:
-
-```sql
--- Usando CASE
-CASE WHEN telefone IS NULL THEN 'Não informado' ELSE telefone END
-
--- Usando COALESCE (mais simples)
-COALESCE(telefone, 'Não informado')
-```
-
-## NULLIF - Complemento útil
-
-`NULLIF(a, b)` retorna NULL se a = b, senão retorna a. Útil para evitar divisão por zero:
-
-```sql
--- Evitar divisão por zero
-SELECT
-    total_vendas / NULLIF(total_clientes, 0) AS media_por_cliente
-FROM resumo;
 ```
 
 ## Desafios

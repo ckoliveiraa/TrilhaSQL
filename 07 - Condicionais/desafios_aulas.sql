@@ -11,9 +11,9 @@ SELECT
     nome,
     preco,
     CASE
-        WHEN preco < 250 THEN 'Barato'
-        WHEN preco <= 1000 THEN 'Medio'
-        ELSE 'Caro'
+        WHEN preco < 250 THEN ('Barato')
+        WHEN preco <= 1000 THEN ('Medio')
+        ELSE ('Caro')
     END AS classificacao
 FROM produtos;
 
