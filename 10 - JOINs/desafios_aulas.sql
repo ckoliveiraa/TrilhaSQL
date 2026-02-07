@@ -104,13 +104,7 @@ SELECT
     p.produto_id,
     p.nome AS produto,
     p.preco,
-    COUNT(a.avaliacao_id) AS total_avaliacoes,
-    ROUND(AVG(a.nota), 2) AS nota_media,
-    CASE
-        WHEN COUNT(a.avaliacao_id) = 0 THEN 'Sem avaliações'
-        WHEN COUNT(a.avaliacao_id) = 1 THEN 'Apenas 1 avaliação'
-        ELSE 'Poucas avaliações'
-    END AS status_engajamento
+    COUNT(a.avaliacao_id) AS total_avaliacoes
 FROM produtos p
 FULL OUTER JOIN avaliacoes a ON p.produto_id = a.produto_id
 GROUP BY p.produto_id, p.nome, p.preco
