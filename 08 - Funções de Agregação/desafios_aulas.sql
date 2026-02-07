@@ -11,10 +11,10 @@ SELECT COUNT(*) AS total_produtos
 FROM produtos;
 
 
--- Aula 33 - Desafio 2: Contar quantos pedidos foram feitos em 2024
-SELECT COUNT(*) AS pedidos_2024
+-- Aula 33 - Desafio 2: Contar quantos pedidos foram feitos em 2025
+SELECT COUNT(*) AS pedidos_2025
 FROM pedidos
-WHERE EXTRACT(YEAR FROM data_pedido) = 2024;
+WHERE EXTRACT(YEAR FROM data_pedido) = 2025;
 
 
 -- =================================================================
@@ -50,12 +50,12 @@ FROM produtos;
 -- =================================================================
 
 -- Aula 36 - Desafio 1: Calcular o preco medio dos produtos
-SELECT ROUND(AVG(preco), 2) AS preco_medio
+SELECT AVG(preco) AS preco_medio
 FROM produtos;
 
 
 -- Aula 36 - Desafio 2: Calcular o valor medio dos pedidos
-SELECT ROUND(AVG(valor_total), 2) AS ticket_medio
+SELECT AVG(valor_total) AS ticket_medio
 FROM pedidos;
 
 
@@ -63,21 +63,15 @@ FROM pedidos;
 -- AULA 37 - MIN - Encontrando Minimo
 -- =================================================================
 
--- Aula 37 - Desafio 1: Encontrar o produto mais barato
-SELECT MIN(preco) AS menor_preco
-FROM produtos;
-
--- Para ver qual produto:
-SELECT nome, preco
+-- Aula 37 - Desafio 1:  Encontre o menor preço dos produto da categoria Automotivo
+SELECT MIN(preco) AS menor_preco_automotivo
 FROM produtos
-ORDER BY preco ASC
-LIMIT 1;
+WHERE categoria_id = 6;
 
-
--- Aula 37 - Desafio 2: Encontrar o pedido de menor valor
-SELECT MIN(valor_total) AS menor_pedido
-FROM pedidos;
-
+-- Aula 37 - Desafio 2: Identifique o menor desconto aplicado em pedidos com desconto
+SELECT MIN(desconto) AS menor_desconto
+FROM pedidos
+WHERE desconto > 0 OR desconto IS NOT NULL;
 
 -- =================================================================
 -- AULA 38 - MAX - Encontrando Maximo

@@ -73,7 +73,7 @@ SELECT COUNT(*) FROM produtos WHERE preco > 500;
 -- Aula 33 - Desafio 1: Contar quantos produtos existem no banco
 
 
--- Aula 33 - Desafio 2: Contar quantos pedidos foram feitos em 2024
+-- Aula 33 - Desafio 2: Contar quantos pedidos foram feitos em 2025
 
 ```
 
@@ -430,10 +430,10 @@ SELECT nome, preco FROM produtos ORDER BY preco ASC LIMIT 1;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 37 - Desafio 1: Encontrar o produto mais barato
+-- Aula 37 - Desafio 1:  Encontre o menor preço dos produto da categoria Automotivo
 
 
--- Aula 37 - Desafio 2: Encontrar o pedido de menor valor
+-- Aula 37 - Desafio 2: Identifique o menor desconto aplicado em pedidos com desconto
 
 ```
 
