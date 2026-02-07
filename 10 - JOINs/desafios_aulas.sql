@@ -33,7 +33,7 @@ INNER JOIN clientes cli ON ped.cliente_id = cli.cliente_id;
 -- =================================================================
 
 -- Aula 43 - Desafio 1: Listar todos os produtos, incluindo os que nunca foram vendidos
--- Mostre: nome do produto, preco, quantidade vendida (ou NULL se nunca vendido)
+-- Mostre: nome do produto, preco, quantidade vendida
 SELECT
     p.nome AS produto,
     p.preco,
@@ -41,7 +41,7 @@ SELECT
 FROM produtos p
 LEFT JOIN itens_pedido ip ON p.produto_id = ip.produto_id
 GROUP BY p.produto_id, p.nome, p.preco
-ORDER BY quantidade_vendida DESC NULLS LAST;
+ORDER BY quantidade_vendida DESC;
 
 
 -- Aula 43 - Desafio 2: Listar todos os clientes, incluindo os que nunca fizeram pedidos
@@ -97,16 +97,25 @@ FROM produtos p
 FULL OUTER JOIN avaliacoes a ON p.produto_id = a.produto_id;
 
 
--- Aula 45 - Desafio 2: Identificar inconsistencias entre categorias e produtos
--- Encontre: categorias sem produtos OU produtos sem categoria valida
+-- Aula 45 - Desafio 2: Produtos com baixo engajamento de avaliações
+-- Liste produtos com poucas ou nenhuma avaliação (menos de 3 avaliações)
+-- Use FULL OUTER JOIN para garantir que todos os produtos sejam incluídos
 SELECT
-    c.categoria_id,
-    c.nome AS categoria,
     p.produto_id,
-    p.nome AS produto
-FROM categorias c
-FULL OUTER JOIN produtos p ON c.categoria_id = p.categoria_id
-WHERE c.categoria_id IS NULL OR p.produto_id IS NULL;
+    p.nome AS produto,
+    p.preco,
+    COUNT(a.avaliacao_id) AS total_avaliacoes,
+    ROUND(AVG(a.nota), 2) AS nota_media,
+    CASE
+        WHEN COUNT(a.avaliacao_id) = 0 THEN 'Sem avaliações'
+        WHEN COUNT(a.avaliacao_id) = 1 THEN 'Apenas 1 avaliação'
+        ELSE 'Poucas avaliações'
+    END AS status_engajamento
+FROM produtos p
+FULL OUTER JOIN avaliacoes a ON p.produto_id = a.produto_id
+GROUP BY p.produto_id, p.nome, p.preco
+HAVING COUNT(a.avaliacao_id) < 3
+ORDER BY total_avaliacoes ASC, p.preco DESC;
 
 
 -- =================================================================
@@ -184,110 +193,4 @@ INNER JOIN produtos prod ON ip.produto_id = prod.produto_id
 INNER JOIN categorias cat ON prod.categoria_id = cat.categoria_id
 LEFT JOIN pagamentos pg ON ped.pedido_id = pg.pedido_id
 WHERE ped.status = 'entregue'
-ORDER BY ped.data_pedido DESC, ped.pedido_id;
-
-
--- =================================================================
--- DESAFIOS FINAIS DO MODULO 09
--- =================================================================
-
--- Desafio Final 1: Catalogo Completo
--- Liste todos os produtos com suas categorias
--- Inclua produtos mesmo que a categoria esteja inativa
-SELECT
-    p.nome AS produto,
-    p.preco,
-    p.estoque,
-    p.marca,
-    c.nome AS categoria
-FROM produtos p
-LEFT JOIN categorias c ON p.categoria_id = c.categoria_id
-ORDER BY c.nome, p.nome;
-
-
--- Desafio Final 2: Clientes sem Compras
--- Encontre todos os clientes que nunca fizeram pedidos
-SELECT
-    c.nome,
-    c.email,
-    c.cidade,
-    c.estado
-FROM clientes c
-LEFT JOIN pedidos p ON c.cliente_id = p.cliente_id
-WHERE p.pedido_id IS NULL
-ORDER BY c.nome;
-
-
--- Desafio Final 3: Analise de Pagamentos
--- Liste todos os pedidos com informacoes de pagamento
--- Inclua pedidos que ainda nao tem pagamento registrado
-SELECT
-    ped.pedido_id,
-    cli.nome AS cliente,
-    ped.valor_total AS valor_pedido,
-    pg.metodo,
-    pg.status AS status_pagamento
-FROM pedidos ped
-INNER JOIN clientes cli ON ped.cliente_id = cli.cliente_id
-LEFT JOIN pagamentos pg ON ped.pedido_id = pg.pedido_id
-ORDER BY ped.valor_total DESC;
-
-
--- Desafio Final 4: Produtos Mais Avaliados
--- Liste produtos que tem avaliacoes, com estatisticas
--- Apenas produtos com mais de 1 avaliacao
-SELECT
-    p.nome AS produto,
-    c.nome AS categoria,
-    COUNT(*) AS qtd_avaliacoes,
-    ROUND(AVG(a.nota), 2) AS nota_media
-FROM produtos p
-INNER JOIN categorias c ON p.categoria_id = c.categoria_id
-INNER JOIN avaliacoes a ON p.produto_id = a.produto_id
-GROUP BY p.produto_id, p.nome, c.nome
-HAVING COUNT(*) > 1
-ORDER BY nota_media DESC;
-
-
--- Desafio Final 5: Relatorio de Vendas por Cliente (Desafio Avancado)
--- Para cada cliente que fez pedidos, mostre:
--- Nome, cidade, estado, total de pedidos, valor total gasto, ticket medio
--- Apenas clientes com mais de 1 pedido
-SELECT
-    c.nome AS cliente,
-    c.cidade,
-    c.estado,
-    COUNT(*) AS total_pedidos,
-    SUM(p.valor_total) AS valor_total_gasto,
-    ROUND(AVG(p.valor_total), 2) AS ticket_medio
-FROM clientes c
-INNER JOIN pedidos p ON c.cliente_id = p.cliente_id
-GROUP BY c.cliente_id, c.nome, c.cidade, c.estado
-HAVING COUNT(*) > 1
-ORDER BY valor_total_gasto DESC;
-
-
--- Desafio Final 6: Dashboard Completo (Boss Final!)
--- Relatorio detalhado de vendas:
--- pedido_id, data, cliente, cidade/estado, produto, categoria, quantidade, preco, subtotal, pagamento
--- Filtros: status 'entregue' ou 'enviado', categorias ativas
-SELECT
-    ped.pedido_id,
-    ped.data_pedido,
-    cli.nome AS cliente,
-    cli.cidade || '/' || cli.estado AS localizacao,
-    prod.nome AS produto,
-    cat.nome AS categoria,
-    ip.quantidade,
-    ip.preco_unitario,
-    ip.quantidade * ip.preco_unitario AS subtotal,
-    COALESCE(pg.metodo, 'Nao registrado') AS forma_pagamento
-FROM pedidos ped
-INNER JOIN clientes cli ON ped.cliente_id = cli.cliente_id
-INNER JOIN itens_pedido ip ON ped.pedido_id = ip.pedido_id
-INNER JOIN produtos prod ON ip.produto_id = prod.produto_id
-INNER JOIN categorias cat ON prod.categoria_id = cat.categoria_id
-LEFT JOIN pagamentos pg ON ped.pedido_id = pg.pedido_id
-WHERE ped.status IN ('entregue', 'enviado')
-  AND cat.ativo = TRUE
 ORDER BY ped.data_pedido DESC, ped.pedido_id;

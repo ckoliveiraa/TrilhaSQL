@@ -1,7 +1,140 @@
-# Módulo 9 - JOINs - Material Didático
+# Módulo 10 - JOINs - Material Didático
 
 ## Objetivo do Módulo
 Dominar as técnicas de junção de tabelas em SQL, aprendendo a combinar dados de múltiplas tabelas usando INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN e SELF JOIN.
+
+
+## Introdução a PK e FK e Modelo EMR
+
+Antes de aprender JOINs, é essencial entender como as tabelas se relacionam através de **chaves**.
+
+### 🔑 Primary Key (PK) - Chave Primária
+
+A **chave primária** é um identificador **único** para cada registro da tabela.
+
+**Características:**
+- Não pode ser NULL (vazia)
+- Deve ser única (sem duplicatas)
+- Geralmente é um número inteiro (ID)
+
+**Exemplos:**
+- `cliente_id` na tabela `clientes`
+- `produto_id` na tabela `produtos`
+- `pedido_id` na tabela `pedidos`
+
+### 🔗 Foreign Key (FK) - Chave Estrangeira
+
+A **chave estrangeira** é uma coluna que **referencia** a chave primária de outra tabela, criando um relacionamento entre elas.
+
+**Características:**
+- Aponta para a PK de outra tabela
+- Pode ser NULL (registro sem relacionamento)
+- Permite relacionar dados entre tabelas
+
+**Exemplos:**
+- `categoria_id` em `produtos` → referencia `categoria_id` em `categorias`
+- `cliente_id` em `pedidos` → referencia `cliente_id` em `clientes`
+- `produto_id` em `avaliacoes` → referencia `produto_id` em `produtos`
+
+### 📊 Como PK e FK funcionam juntas
+
+```
+CATEGORIAS                    PRODUTOS
++--------------+             +--------------+
+| categoria_id | ←─────────── | categoria_id | (FK)
+| nome         |             | produto_id   | (PK)
+| descricao    |             | nome         |
++--------------+             | preco        |
+                             +--------------+
+```
+
+Quando fazemos um JOIN, usamos essas chaves para "conectar" as tabelas:
+```sql
+SELECT p.nome, c.nome AS categoria
+FROM produtos p
+INNER JOIN categorias c ON p.categoria_id = c.categoria_id;
+```
+
+### 🗺️ Modelo ER do E-commerce
+
+```mermaid
+erDiagram
+    CATEGORIAS ||--o{ PRODUTOS : possui
+    CLIENTES ||--o{ PEDIDOS : realiza
+    CLIENTES ||--o{ AVALIACOES : faz
+    PEDIDOS ||--o{ ITENS_PEDIDO : contem
+    PEDIDOS ||--o{ PAGAMENTOS : gera
+    PRODUTOS ||--o{ ITENS_PEDIDO : vendido_em
+    PRODUTOS ||--o{ AVALIACOES : recebe
+
+    CATEGORIAS {
+        int categoria_id PK
+        varchar nome
+        varchar descricao
+        boolean ativo
+    }
+
+    PRODUTOS {
+        int produto_id PK
+        int categoria_id FK
+        varchar nome
+        decimal preco
+        int estoque
+        varchar marca
+        boolean ativo
+    }
+
+    CLIENTES {
+        int cliente_id PK
+        varchar nome
+        varchar email
+        varchar cpf
+        varchar telefone
+        varchar cidade
+        varchar estado
+        boolean ativo
+    }
+
+    PEDIDOS {
+        int pedido_id PK
+        int cliente_id FK
+        date data_pedido
+        varchar status
+        decimal valor_total
+        decimal frete
+        decimal desconto
+    }
+
+    ITENS_PEDIDO {
+        int item_pedido_id PK
+        int pedido_id FK
+        int produto_id FK
+        int quantidade
+        decimal preco_unitario
+    }
+
+    PAGAMENTOS {
+        int pagamento_id PK
+        int pedido_id FK
+        varchar metodo
+        varchar status
+        decimal valor
+    }
+
+    AVALIACOES {
+        int avaliacao_id PK
+        int produto_id FK
+        int cliente_id FK
+        int nota
+        varchar comentario
+    }
+```
+
+**Legenda do Diagrama:**
+- `||--o{` = Relacionamento **um para muitos** (1:N)
+- Uma CATEGORIA pode ter vários PRODUTOS
+- Um CLIENTE pode fazer vários PEDIDOS
+- Um PEDIDO contém vários ITENS_PEDIDO
 
 ---
 # AULA 42
@@ -537,9 +670,9 @@ SELECT * FROM tabela1 RIGHT JOIN tabela2 ON ...
 -- Mostre: produto_id, nome do produto, avaliacao_id, nota
 
 
--- Aula 45 - Desafio 2: Identificar inconsistências entre categorias e produtos
--- Encontre: categorias sem produtos OU produtos sem categoria válida
--- Mostre: categoria_id, nome da categoria, produto_id, nome do produto
+-- Aula 45 - Desafio 2: Produtos com baixo engajamento de avaliações
+-- Liste produtos com poucas ou nenhuma avaliação (menos de 3 avaliações)
+-- Use FULL OUTER JOIN para garantir que todos os produtos sejam incluídos
 
 ```
 
@@ -605,6 +738,14 @@ INNER JOIN produtos p2
     ON p1.produto_id < p2.produto_id
     AND ABS(p1.preco - p2.preco) < 50;
 ```
+
+**O que é ABS()?**
+A função `ABS()` retorna o valor **absoluto** (sempre positivo) de um número. É útil quando queremos calcular diferenças sem nos preocupar com a ordem da subtração.
+
+- `ABS(100 - 150)` = 50 (em vez de -50)
+- `ABS(150 - 100)` = 50 (mesmo resultado)
+
+No exemplo acima, usamos `ABS()` para garantir que a diferença entre preços seja sempre positiva, independentemente de qual produto é mais caro.
 
 ### 3. Produtos da mesma marca
 
@@ -725,16 +866,6 @@ INNER JOIN itens_pedido ip ON p.pedido_id = ip.pedido_id
 INNER JOIN produtos prod ON ip.produto_id = prod.produto_id
 INNER JOIN categorias cat ON prod.categoria_id = cat.categoria_id
 ORDER BY p.pedido_id, prod.nome;
-```
-
-## Diagrama de relacionamento
-
-```
-clientes ←── pedidos ←── itens_pedido ──→ produtos ──→ categorias
-    │            │
-    │            └──→ pagamentos
-    │
-    └──────────────→ avaliacoes ←─────────── produtos
 ```
 
 ## Exemplos Práticos
@@ -908,7 +1039,7 @@ LIMIT número                    -- 9º
 
 ---
 
-## Desafio Final do Módulo 9
+## Desafio Final do Módulo 10
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>
