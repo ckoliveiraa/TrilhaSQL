@@ -1,4 +1,4 @@
-# Módulo 10 - Combinando Resultados - Material Didático
+# Módulo 11 - Combinando Resultados - Material Didático
 
 ## Objetivo do Módulo
 Dominar os operadores de conjunto em SQL (UNION, UNION ALL, INTERSECT, EXCEPT) para combinar resultados de múltiplas consultas em um único resultado.
@@ -106,12 +106,16 @@ ORDER BY nome;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 48 - Desafio 1: Criar lista única de todas as marcas de produtos e nomes de categorias
--- Combine em uma única lista, sem duplicatas
+-- Aula 48 - Desafio 1: Lista unificada de marcas e categorias
+-- Combine marcas de produtos + nomes de categorias em uma única lista
+-- Adicione coluna "origem" identificando se é 'produtos' ou 'categorias'
+-- Exclua marcas nulas e garanta que não haja duplicatas
 
 
--- Aula 48 - Desafio 2: Listar todas as cidades onde temos clientes
--- Crie uma lista única de cidades (sem repetição)
+-- Aula 48 - Desafio 2: Lista unificada de todos os status do sistema
+-- Combine status de pedidos + status de pagamentos em uma única lista
+-- Adicione coluna "origem" para identificar de qual tabela vem cada status
+-- Liste apenas valores únicos (sem duplicatas)
 
 ```
 
@@ -244,13 +248,18 @@ EXCEPT:     A - B (apenas em A)
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 49 - Desafio 1: Listar todos os nomes (produtos e clientes), permitindo repetição
--- Use UNION ALL para manter duplicatas
+-- Aula 49 - Desafio 1: Clientes que compraram mas nunca avaliaram
+-- Encontre clientes que fizeram pedidos MAS NUNCA avaliaram produtos
 
 
 -- Aula 49 - Desafio 2: Criar histórico completo de ações
 -- Combine pedidos e pagamentos em uma linha do tempo
 -- Inclua: data, valor, tipo de ação
+
+
+-- Aula 49 - Desafio 3: Clientes engajados (que compraram E avaliaram)
+-- Encontre clientes que fizeram pedidos E também avaliaram produtos
+-- Use INTERSECT para encontrar IDs que aparecem em ambas as tabelas
 
 ```
 
@@ -303,7 +312,7 @@ No próximo módulo, você aprenderá sobre:
 
 ---
 
-## Desafio Final do Módulo 10
+## Desafio Final do Módulo 11
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>

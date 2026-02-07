@@ -1,5 +1,5 @@
 -- ============================================
--- MÓDULO 10 - COMBINANDO RESULTADOS
+-- MÓDULO 11 - COMBINANDO RESULTADOS
 -- Respostas do Desafio Final
 -- ============================================
 
