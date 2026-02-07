@@ -1,4 +1,4 @@
-# Módulo 8 - Agrupamento - Material Didático
+# Módulo 9 - Agrupamento - Material Didático
 
 ## Objetivo do Módulo
 Dominar as técnicas de agrupamento de dados em SQL, aprendendo a usar GROUP BY para criar relatórios agregados e HAVING para filtrar grupos de resultados.
@@ -573,7 +573,7 @@ HAVING AVG(nota) >= 4
 
 ---
 
-## Desafio Final do Módulo 8
+## Desafio Final do Módulo 9
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>
