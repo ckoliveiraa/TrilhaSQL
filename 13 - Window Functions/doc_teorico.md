@@ -3,11 +3,136 @@
 ## Objetivo do Módulo
 Dominar as funções de janela (Window Functions) em SQL, que permitem realizar cálculos em grupos de linhas relacionadas sem agrupar os resultados, mantendo o detalhe de cada registro.
 
+
+## Introdução às Window Functions
+
+## O que são Window Functions?
+
+**Window Functions** (Funções de Janela) são funções especiais que permitem fazer **cálculos em grupos de linhas** sem perder o detalhe individual de cada registro.
+
+Diferente do `GROUP BY` que **colapsa** as linhas em um único resultado por grupo, as Window Functions **mantêm todas as linhas** e adicionam informações calculadas baseadas em "janelas" (grupos) de dados.
+
+## A Diferença Fundamental
+
+### Com GROUP BY (Agregação Tradicional):
+```sql
+-- Conta quantos produtos temos por categoria
+SELECT
+    c.nome AS categoria,
+    COUNT(*) AS total_produtos
+FROM produtos p
+INNER JOIN categorias c ON p.categoria_id = c.categoria_id
+GROUP BY c.categoria_id, c.nome;
+
+-- Resultado:
+-- | categoria    | total_produtos |
+-- |--------------|----------------|
+-- | Eletrônicos  | 15             |
+-- | Roupas       | 8              |
+-- | Livros       | 12             |
+
+-- 👎 PERDEMOS os detalhes de CADA produto!
+-- 👎 Só vemos o total agregado por categoria
+```
+
+### Com Window Functions:
+```sql
+-- Mostra CADA produto E conta o total da categoria
+SELECT
+    c.nome AS categoria,
+    p.nome AS produto,
+    p.preco,
+    COUNT(*) OVER (PARTITION BY p.categoria_id) AS total_na_categoria
+FROM produtos p
+INNER JOIN categorias c ON p.categoria_id = c.categoria_id;
+
+-- Resultado:
+-- | categoria    | produto      | preco  | total_na_categoria |
+-- |--------------|--------------|--------|-------------------|
+-- | Eletrônicos  | iPhone 15    | 8999   | 15                |
+-- | Eletrônicos  | Galaxy S24   | 5999   | 15                |
+-- | Eletrônicos  | MacBook Pro  | 7999   | 15                |
+-- | Roupas       | Camiseta     | 49     | 8                 |
+-- | Roupas       | Calça Jeans  | 129    | 8                 |
+
+-- ✅ Mantemos TODAS as linhas de produtos!
+-- ✅ Cada linha mostra o total da SUA categoria
+```
+
+## Visualização da Diferença
+
+```
+GROUP BY (Agregação):           Window Functions:
+┌──────────┬────────┐            ┌──────────┬──────────┬───────┬─────┐
+│ Categoria│ Total  │            │ Categoria│ Produto  │ Preço │Total│
+├──────────┼────────┤            ├──────────┼──────────┼───────┼─────┤
+│ Celular  │ 3      │            │ Celular  │ iPhone   │ 8999  │ 3   │
+│ Notebook │ 2      │            │ Celular  │ Galaxy   │ 5999  │ 3   │
+└──────────┴────────┘            │ Celular  │ Xiaomi   │ 2999  │ 3   │
+5 produtos viram                 │ Notebook │ MacBook  │ 7999  │ 2   │
+2 linhas!                        │ Notebook │ Dell     │ 4999  │ 2   │
+                                 └──────────┴──────────┴───────┴─────┘
+                                 5 produtos permanecem 5 linhas!
+```
+
+## Quando usar cada um?
+
+| Situação | Use GROUP BY | Use Window Functions |
+|----------|--------------|---------------------|
+| **Quer apenas totais/resumos** | ✅ Sim | ❌ Não necessário |
+| **Precisa de detalhes + cálculos** | ❌ Não consegue | ✅ Perfeito! |
+| **Ranking/numeração** | ❌ Não consegue | ✅ Ideal |
+| **Comparar com linha anterior** | ❌ Impossível | ✅ LAG/LEAD |
+| **Top N por grupo** | 🟡 Difícil | ✅ Fácil |
+
+## Exemplo Prático: Ranking de Vendas
+
+**Pergunta:** "Quero ver TODOS os pedidos E o ranking de valor de cada um"
+
+### ❌ Com GROUP BY não dá:
+```sql
+-- Isso não funciona como queremos
+SELECT
+    pedido_id,
+    valor_total,
+    RANK() -- ❌ ERRO: não pode usar RANK com GROUP BY
+FROM pedidos
+GROUP BY ...;
+```
+
+### ✅ Com Window Functions:
+```sql
+-- Perfeito! Cada pedido mantém seus detalhes
+SELECT
+    pedido_id,
+    cliente_id,
+    data_pedido,
+    valor_total,
+    RANK() OVER (ORDER BY valor_total DESC) AS ranking
+FROM pedidos;
+
+-- Resultado:
+-- | pedido_id | cliente_id | data_pedido | valor_total | ranking |
+-- |-----------|------------|-------------|-------------|---------|
+-- | 1523      | 45         | 2024-03-15  | 2500.00     | 1       |
+-- | 1891      | 12         | 2024-03-18  | 2500.00     | 1       |
+-- | 1456      | 89         | 2024-03-10  | 1800.00     | 3       |
+-- | 1678      | 23         | 2024-03-14  | 950.00      | 4       |
+```
+
+## Em resumo
+
+- **GROUP BY**: Agrupa e resume → Perde detalhes
+- **Window Functions**: Calcula em grupos → Mantém detalhes
+- **Poder das Window Functions**: "Faça cálculos em grupos SEM agrupar o resultado!"
+
+Agora vamos aprender as principais Window Functions disponíveis! 🚀
+
 ---
-# AULA 58
+# AULA 54
 
 <details>
-<summary><strong>Expandir Aula 58</strong></summary>
+<summary><strong>Expandir Aula 54</strong></summary>
 
 ## ROW_NUMBER - Numerando Linhas
 
@@ -21,20 +146,6 @@ A função `ROW_NUMBER()` atribui um **número sequencial único** a cada linha 
 ROW_NUMBER() OVER (ORDER BY coluna)
 ```
 
-## Window Functions vs Agregação
-
-```
-GROUP BY (Agregação):           Window Functions:
-┌────────┬────────┐             ┌────────┬────────┬─────┐
-│ Grupo  │ Total  │             │ Linha  │ Valor  │ Num │
-├────────┼────────┤             ├────────┼────────┼─────┤
-│ A      │ 300    │             │ A      │ 100    │ 1   │
-│ B      │ 200    │             │ A      │ 200    │ 2   │
-└────────┴────────┘             │ B      │ 150    │ 3   │
-Perde os detalhes!              │ B      │ 50     │ 4   │
-                                └────────┴────────┴─────┘
-                                Mantém os detalhes!
-```
 
 ## Exemplos Práticos
 
@@ -92,11 +203,11 @@ WHERE num BETWEEN 11 AND 20;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 58 - Desafio 1: Numerar produtos ordenados por preço (do mais caro ao mais barato)
+-- Aula 54 - Desafio 1: Numerar produtos ordenados por preço (do mais caro ao mais barato)
 -- Exiba: número, nome e preço
 
 
--- Aula 58 - Desafio 2: Numerar pedidos de cada cliente por data
+-- Aula 54 - Desafio 2: Numerar pedidos de cada cliente por data
 -- Exiba: cliente_id, pedido_id, data_pedido e número do pedido
 
 ```
@@ -107,10 +218,10 @@ WHERE num BETWEEN 11 AND 20;
 
 ---
 
-# AULA 59
+# AULA 55
 
 <details>
-<summary><strong>Expandir Aula 59</strong></summary>
+<summary><strong>Expandir Aula 55</strong></summary>
 
 ## RANK - Ranking com Empates
 
@@ -188,11 +299,11 @@ GROUP BY c.cliente_id, c.nome;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 59 - Desafio 1: Rankear produtos por preço (empatados ficam com mesmo número)
+-- Aula 55 - Desafio 1: Rankear produtos por preço (empatados ficam com mesmo número)
 -- Exiba: ranking, nome, preco
 
 
--- Aula 59 - Desafio 2: Rankear clientes por total gasto
+-- Aula 55 - Desafio 2: Rankear clientes por total gasto
 -- Use JOIN com pedidos, agrupe por cliente e aplique RANK
 
 ```
@@ -203,10 +314,10 @@ GROUP BY c.cliente_id, c.nome;
 
 ---
 
-# AULA 60
+# AULA 56
 
 <details>
-<summary><strong>Expandir Aula 60</strong></summary>
+<summary><strong>Expandir Aula 56</strong></summary>
 
 ## DENSE_RANK - Ranking Denso
 
@@ -284,11 +395,11 @@ GROUP BY p.produto_id, p.nome;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 60 - Desafio 1: Rankear produtos por avaliação média (sem pular números)
+-- Aula 56 - Desafio 1: Rankear produtos por avaliação média (sem pular números)
 -- Use DENSE_RANK com AVG(nota)
 
 
--- Aula 60 - Desafio 2: Rankear categorias por número de produtos
+-- Aula 56 - Desafio 2: Rankear categorias por número de produtos
 -- Conte produtos por categoria e aplique DENSE_RANK
 
 ```
@@ -299,10 +410,10 @@ GROUP BY p.produto_id, p.nome;
 
 ---
 
-# AULA 61
+# AULA 57
 
 <details>
-<summary><strong>Expandir Aula 61</strong></summary>
+<summary><strong>Expandir Aula 57</strong></summary>
 
 ## PARTITION BY - Dividindo em Grupos
 
@@ -406,11 +517,11 @@ GROUP BY EXTRACT(MONTH FROM p.data_pedido), v.vendedor_id, v.nome;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 61 - Desafio 1: Numerar produtos dentro de cada categoria
+-- Aula 57 - Desafio 1: Numerar produtos dentro de cada categoria
 -- Ordenar por preço dentro de cada categoria
 
 
--- Aula 61 - Desafio 2: Rankear vendas por mês
+-- Aula 57 - Desafio 2: Rankear vendas por mês
 -- Mostre o ranking de pedidos por valor em cada mês
 
 ```
@@ -421,10 +532,10 @@ GROUP BY EXTRACT(MONTH FROM p.data_pedido), v.vendedor_id, v.nome;
 
 ---
 
-# AULA 62
+# AULA 58
 
 <details>
-<summary><strong>Expandir Aula 62</strong></summary>
+<summary><strong>Expandir Aula 58</strong></summary>
 
 ## LEAD e LAG - Acessando Linhas Adjacentes
 
@@ -558,11 +669,11 @@ FROM produtos;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 62 - Desafio 1: Comparar preço de cada produto com o próximo produto
+-- Aula 58 - Desafio 1: Comparar preço de cada produto com o próximo produto
 -- Ordene por preço e mostre a diferença
 
 
--- Aula 62 - Desafio 2: Calcular diferença de valor entre pedidos consecutivos de cada cliente
+-- Aula 58 - Desafio 2: Calcular diferença de valor entre pedidos consecutivos de cada cliente
 -- Use PARTITION BY cliente_id
 
 ```
