@@ -104,9 +104,18 @@ WHERE preco > (
 <details>
 <summary><strong>Ver Desafios</strong></summary>
 
-1. Mostrar produtos com preço acima da média geral
-2. Mostrar clientes que fizeram pedidos com valor acima de R$ 1000
+```sql
+-- Aula 50 - Desafio 1: Produtos com preço acima da média geral
+-- Use uma subconsulta no WHERE para comparar com a média de preços de todos os produtos
+-- Mostre: nome e preço dos produtos
+-- Ordene do mais caro para o mais barato
 
+
+-- Aula 50 - Desafio 2: Clientes que fizeram pedidos de alto valor (acima de R$ 1000)
+-- Use uma subconsulta com IN no WHERE para filtrar clientes
+-- Mostre: nome e email dos clientes que têm pelo menos um pedido acima de R$ 1000
+-- Ordene por nome em ordem alfabética
+```
 </details>
 
 </details>
@@ -249,9 +258,18 @@ WHERE total_gasto > media_geral;
 <details>
 <summary><strong>Ver Desafios</strong></summary>
 
-1. Criar uma tabela temporária com resumo de vendas por produto (nome, quantidade vendida, valor total)
-2. Calcular a média de pedidos por cliente usando subquery no FROM
+```sql
+-- Aula 51 - Desafio 1: Resumo de vendas por produto usando tabela derivada (Derived Table)
+-- Crie uma subconsulta no FROM que agrupe as vendas por produto
+-- Mostre: nome do produto, quantidade total vendida e valor total arrecadado
+-- Ordene do produto que gerou mais receita para o que gerou menos
 
+
+-- Aula 51 - Desafio 2: Calcular médias gerais a partir de dados agregados por cliente
+-- Use uma subconsulta no FROM que agrupe pedidos por cliente (total de pedidos e valor total)
+-- Mostre: média de pedidos por cliente e média de valor gasto por cliente
+-- Arredonde ambos os valores para 2 casas decimais
+```
 </details>
 
 </details>
@@ -406,8 +424,20 @@ FROM produtos p;
 <details>
 <summary><strong>Ver Desafios</strong></summary>
 
-1. Listar produtos com a quantidade total vendida em cada linha
-2. Listar clientes com o total gasto por cada um
+```sql
+
+-- Aula 52 - Desafio 1: Relatório de produtos com quantidade total vendida
+-- Mostre: nome, preço, estoque atual e total de unidades vendidas de cada produto
+-- Inclua produtos que nunca foram vendidos (devem aparecer com 0 unidades)
+-- Ordene do produto mais vendido para o menos vendido
+
+
+-- Aula 52 - Desafio 2: Relatório de clientes com valor total gasto individualmente
+-- Mostre: ID, nome, email, cidade e total gasto por cada cliente
+-- Inclua clientes que nunca fizeram pedidos (devem aparecer com R$ 0,00)
+-- Ordene do cliente que mais gastou para o que menos gastou
+
+```
 
 </details>
 
@@ -556,8 +586,17 @@ Para verificar se "João fez algum pedido":
 <details>
 <summary><strong>Ver Desafios</strong></summary>
 
-1. Listar produtos que já foram vendidos (usando EXISTS)
-2. Listar clientes que já fizeram avaliações (usando EXISTS)
+
+```sql
+
+-- Aula 53 - Desafio 1: Produtos que já foram vendidos pelo menos uma vez
+-- Mostre: nome, preço e estoque atual dos produtos
+-- Ordene por nome do produto em ordem alfabética
+
+-- Aula 53 - Desafio 2: Clientes que nunca avaliaram produtos
+-- Mostre: nome e email dos clientes
+-- Ordene por nome em ordem alfabética
+```
 
 </details>
 
@@ -619,29 +658,38 @@ No próximo módulo, você aprenderá sobre:
 <details>
 <summary><strong>Ver Desafio Final</strong></summary>
 
+```sql 
+
 Usando seus conhecimentos de subconsultas, resolva os seguintes problemas:
 
-**Desafio 1:** Liste todos os produtos com preço acima da média da sua categoria. Mostre: nome do produto, preço, nome da categoria, preço médio da categoria.
+-- Desafio Final 1: Produtos com preço acima da média da sua categoria
+-- Use subconsultas no WHERE (para filtrar) e no SELECT (para calcular a média)
+-- Mostre: nome do produto, preço, nome da categoria e preço médio da categoria
+-- Ordene por categoria e depois por preço (do mais caro para o mais barato)
 
-**Desafio 2:** Encontre os clientes "VIP" - aqueles cujo total gasto está acima da média de todos os clientes. Mostre: nome, email, total gasto, média geral.
+-- Desafio Final 2: Identificar clientes VIP (gastam acima da média)
+-- Use subconsulta no FROM para calcular o total gasto por cliente
+-- Use outra subconsulta para calcular a média geral de gastos
+-- Mostre: nome, email, total gasto e média geral (apenas clientes acima da média)
+-- Ordene do cliente que mais gastou para o que menos gastou
 
-**Desafio 3:** Para cada categoria, mostre quantos produtos têm estoque abaixo de 10 unidades. Use subconsulta no SELECT.
+-- Desafio Final 3: Contagem de produtos com estoque baixo por categoria
+-- Use uma subconsulta escalar no SELECT para contar produtos com estoque < 10
+-- Mostre: nome da categoria e quantidade de produtos com estoque baixo
+-- Considere apenas categorias ativas
+-- Ordene da categoria com mais produtos em estoque baixo para a com menos
 
-**Desafio 4:** Liste produtos que foram vendidos em pedidos com valor total acima de R$ 1000. Use EXISTS.
+-- Desafio Final 4: Produtos vendidos em pedidos de alto valor (acima de R$ 1000)
+-- Use EXISTS para verificar se o produto aparece em pedidos grandes
+-- Mostre: nome, preço e marca dos produtos (sem duplicatas)
+-- Ordene por nome do produto
 
-**Desafio 5:** Crie um relatório mostrando para cada mês: total de vendas, quantidade de pedidos, e se esse mês teve vendas acima da média mensal (sim/não). Use subconsulta no FROM.
+-- Desafio Final 5: Análise mensal de desempenho de vendas
+-- Use subconsulta no FROM para agrupar vendas por ano/mês
+-- Use outra subconsulta para calcular a média mensal de vendas
+-- Mostre: ano, mês, total de vendas, quantidade de pedidos e se superou a média (Sim/Não)
+-- Exclua pedidos cancelados da análise
+-- Ordene por ano e mês cronologicamente
 
-**Desafio 6 (Boss Final!):** Crie um dashboard de produtos que mostre:
-- Nome do produto
-- Categoria
-- Preço
-- Estoque
-- Total vendido (quantidade)
-- Receita gerada
-- Nota média das avaliações
-- Se já foi avaliado (sim/não usando EXISTS)
-- Classificação: "Campeão" se vendeu mais que a média, "Normal" caso contrário
-
-Ordene pelos mais vendidos primeiro.
-
+````
 </details>

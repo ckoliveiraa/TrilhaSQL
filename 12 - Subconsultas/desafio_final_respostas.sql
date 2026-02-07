@@ -1,11 +1,12 @@
 -- ============================================
--- MÓDULO 11 - SUBCONSULTAS
+-- MÓDULO 12 - SUBCONSULTAS
 -- Respostas do Desafio Final
 -- ============================================
 
--- Desafio Final 1: Produtos Acima da Média da Categoria
--- Liste todos os produtos com preço acima da média da sua categoria
--- Mostre: nome do produto, preço, nome da categoria, preço médio da categoria
+-- Desafio Final 1: Produtos com preço acima da média da sua categoria
+-- Use subconsultas no WHERE (para filtrar) e no SELECT (para calcular a média)
+-- Mostre: nome do produto, preço, nome da categoria e preço médio da categoria
+-- Ordene por categoria e depois por preço (do mais caro para o mais barato)
 
 SELECT
     p.nome AS produto,
@@ -26,9 +27,11 @@ WHERE p.preco > (
 ORDER BY c.nome, p.preco DESC;
 
 
--- Desafio Final 2: Clientes VIP
--- Encontre os clientes cujo total gasto está acima da média de todos os clientes
--- Mostre: nome, email, total gasto, média geral
+-- Desafio Final 2: Identificar clientes VIP (gastam acima da média)
+-- Use subconsulta no FROM para calcular o total gasto por cliente
+-- Use outra subconsulta para calcular a média geral de gastos
+-- Mostre: nome, email, total gasto e média geral (apenas clientes acima da média)
+-- Ordene do cliente que mais gastou para o que menos gastou
 
 SELECT
     cliente,
@@ -56,9 +59,11 @@ WHERE total_gasto > media_geral
 ORDER BY total_gasto DESC;
 
 
--- Desafio Final 3: Produtos com Estoque Baixo por Categoria
--- Para cada categoria, mostre quantos produtos têm estoque abaixo de 10 unidades
--- Use subconsulta no SELECT
+-- Desafio Final 3: Contagem de produtos com estoque baixo por categoria
+-- Use uma subconsulta escalar no SELECT para contar produtos com estoque < 10
+-- Mostre: nome da categoria e quantidade de produtos com estoque baixo
+-- Considere apenas categorias ativas
+-- Ordene da categoria com mais produtos em estoque baixo para a com menos
 
 SELECT
     c.nome AS categoria,
@@ -73,9 +78,10 @@ WHERE c.ativo = TRUE
 ORDER BY produtos_estoque_baixo DESC;
 
 
--- Desafio Final 4: Produtos em Pedidos Grandes
--- Liste produtos que foram vendidos em pedidos com valor total acima de R$ 1000
--- Use EXISTS
+-- Desafio Final 4: Produtos vendidos em pedidos de alto valor (acima de R$ 1000)
+-- Use EXISTS para verificar se o produto aparece em pedidos grandes
+-- Mostre: nome, preço e marca dos produtos (sem duplicatas)
+-- Ordene por nome do produto
 
 SELECT DISTINCT
     p.nome AS produto,
@@ -92,9 +98,12 @@ WHERE EXISTS (
 ORDER BY p.nome;
 
 
--- Desafio Final 5: Relatório Mensal de Vendas
--- Para cada mês: total de vendas, quantidade de pedidos
--- E se esse mês teve vendas acima da média mensal (sim/não)
+-- Desafio Final 5: Análise mensal de desempenho de vendas
+-- Use subconsulta no FROM para agrupar vendas por ano/mês
+-- Use outra subconsulta para calcular a média mensal de vendas
+-- Mostre: ano, mês, total de vendas, quantidade de pedidos e se superou a média (Sim/Não)
+-- Exclua pedidos cancelados da análise
+-- Ordene por ano e mês cronologicamente
 
 SELECT
     ano,
@@ -127,12 +136,16 @@ FROM (
 ORDER BY ano, mes;
 
 
--- Desafio Final 6: Dashboard Completo de Produtos (Boss Final!)
--- Nome do produto, categoria, preço, estoque
--- Total vendido (quantidade), receita gerada
--- Nota média das avaliações
--- Se já foi avaliado (sim/não usando EXISTS)
--- Classificação: "Campeão" se vendeu mais que a média, "Normal" caso contrário
+-- Desafio Final 6: Dashboard executivo completo de produtos (Boss Final!)
+-- Combine TODOS os tipos de subconsultas: no SELECT, no WHERE e EXISTS
+-- Mostre para cada produto:
+--   - Nome, categoria, preço, estoque atual
+--   - Total de unidades vendidas e receita total gerada
+--   - Nota média das avaliações (arredondada para 1 casa decimal)
+--   - Se o produto já foi avaliado alguma vez (Sim/Não usando EXISTS)
+--   - Classificação: "Campeão" se vendeu acima da média geral, "Normal" caso contrário
+-- Ordene do produto mais vendido para o menos vendido
+-- DICA: Use COALESCE para produtos que nunca foram vendidos ou avaliados
 
 SELECT
     p.nome AS produto,
