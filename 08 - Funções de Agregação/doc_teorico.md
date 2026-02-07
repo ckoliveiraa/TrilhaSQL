@@ -530,7 +530,7 @@ FROM pedidos;
 -- Aula 38 - Desafio 1: Encontrar o produto mais caro
 
 
--- Aula 38 - Desafio 2: Encontrar o pedido de maior valor
+-- Aula 38 - Desafio 2: Encontrar o valor do maior pedido
 
 ```
 
