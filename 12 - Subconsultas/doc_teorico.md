@@ -1,4 +1,4 @@
-# Módulo 11 - Subconsultas - Material Didático
+# Módulo 12 - Subconsultas - Material Didático
 
 ## Objetivo do Módulo
 Aprender a usar consultas dentro de outras consultas, uma técnica poderosa para resolver problemas complexos em SQL.

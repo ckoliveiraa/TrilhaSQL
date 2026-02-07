@@ -3,10 +3,10 @@
 -- =================================================================
 
 -- =================================================================
--- AULA 58 - ROW_NUMBER - Numerando Linhas
+-- AULA 53 - ROW_NUMBER - Numerando Linhas
 -- =================================================================
 
--- Aula 58 - Desafio 1: Numerar produtos ordenados por preço (do mais caro ao mais barato)
+-- Aula 53 - Desafio 1: Numerar produtos ordenados por preço (do mais caro ao mais barato)
 -- Exiba: número, nome e preço
 SELECT
     ROW_NUMBER() OVER (ORDER BY preco DESC) AS numero,
@@ -15,7 +15,7 @@ SELECT
 FROM produtos;
 
 
--- Aula 58 - Desafio 2: Numerar pedidos de cada cliente por data
+-- Aula 53 - Desafio 2: Numerar pedidos de cada cliente por data
 -- Exiba: cliente_id, pedido_id, data_pedido e número do pedido
 SELECT
     cliente_id,
@@ -27,10 +27,10 @@ ORDER BY cliente_id, numero_pedido;
 
 
 -- =================================================================
--- AULA 59 - RANK - Ranking com Empates
+-- AULA 54 - RANK - Ranking com Empates
 -- =================================================================
 
--- Aula 59 - Desafio 1: Rankear produtos por preço (empatados ficam com mesmo número)
+-- Aula 54 - Desafio 1: Rankear produtos por preço (empatados ficam com mesmo número)
 -- Exiba: ranking, nome, preco
 SELECT
     RANK() OVER (ORDER BY preco DESC) AS ranking,
@@ -39,7 +39,7 @@ SELECT
 FROM produtos;
 
 
--- Aula 59 - Desafio 2: Rankear clientes por total gasto
+-- Aula 54 - Desafio 2: Rankear clientes por total gasto
 -- Use JOIN com pedidos, agrupe por cliente e aplique RANK
 SELECT
     c.nome AS cliente,
@@ -52,10 +52,10 @@ ORDER BY ranking;
 
 
 -- =================================================================
--- AULA 60 - DENSE_RANK - Ranking Denso
+-- AULA 55 - DENSE_RANK - Ranking Denso
 -- =================================================================
 
--- Aula 60 - Desafio 1: Rankear produtos por avaliação média (sem pular números)
+-- Aula 55 - Desafio 1: Rankear produtos por avaliação média (sem pular números)
 -- Use DENSE_RANK com AVG(nota)
 SELECT
     p.nome AS produto,
@@ -67,7 +67,7 @@ GROUP BY p.produto_id, p.nome
 ORDER BY ranking;
 
 
--- Aula 60 - Desafio 2: Rankear categorias por número de produtos
+-- Aula 55 - Desafio 2: Rankear categorias por número de produtos
 -- Conte produtos por categoria e aplique DENSE_RANK
 SELECT
     c.nome AS categoria,
@@ -80,10 +80,10 @@ ORDER BY ranking;
 
 
 -- =================================================================
--- AULA 61 - PARTITION BY - Dividindo em Grupos
+-- AULA 56 - PARTITION BY - Dividindo em Grupos
 -- =================================================================
 
--- Aula 61 - Desafio 1: Numerar produtos dentro de cada categoria
+-- Aula 56 - Desafio 1: Numerar produtos dentro de cada categoria
 -- Ordenar por preço dentro de cada categoria
 SELECT
     c.nome AS categoria,
@@ -98,7 +98,7 @@ INNER JOIN categorias c ON p.categoria_id = c.categoria_id
 ORDER BY c.nome, ranking_na_categoria;
 
 
--- Aula 61 - Desafio 2: Rankear vendas por mês
+-- Aula 56 - Desafio 2: Rankear vendas por mês
 -- Mostre o ranking de pedidos por valor em cada mês
 SELECT
     EXTRACT(YEAR FROM data_pedido) AS ano,
@@ -114,10 +114,10 @@ ORDER BY ano, mes, ranking_no_mes;
 
 
 -- =================================================================
--- AULA 62 - LEAD e LAG - Acessando Linhas Adjacentes
+-- AULA 57 - LEAD e LAG - Acessando Linhas Adjacentes
 -- =================================================================
 
--- Aula 62 - Desafio 1: Comparar preço de cada produto com o próximo produto
+-- Aula 57 - Desafio 1: Comparar preço de cada produto com o próximo produto
 -- Ordene por preço e mostre a diferença
 SELECT
     nome,
@@ -128,7 +128,7 @@ FROM produtos
 ORDER BY preco;
 
 
--- Aula 62 - Desafio 2: Calcular diferença de valor entre pedidos consecutivos de cada cliente
+-- Aula 57 - Desafio 2: Calcular diferença de valor entre pedidos consecutivos de cada cliente
 -- Use PARTITION BY cliente_id
 SELECT
     cliente_id,

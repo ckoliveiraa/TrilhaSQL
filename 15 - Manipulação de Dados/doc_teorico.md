@@ -1,4 +1,4 @@
-# Módulo 12 - Manipulação de Dados - Material Didático
+# Módulo 13 - Manipulação de Dados - Material Didático
 
 ## Objetivo do Módulo
 Dominar os comandos DML (Data Manipulation Language) para inserir, atualizar e deletar dados de forma segura e eficiente.
@@ -552,7 +552,7 @@ No próximo módulo, você aprenderá sobre:
 
 ---
 
-## Desafio Final do Módulo 12
+## Desafio Final do Módulo 13
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>
