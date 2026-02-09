@@ -77,33 +77,33 @@ LIMIT 10;
 ```sql
 -- Usar várias CTEs na mesma query
 WITH
-vendas_por_cliente AS (
+vendas_por_categoria AS (
     SELECT
-        cliente_id,
-        COUNT(*) AS qtd_pedidos,
-        SUM(valor_total) AS total_gasto
-    FROM pedidos
-    GROUP BY cliente_id
+        cat.categoria_id,
+        cat.nome AS categoria,
+        COUNT(DISTINCT p.pedido_id) AS qtd_pedidos,
+        SUM(ip.quantidade * ip.preco_unitario) AS receita_total
+    FROM categorias cat
+    INNER JOIN produtos prod ON cat.categoria_id = prod.categoria_id
+    INNER JOIN itens_pedido ip ON prod.produto_id = ip.produto_id
+    INNER JOIN pedidos p ON ip.pedido_id = p.pedido_id
+    GROUP BY cat.categoria_id, cat.nome
 ),
-media_geral AS (
-    SELECT AVG(total_gasto) AS media
-    FROM vendas_por_cliente
+top_categorias AS (
+    SELECT
+        categoria,
+        receita_total,
+        ROW_NUMBER() OVER (ORDER BY receita_total DESC) AS ranking
+    FROM vendas_por_categoria
 )
 SELECT
-    c.nome,
-    v.qtd_pedidos,
-    v.total_gasto,
-    m.media AS media_geral,
-    CASE
-        WHEN v.total_gasto > m.media THEN 'Acima da média'
-        ELSE 'Abaixo da média'
-    END AS classificacao
-FROM clientes c
-INNER JOIN vendas_por_cliente v ON c.cliente_id = v.cliente_id
-CROSS JOIN media_geral m;
+    categoria,
+    receita_total,
+    ranking
+FROM top_categorias
+WHERE ranking <= 5
+ORDER BY ranking;
 ```
-
-**Nota sobre CROSS JOIN:** O `CROSS JOIN` combina cada linha de uma tabela com todas as linhas de outra tabela (produto cartesiano). No exemplo acima, como `media_geral` retorna apenas uma linha, usamos `CROSS JOIN` para adicionar essa linha a todos os resultados. Isso é útil quando queremos comparar valores individuais com um valor agregado único (como uma média geral).
 
 ## CTEs que Referenciam Outras CTEs
 
