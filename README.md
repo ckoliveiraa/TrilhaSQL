@@ -5,6 +5,11 @@ Dominar os fundamentos do SQL através de aulas práticas e desafios progressivo
 
 ---
 
+## 🗺️ Trilha de Aprendizado
+
+[![Trilha de Aprendizado SQL](https://i.postimg.cc/PqvCx3G3/Chat-GPT-Image-9-de-fev-de-2026-17-12-27.png)](https://postimg.cc/WDjNY71g)
+
+---
 ## 📖 Módulos Disponíveis
 
 | # | Módulo | Descrição |
@@ -24,59 +29,6 @@ Dominar os fundamentos do SQL através de aulas práticas e desafios progressivo
 | 13 | [Window Functions](13%20-%20Window%20Functions/) | ROW_NUMBER, RANK, LAG, LEAD |
 | 14 | [CTEs](14%20-%20CTEs/) | WITH, Common Table Expressions |
 | 15 | [Manipulação de Dados](15%20-%20Manipulação%20de%20Dados/) | CREATE, INSERT, UPDATE, DELETE, DROP |
-
----
-
-## 🗺️ Trilha de Aprendizado
-
-```
-═══════════════════════════════════════════════════════════════════════════════
-                           TRILHA DE APRENDIZADO SQL
-═══════════════════════════════════════════════════════════════════════════════
-
- SETUP
- ─────
- ┌─────────┐
- │   01    │
- │  INTRO  │  Render + PostgreSQL + Configuração
- │ Setup DB│
- └────┬────┘
-      │
-      ↓
- FUNDAÇÃO                    TRANSFORMAÇÃO              AGREGAÇÃO
- ────────                    ─────────────              ─────────
- ┌─────────┐  ┌─────────┐   ┌─────────┐ ┌─────────┐   ┌─────────┐ ┌─────────┐
- │   02    │  │   03    │   │   04    │ │   05    │   │   07    │ │   08    │
- │ SELECT  │→ │ FILTROS │ → │ STRING  │→│  DATA   │ → │  CASE   │→│  AGG    │
- │ básico  │  │  WHERE  │   │  funcs  │ │  funcs  │   │  WHEN   │ │ funcs   │
- └─────────┘  └─────────┘   └─────────┘ └─────────┘   └─────────┘ └─────────┘
-                                   │
-                            ┌──────┴──────┐
-                            │     06      │
-                            │  CONVERSÃO  │
-                            │    CAST     │
-                            └─────────────┘
-
- AGRUPAMENTO                RELACIONAMENTOS            COMBINAÇÕES
- ───────────                ───────────────            ───────────
- ┌─────────┐               ┌─────────┐                ┌─────────┐
- │   09    │               │   10    │                │   11    │
- │ GROUP BY│ ────────────→ │  JOINs  │ ─────────────→ │  UNION  │
- │ HAVING  │               │múltiplas│                │INTERSECT│
- └─────────┘               │ tabelas │                └─────────┘
-                           └─────────┘
-
- AVANÇADO                                              MANIPULAÇÃO
- ────────                                              ───────────
- ┌─────────┐  ┌─────────┐   ┌─────────┐              ┌─────────┐
- │   12    │  │   13    │   │   14    │              │   15    │
- │  SUB    │→ │ WINDOW  │ → │  CTEs   │────────────→ │ CREATE  │
- │ QUERIES │  │  FUNCS  │   │   WITH  │              │ INSERT  │
- └─────────┘  └─────────┘   └─────────┘              │ UPDATE  │
-                                                      │ DELETE  │
-                                                      └─────────┘
-═══════════════════════════════════════════════════════════════════════════════
-```
 
 ---
 
