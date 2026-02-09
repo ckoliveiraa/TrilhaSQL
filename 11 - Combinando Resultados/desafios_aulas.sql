@@ -25,10 +25,12 @@ ORDER BY item;
 -- Combine status de pedidos + status de pagamentos em uma única lista
 -- Adicione coluna "origem" para identificar de qual tabela vem cada status
 -- Liste apenas valores únicos (sem duplicatas)
-SELECT DISTINCT status, 'pedidos' AS origem
+SELECT DISTINCT status, 
+'pedidos' AS origem
 FROM pedidos
 UNION
-SELECT DISTINCT status, 'pagamentos' AS origem
+SELECT DISTINCT status, 
+'pagamentos' AS origem
 FROM pagamentos
 ORDER BY origem, status;
 

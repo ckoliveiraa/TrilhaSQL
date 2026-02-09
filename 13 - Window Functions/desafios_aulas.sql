@@ -30,8 +30,10 @@ ORDER BY cliente_id, numero_pedido;
 -- AULA 54 - RANK - Ranking com Empates
 -- =================================================================
 
--- Aula 54 - Desafio 1: Rankear produtos por preço (empatados ficam com mesmo número)
--- Exiba: ranking, nome, preco
+-- Aula 54 - Desafio 1: Ranking de produtos mais caros
+-- Crie um ranking dos produtos ordenados do mais caro para o mais barato.
+-- Use RANK() para que produtos com preços iguais recebam o mesmo número no ranking.
+-- Exiba: posição no ranking, nome do produto e preço
 SELECT
     RANK() OVER (ORDER BY preco DESC) AS ranking,
     nome,
@@ -39,8 +41,12 @@ SELECT
 FROM produtos;
 
 
--- Aula 54 - Desafio 2: Rankear clientes por total gasto
--- Use JOIN com pedidos, agrupe por cliente e aplique RANK
+-- Aula 54 - Desafio 2: Ranking de clientes por valor total de compras
+-- Identifique quais clientes gastam mais na loja criando um ranking.
+-- Calcule o total gasto por cada cliente somando o valor_total de todos os seus pedidos.
+-- Use RANK() para que clientes com mesmo total gasto fiquem empatados no ranking.
+-- Dica: Combine JOIN + GROUP BY + window function
+-- Exiba: nome do cliente, total gasto e ranking
 SELECT
     c.nome AS cliente,
     SUM(p.valor_total) AS total_gasto,
