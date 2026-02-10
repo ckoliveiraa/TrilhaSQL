@@ -254,7 +254,7 @@ EXCEPT:     A - B (apenas em A)
 
 -- Aula 49 - Desafio 2: Criar histórico completo de ações
 -- Combine pedidos e pagamentos em uma linha do tempo
--- Inclua: data, valor, tipo de ação
+-- Inclua: data, valor, tipo de ação ('Pedido realizado' ou 'Pagamento registrado')
 
 
 -- Aula 49 - Desafio 3: Clientes engajados (que compraram E avaliaram)
