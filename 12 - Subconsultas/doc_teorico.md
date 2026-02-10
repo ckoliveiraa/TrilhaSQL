@@ -447,40 +447,7 @@ WHERE EXISTS (SELECT 1 FROM outra_tabela WHERE condição);
 
 ## Exemplos Práticos
 
-**1. Produtos que já foram vendidos:**
-```sql
-SELECT p.nome, p.preco, p.estoque
-FROM produtos p
-WHERE EXISTS (
-    SELECT 1
-    FROM itens_pedido ip
-    WHERE ip.produto_id = p.produto_id
-);
-```
-
-**2. Produtos que NUNCA foram vendidos (NOT EXISTS):**
-```sql
-SELECT p.nome, p.preco, p.estoque
-FROM produtos p
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM itens_pedido ip
-    WHERE ip.produto_id = p.produto_id
-);
-```
-
-**3. Clientes que fizeram avaliações:**
-```sql
-SELECT c.nome, c.email
-FROM clientes c
-WHERE EXISTS (
-    SELECT 1
-    FROM avaliacoes a
-    WHERE a.cliente_id = c.cliente_id
-);
-```
-
-**4. Categorias com produtos em estoque:**
+**1. Categorias com produtos em estoque:**
 ```sql
 SELECT cat.nome AS categoria
 FROM categorias cat
@@ -493,7 +460,7 @@ WHERE EXISTS (
 );
 ```
 
-**5. Clientes com pedidos entregues:**
+**2. Clientes com pedidos entregues:**
 ```sql
 SELECT c.nome, c.email, c.cidade
 FROM clientes c
@@ -505,7 +472,7 @@ WHERE EXISTS (
 );
 ```
 
-**6. Produtos com avaliação 5 estrelas:**
+**3. Produtos com avaliação 5 estrelas:**
 ```sql
 SELECT p.nome, p.preco
 FROM produtos p
@@ -517,7 +484,7 @@ WHERE EXISTS (
 );
 ```
 
-**7. Combinando EXISTS com outras condições:**
+**4. Combinando EXISTS com outras condições:**
 ```sql
 SELECT
     c.nome,
