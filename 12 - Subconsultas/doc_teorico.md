@@ -176,22 +176,7 @@ WHERE total_vendido > 1000
 ORDER BY total_vendido DESC;
 ```
 
-**2. Média de pedidos por cliente:**
-```sql
-SELECT
-    ROUND(AVG(total_pedidos), 2) AS media_pedidos_por_cliente,
-    ROUND(AVG(valor_total), 2) AS media_valor_por_cliente
-FROM (
-    SELECT
-        cliente_id,
-        COUNT(*) AS total_pedidos,
-        SUM(valor_total) AS valor_total
-    FROM pedidos
-    GROUP BY cliente_id
-) AS pedidos_cliente;
-```
-
-**3. Top 5 clientes com ranking:**
+**2. Top 5 clientes com ranking:**
 ```sql
 SELECT
     cliente,
@@ -210,7 +195,7 @@ ORDER BY total_gasto DESC
 LIMIT 5;
 ```
 
-**4. Categorias com estatísticas:**
+**3. Categorias com estatísticas:**
 ```sql
 SELECT
     categoria,
@@ -232,7 +217,7 @@ FROM (
 ) AS stats_categoria;
 ```
 
-**5. Comparando com a média geral:**
+**4. Comparando com a média geral:**
 ```sql
 SELECT
     cliente,
