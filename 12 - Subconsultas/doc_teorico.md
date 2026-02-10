@@ -291,22 +291,7 @@ FROM tabela_principal;
 
 ## Exemplos Práticos
 
-**1. Produtos com quantidade total vendida:**
-```sql
-SELECT
-    p.nome,
-    p.preco,
-    p.estoque,
-    (
-        SELECT COALESCE(SUM(ip.quantidade), 0)
-        FROM itens_pedido ip
-        WHERE ip.produto_id = p.produto_id
-    ) AS total_vendido
-FROM produtos p
-ORDER BY total_vendido DESC;
-```
-
-**2. Clientes com total gasto:**
+**1. Clientes com total gasto:**
 ```sql
 SELECT
     c.nome,
@@ -321,7 +306,7 @@ FROM clientes c
 ORDER BY total_gasto DESC;
 ```
 
-**3. Produtos com média de avaliação:**
+**2. Produtos com média de avaliação:**
 ```sql
 SELECT
     p.nome,
@@ -341,7 +326,7 @@ WHERE p.ativo = TRUE
 ORDER BY nota_media DESC NULLS LAST;
 ```
 
-**4. Categorias com contagem de produtos:**
+**3. Categorias com contagem de produtos:**
 ```sql
 SELECT
     c.nome AS categoria,
@@ -360,7 +345,7 @@ FROM categorias c
 WHERE c.ativo = TRUE;
 ```
 
-**5. Pedidos com informações extras:**
+**4. Pedidos com informações extras:**
 ```sql
 SELECT
     p.pedido_id,
