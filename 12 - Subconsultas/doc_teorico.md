@@ -176,22 +176,7 @@ WHERE total_vendido > 1000
 ORDER BY total_vendido DESC;
 ```
 
-**2. Média de pedidos por cliente:**
-```sql
-SELECT
-    ROUND(AVG(total_pedidos), 2) AS media_pedidos_por_cliente,
-    ROUND(AVG(valor_total), 2) AS media_valor_por_cliente
-FROM (
-    SELECT
-        cliente_id,
-        COUNT(*) AS total_pedidos,
-        SUM(valor_total) AS valor_total
-    FROM pedidos
-    GROUP BY cliente_id
-) AS pedidos_cliente;
-```
-
-**3. Top 5 clientes com ranking:**
+**2. Top 5 clientes com ranking:**
 ```sql
 SELECT
     cliente,
@@ -210,7 +195,7 @@ ORDER BY total_gasto DESC
 LIMIT 5;
 ```
 
-**4. Categorias com estatísticas:**
+**3. Categorias com estatísticas:**
 ```sql
 SELECT
     categoria,
@@ -232,7 +217,7 @@ FROM (
 ) AS stats_categoria;
 ```
 
-**5. Comparando com a média geral:**
+**4. Comparando com a média geral:**
 ```sql
 SELECT
     cliente,
@@ -306,22 +291,7 @@ FROM tabela_principal;
 
 ## Exemplos Práticos
 
-**1. Produtos com quantidade total vendida:**
-```sql
-SELECT
-    p.nome,
-    p.preco,
-    p.estoque,
-    (
-        SELECT COALESCE(SUM(ip.quantidade), 0)
-        FROM itens_pedido ip
-        WHERE ip.produto_id = p.produto_id
-    ) AS total_vendido
-FROM produtos p
-ORDER BY total_vendido DESC;
-```
-
-**2. Clientes com total gasto:**
+**1. Clientes com total gasto:**
 ```sql
 SELECT
     c.nome,
@@ -336,7 +306,7 @@ FROM clientes c
 ORDER BY total_gasto DESC;
 ```
 
-**3. Produtos com média de avaliação:**
+**2. Produtos com média de avaliação:**
 ```sql
 SELECT
     p.nome,
@@ -356,7 +326,7 @@ WHERE p.ativo = TRUE
 ORDER BY nota_media DESC NULLS LAST;
 ```
 
-**4. Categorias com contagem de produtos:**
+**3. Categorias com contagem de produtos:**
 ```sql
 SELECT
     c.nome AS categoria,
@@ -375,7 +345,7 @@ FROM categorias c
 WHERE c.ativo = TRUE;
 ```
 
-**5. Pedidos com informações extras:**
+**4. Pedidos com informações extras:**
 ```sql
 SELECT
     p.pedido_id,
@@ -477,40 +447,7 @@ WHERE EXISTS (SELECT 1 FROM outra_tabela WHERE condição);
 
 ## Exemplos Práticos
 
-**1. Produtos que já foram vendidos:**
-```sql
-SELECT p.nome, p.preco, p.estoque
-FROM produtos p
-WHERE EXISTS (
-    SELECT 1
-    FROM itens_pedido ip
-    WHERE ip.produto_id = p.produto_id
-);
-```
-
-**2. Produtos que NUNCA foram vendidos (NOT EXISTS):**
-```sql
-SELECT p.nome, p.preco, p.estoque
-FROM produtos p
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM itens_pedido ip
-    WHERE ip.produto_id = p.produto_id
-);
-```
-
-**3. Clientes que fizeram avaliações:**
-```sql
-SELECT c.nome, c.email
-FROM clientes c
-WHERE EXISTS (
-    SELECT 1
-    FROM avaliacoes a
-    WHERE a.cliente_id = c.cliente_id
-);
-```
-
-**4. Categorias com produtos em estoque:**
+**1. Categorias com produtos em estoque:**
 ```sql
 SELECT cat.nome AS categoria
 FROM categorias cat
@@ -523,7 +460,7 @@ WHERE EXISTS (
 );
 ```
 
-**5. Clientes com pedidos entregues:**
+**2. Clientes com pedidos entregues:**
 ```sql
 SELECT c.nome, c.email, c.cidade
 FROM clientes c
@@ -535,7 +472,7 @@ WHERE EXISTS (
 );
 ```
 
-**6. Produtos com avaliação 5 estrelas:**
+**3. Produtos com avaliação 5 estrelas:**
 ```sql
 SELECT p.nome, p.preco
 FROM produtos p
@@ -547,7 +484,7 @@ WHERE EXISTS (
 );
 ```
 
-**7. Combinando EXISTS com outras condições:**
+**4. Combinando EXISTS com outras condições:**
 ```sql
 SELECT
     c.nome,
