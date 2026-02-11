@@ -203,13 +203,15 @@ WHERE num BETWEEN 11 AND 20;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 54 - Desafio 1: Numerar produtos ordenados por preço (do mais caro ao mais barato)
--- Exiba: número, nome e preço
+-- Aula 54 - Desafio 1: Ranking de produtos mais caros
+-- Crie um ranking dos produtos ordenados do mais caro para o mais barato.
+-- Exiba: posição no ranking, nome do produto e preço
 
 
--- Aula 54 - Desafio 2: Numerar pedidos de cada cliente por data
--- Exiba: cliente_id, pedido_id, data_pedido e número do pedido
-
+-- Aula 54 - Desafio 2: Ranking de clientes por valor total de compras
+-- Identifique quais clientes gastam mais na loja criando um ranking.
+-- Calcule o total gasto por cada cliente somando o valor_total de todos os seus pedidos.
+-- Exiba: nome do cliente, total gasto e ranking
 ```
 
 </details>
