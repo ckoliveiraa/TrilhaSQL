@@ -1148,10 +1148,13 @@ Você é o analista de dados responsável por criar uma estrutura temporária pa
 
 ---
 
-## Como Usar Este Material
+## Próximos Passos na sua Jornada SQL
 
-1. Estude uma aula por vez
-2. Leia todos os conceitos com atenção
-3. Pratique os desafios antes de avançar
-4. Revise os conceitos quando necessário
-5. Use o resumo para consultas rápidas
+1. **Pratique** com dados reais do seu dia a dia
+2. **Explore** funções específicas do seu banco (PostgreSQL, MySQL, etc.)
+3. **Aprenda** sobre modelagem de dados e normalização
+4. **Estude** sobre otimização de queries (EXPLAIN, índices)
+5. **Investigue** sobre transações e controle de concorrência
+6. **Explore** ferramentas de BI e relatórios
+
+**Parabéns por completar a trilha!** 🎉
