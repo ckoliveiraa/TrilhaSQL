@@ -611,7 +611,6 @@ FROM produtos;
 função() OVER (
     PARTITION BY coluna_grupo     -- Opcional: divide em grupos
     ORDER BY coluna_ordem         -- Define a ordem
-    ROWS/RANGE ...                -- Opcional: define o frame
 )
 ```
 
