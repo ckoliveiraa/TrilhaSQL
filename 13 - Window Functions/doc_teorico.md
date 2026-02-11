@@ -264,35 +264,6 @@ FROM produtos;
 -- Se dois produtos custam R$ 500, ambos ficam em 1º lugar
 -- O próximo produto fica em 3º lugar (não 2º)
 ```
-
-## Aplicação: Top N com Empates
-
-```sql
--- Top 3 produtos mais caros (inclui empates)
-SELECT * FROM (
-    SELECT
-        RANK() OVER (ORDER BY preco DESC) AS ranking,
-        nome,
-        preco
-    FROM produtos
-) AS ranked
-WHERE ranking <= 3;
--- Pode retornar mais de 3 se houver empates
-```
-
-## Ranking de Clientes por Total Gasto
-
-```sql
--- Rankear clientes por valor total de compras
-SELECT
-    c.nome,
-    SUM(p.valor_total) AS total_gasto,
-    RANK() OVER (ORDER BY SUM(p.valor_total) DESC) AS ranking
-FROM clientes c
-INNER JOIN pedidos p ON c.cliente_id = p.cliente_id
-GROUP BY c.cliente_id, c.nome;
-```
-
 ## Desafio
 
 <details>
@@ -376,19 +347,6 @@ FROM produtos;
 -- | Produto D | 300   | 4       | 4    | 3          |
 ```
 
-## Ranking de Avaliações
-
-```sql
--- Rankear produtos por avaliação média
-SELECT
-    p.nome,
-    ROUND(AVG(a.nota), 2) AS media_avaliacao,
-    DENSE_RANK() OVER (ORDER BY AVG(a.nota) DESC) AS ranking
-FROM produtos p
-INNER JOIN avaliacoes a ON p.produto_id = a.produto_id
-GROUP BY p.produto_id, p.nome;
-```
-
 ## Desafio
 
 <details>
@@ -443,20 +401,6 @@ Numeração global                 Numeração por grupo
 ```
 
 ## Exemplos Práticos
-
-```sql
--- Numerar produtos dentro de cada categoria
-SELECT
-    c.nome AS categoria,
-    p.nome AS produto,
-    p.preco,
-    ROW_NUMBER() OVER (
-        PARTITION BY p.categoria_id
-        ORDER BY p.preco DESC
-    ) AS ranking_na_categoria
-FROM produtos p
-INNER JOIN categorias c ON p.categoria_id = c.categoria_id;
-```
 
 ## Top N por Grupo
 
@@ -586,26 +530,6 @@ SELECT
 FROM produtos;
 ```
 
-## Análise de Vendas
-
-```sql
--- Comparar valor de cada pedido com o pedido anterior do mesmo cliente
-SELECT
-    cliente_id,
-    pedido_id,
-    data_pedido,
-    valor_total,
-    LAG(valor_total) OVER (
-        PARTITION BY cliente_id
-        ORDER BY data_pedido
-    ) AS pedido_anterior,
-    valor_total - LAG(valor_total) OVER (
-        PARTITION BY cliente_id
-        ORDER BY data_pedido
-    ) AS variacao
-FROM pedidos;
-```
-
 ## Calculando Crescimento
 
 ```sql
@@ -652,14 +576,13 @@ SELECT
     FIRST_VALUE(preco) OVER (ORDER BY preco DESC) AS maior_preco
 FROM produtos;
 
--- Último valor (cuidado com o frame!)
+
+--Ultimo valor da janela
 SELECT
     nome,
     preco,
-    LAST_VALUE(nome) OVER (
-        ORDER BY preco DESC
-        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
-    ) AS mais_barato
+    LAST_VALUE(nome) OVER (ORDER BY preco DESC) AS mais_barato,
+    LAST_VALUE(preco) OVER (ORDER BY preco DESC) AS menor_preco
 FROM produtos;
 ```
 
