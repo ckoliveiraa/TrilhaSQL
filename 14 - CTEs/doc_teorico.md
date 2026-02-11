@@ -380,6 +380,17 @@ SELECT * FROM finito;
 
 ---
 
+### Dicas Gerais
+
+1. **Teste incrementalmente**: Construa uma CTE por vez e teste com `SELECT * FROM nome_cte`
+2. **Use comentários**: Documente cada CTE para facilitar a manutenção
+3. **Formatação**: Quebre linhas longas para melhor legibilidade
+4. **COALESCE**: Use para lidar com NULLs em LEFT JOINs e divisões
+5. **CAST**: Use para converter tipos quando necessário (especialmente em UNION ALL)
+6. **Window Functions**: Combine com CTEs para análises poderosas (LAG, LEAD, etc.)
+
+---
+
 ## Desafio Final do Módulo 14
 
 <details>
@@ -524,26 +535,8 @@ Você é o analista de dados do e-commerce e precisa criar relatórios complexos
 
 ```
 
-### Dicas Gerais
 
-1. **Teste incrementalmente**: Construa uma CTE por vez e teste com `SELECT * FROM nome_cte`
-2. **Use comentários**: Documente cada CTE para facilitar a manutenção
-3. **Formatação**: Quebre linhas longas para melhor legibilidade
-4. **COALESCE**: Use para lidar com NULLs em LEFT JOINs e divisões
-5. **CAST**: Use para converter tipos quando necessário (especialmente em UNION ALL)
-6. **Window Functions**: Combine com CTEs para análises poderosas (LAG, LEAD, etc.)
 
 </details>
 
 ---
-
-## Próximos Passos na sua Jornada SQL
-
-1. **Pratique** com dados reais do seu dia a dia
-2. **Explore** funções específicas do seu banco (PostgreSQL, MySQL, etc.)
-3. **Aprenda** sobre modelagem de dados e normalização
-4. **Estude** sobre otimização de queries (EXPLAIN, índices)
-5. **Investigue** sobre transações e controle de concorrência
-6. **Explore** ferramentas de BI e relatórios
-
-**Parabéns por completar a trilha!** 🎉
