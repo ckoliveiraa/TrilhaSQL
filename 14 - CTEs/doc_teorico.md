@@ -55,20 +55,24 @@ WHERE total > 1000;
 ## Exemplos Práticos
 
 ```sql
--- CTE simples: produtos mais vendidos
-WITH produtos_vendidos AS (
+-- CTE simples: clientes com maior valor de compras
+WITH valor_por_cliente AS (
     SELECT
-        produto_id,
-        SUM(quantidade) AS total_vendido
-    FROM itens_pedido
-    GROUP BY produto_id
+        cliente_id,
+        COUNT(*) AS total_pedidos,
+        SUM(valor_total) AS valor_gasto
+    FROM pedidos
+    WHERE status = 'entregue'
+    GROUP BY cliente_id
 )
 SELECT
-    p.nome,
-    pv.total_vendido
-FROM produtos p
-INNER JOIN produtos_vendidos pv ON p.produto_id = pv.produto_id
-ORDER BY pv.total_vendido DESC
+    c.nome,
+    c.email,
+    vpc.total_pedidos,
+    vpc.valor_gasto
+FROM clientes c
+INNER JOIN valor_por_cliente vpc ON c.cliente_id = vpc.cliente_id
+ORDER BY vpc.valor_gasto DESC
 LIMIT 10;
 ```
 
