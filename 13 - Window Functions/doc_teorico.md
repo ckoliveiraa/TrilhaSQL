@@ -275,7 +275,7 @@ FROM produtos;
 -- Exiba: posição no ranking, nome do produto e preço
 
 
--- Aula 54 - Desafio 2: Ranking de clientes por valor total de compras
+-- Aula 55 - Desafio 2: Ranking de clientes por valor total de compras
 -- Identifique quais clientes gastam mais na loja criando um ranking.
 -- Calcule o total gasto por cada cliente somando o valor_total de todos os seus pedidos.
 -- Exiba: nome do cliente, total gasto e ranking
@@ -439,23 +439,6 @@ SELECT
     ) AS ranking
 FROM produtos p
 INNER JOIN categorias c ON p.categoria_id = c.categoria_id;
-```
-
-## Ranking de Vendas por Mês
-
-```sql
--- Ranking de vendedores por mês
-SELECT
-    EXTRACT(MONTH FROM p.data_pedido) AS mes,
-    v.nome AS vendedor,
-    SUM(p.valor_total) AS total_vendas,
-    RANK() OVER (
-        PARTITION BY EXTRACT(MONTH FROM p.data_pedido)
-        ORDER BY SUM(p.valor_total) DESC
-    ) AS ranking_mes
-FROM pedidos p
-INNER JOIN vendedores v ON p.vendedor_id = v.vendedor_id
-GROUP BY EXTRACT(MONTH FROM p.data_pedido), v.vendedor_id, v.nome;
 ```
 
 ## Desafio
