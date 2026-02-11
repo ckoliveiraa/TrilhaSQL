@@ -633,8 +633,6 @@ função() OVER (
 
 No próximo módulo, você aprenderá sobre:
 - CTEs (Common Table Expressions)
-- Otimização de queries
-- EXPLAIN e índices
 
 ---
 
