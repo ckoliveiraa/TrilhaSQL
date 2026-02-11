@@ -344,7 +344,7 @@ SELECT * FROM finito;
 
 -- Aula 60 - Desafio 2: Relatório de Vendas Diárias Completo
 -- O diretor financeiro precisa de um relatório de vendas que mostre
--- TODOS OS DIAS de janeiro de 2024, mesmo os dias que não tiveram vendas.
+-- TODOS OS DIAS de janeiro de 2026, mesmo os dias que não tiveram vendas.
 -- Use CTE recursiva para gerar um calendário completo do mês e combine
 -- com os dados de vendas. Mostre: data, dia da semana, total de vendas
 -- e quantidade de pedidos (use 0 para dias sem vendas).
