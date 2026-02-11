@@ -203,15 +203,13 @@ WHERE num BETWEEN 11 AND 20;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 54 - Desafio 1: Ranking de produtos mais caros
--- Crie um ranking dos produtos ordenados do mais caro para o mais barato.
--- Exiba: posição no ranking, nome do produto e preço
+-- Aula 54 - Desafio 1: Numerar produtos ordenados por preço (do mais caro ao mais barato)
+-- Exiba: número, nome e preço
 
 
--- Aula 54 - Desafio 2: Ranking de clientes por valor total de compras
--- Identifique quais clientes gastam mais na loja criando um ranking.
--- Calcule o total gasto por cada cliente somando o valor_total de todos os seus pedidos.
--- Exiba: nome do cliente, total gasto e ranking
+-- Aula 54 - Desafio 2: Numerar pedidos de cada cliente por data
+-- Exiba: cliente_id, pedido_id, data_pedido e número do pedido
+
 ```
 
 </details>
@@ -272,12 +270,15 @@ FROM produtos;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 55 - Desafio 1: Rankear produtos por preço (empatados ficam com mesmo número)
--- Exiba: ranking, nome, preco
+-- Aula 55 - Desafio 1: Ranking de produtos mais caros
+-- Crie um ranking dos produtos ordenados do mais caro para o mais barato.
+-- Exiba: posição no ranking, nome do produto e preço
 
 
--- Aula 55 - Desafio 2: Rankear clientes por total gasto
--- Use JOIN com pedidos, agrupe por cliente e aplique RANK
+-- Aula 55 - Desafio 2: Ranking de clientes por valor total de compras
+-- Identifique quais clientes gastam mais na loja criando um ranking.
+-- Calcule o total gasto por cada cliente somando o valor_total de todos os seus pedidos.
+-- Exiba: nome do cliente, total gasto e ranking
 
 ```
 
@@ -438,23 +439,6 @@ SELECT
     ) AS ranking
 FROM produtos p
 INNER JOIN categorias c ON p.categoria_id = c.categoria_id;
-```
-
-## Ranking de Vendas por Mês
-
-```sql
--- Ranking de vendedores por mês
-SELECT
-    EXTRACT(MONTH FROM p.data_pedido) AS mes,
-    v.nome AS vendedor,
-    SUM(p.valor_total) AS total_vendas,
-    RANK() OVER (
-        PARTITION BY EXTRACT(MONTH FROM p.data_pedido)
-        ORDER BY SUM(p.valor_total) DESC
-    ) AS ranking_mes
-FROM pedidos p
-INNER JOIN vendedores v ON p.vendedor_id = v.vendedor_id
-GROUP BY EXTRACT(MONTH FROM p.data_pedido), v.vendedor_id, v.nome;
 ```
 
 ## Desafio
@@ -627,7 +611,6 @@ FROM produtos;
 função() OVER (
     PARTITION BY coluna_grupo     -- Opcional: divide em grupos
     ORDER BY coluna_ordem         -- Define a ordem
-    ROWS/RANGE ...                -- Opcional: define o frame
 )
 ```
 
@@ -649,8 +632,6 @@ função() OVER (
 
 No próximo módulo, você aprenderá sobre:
 - CTEs (Common Table Expressions)
-- Otimização de queries
-- EXPLAIN e índices
 
 ---
 
