@@ -1,136 +1,145 @@
--- ============================================
--- MÓDULO 13 - MANIPULAÇÃO DE DADOS
--- Respostas do Desafio Final
--- ============================================
+-- =================================================================
+-- DESAFIOS FINAIS DO MODULO 15
+-- =================================================================
 
--- ⚠️ ATENÇÃO: Os comandos INSERT, UPDATE e DELETE modificam dados!
--- Execute com cuidado e faça backup antes de testar.
+-- Desafio Final 1: Estrutura de Campanha
+-- Crie uma tabela chamada "promocao_verao" com:
+--   - promocao_id (PK, SERIAL)
+--   - produto_id (FK para produtos)
+--   - desconto_percentual (DECIMAL, entre 0 e 100)
+--   - data_inicio (DATE)
+--   - data_fim (DATE)
+--   - ativo (BOOLEAN, default true)
+
+CREATE TABLE promocao_verao (
+    promocao_id SERIAL PRIMARY KEY,
+    produto_id INT NOT NULL,
+    desconto_percentual DECIMAL(5,2) CHECK (desconto_percentual BETWEEN 0 AND 100),
+    data_inicio DATE NOT NULL,
+    data_fim DATE NOT NULL,
+    ativo BOOLEAN DEFAULT true,
+    FOREIGN KEY (produto_id) REFERENCES produtos(produto_id)
+);
 
 
--- Desafio Final 1: Cadastro em Massa
--- Insira 3 novos produtos e 3 novos clientes
--- Use INSERTs com múltiplos valores
+-- Desafio Final 2: Popular Dados
+-- Insira 5 produtos na promoção de uma vez
+-- Escolha produtos reais da tabela produtos
+-- Use descontos entre 10% e 50%
 
--- Inserindo 3 novos produtos
-INSERT INTO produtos (nome, preco, estoque, marca, categoria_id)
+-- Primeiro, veja alguns produtos disponíveis:
+-- SELECT produto_id, nome, preco FROM produtos LIMIT 10;
+
+-- Inserir promoções (ajuste os IDs conforme seus dados):
+INSERT INTO promocao_verao (produto_id, desconto_percentual, data_inicio, data_fim, ativo)
 VALUES
-    ('Smart TV 55"', 2499.90, 25, 'LG', 1),
-    ('Notebook Gamer', 5999.90, 15, 'ASUS', 1),
-    ('Caixa de Som Bluetooth', 299.90, 100, 'JBL', 1);
-
--- Inserindo 3 novos clientes
-INSERT INTO clientes (nome, email, telefone, cidade, estado)
-VALUES
-    ('Pedro Henrique', 'pedro.h@email.com', '11999001122', 'São Paulo', 'SP'),
-    ('Camila Oliveira', 'camila.o@email.com', '21988776655', 'Rio de Janeiro', 'RJ'),
-    ('Rafael Costa', 'rafael.c@email.com', '31977665544', 'Belo Horizonte', 'MG');
+    (1, 20.00, CURRENT_DATE, CURRENT_DATE + INTERVAL '30 days', true),
+    (2, 15.00, CURRENT_DATE, CURRENT_DATE + INTERVAL '30 days', true),
+    (3, 30.00, CURRENT_DATE, CURRENT_DATE + INTERVAL '30 days', true),
+    (4, 25.00, CURRENT_DATE, CURRENT_DATE + INTERVAL '30 days', true),
+    (5, 10.00, CURRENT_DATE, CURRENT_DATE + INTERVAL '30 days', true);
 
 
--- Desafio Final 2: Atualização Condicional
--- a) Aumente em 5% o preço de produtos com estoque > 100
+-- Desafio Final 3: Criar View de Análise
+-- Crie uma view chamada vw_produtos_promocao que mostre:
+--   - Nome do produto
+--   - Preço original
+--   - Desconto percentual
+--   - Preço com desconto (calculado)
+--   - Data início e fim da promoção
 
--- Primeiro, verificar quais serão afetados:
-SELECT nome, preco, estoque
-FROM produtos
-WHERE estoque > 100;
+CREATE VIEW vw_produtos_promocao AS
+SELECT
+    p.nome AS produto,
+    p.preco AS preco_original,
+    pv.desconto_percentual,
+    ROUND(p.preco * (1 - pv.desconto_percentual / 100), 2) AS preco_com_desconto,
+    pv.data_inicio,
+    pv.data_fim
+FROM promocao_verao pv
+INNER JOIN produtos p ON pv.produto_id = p.produto_id
+WHERE pv.ativo = true;
 
--- Executar o UPDATE:
-UPDATE produtos
-SET preco = preco * 1.05
-WHERE estoque > 100;
 
+-- Desafio Final 4: Ajustes na Campanha
+-- a) Aumente em 5% o desconto de produtos com preço acima de R$ 1000
 
--- b) Diminua em 10% o preço de produtos sem vendas nos últimos 30 dias
+-- Verificar:
+-- SELECT pv.promocao_id, p.nome, p.preco, pv.desconto_percentual,
+--        pv.desconto_percentual + 5 AS novo_desconto
+-- FROM promocao_verao pv
+-- INNER JOIN produtos p ON pv.produto_id = p.produto_id
+-- WHERE p.preco > 1000;
 
--- Primeiro, verificar quais serão afetados:
-SELECT p.nome, p.preco
-FROM produtos p
-WHERE p.produto_id NOT IN (
-    SELECT DISTINCT ip.produto_id
-    FROM itens_pedido ip
-    INNER JOIN pedidos ped ON ip.pedido_id = ped.pedido_id
-    WHERE ped.data_pedido >= CURRENT_DATE - INTERVAL '30 days'
+UPDATE promocao_verao pv
+SET desconto_percentual = CASE
+    WHEN desconto_percentual + 5 > 100 THEN 100
+    ELSE desconto_percentual + 5
+END
+WHERE produto_id IN (
+    SELECT produto_id FROM produtos WHERE preco > 1000
 );
 
--- Executar o UPDATE:
-UPDATE produtos
-SET preco = preco * 0.90
-WHERE produto_id NOT IN (
-    SELECT DISTINCT ip.produto_id
-    FROM itens_pedido ip
-    INNER JOIN pedidos ped ON ip.pedido_id = ped.pedido_id
-    WHERE ped.data_pedido >= CURRENT_DATE - INTERVAL '30 days'
+-- b) Desative promoções que já passaram da data_fim
+
+-- Verificar:
+-- SELECT * FROM promocao_verao
+-- WHERE data_fim < CURRENT_DATE AND ativo = true;
+
+UPDATE promocao_verao
+SET ativo = false
+WHERE data_fim < CURRENT_DATE;
+
+
+-- Desafio Final 5: Limpeza de Dados
+-- a) Remova da promoção os produtos que estão sem estoque
+
+-- Verificar:
+-- SELECT pv.*, p.nome, p.estoque
+-- FROM promocao_verao pv
+-- INNER JOIN produtos p ON pv.produto_id = p.produto_id
+-- WHERE p.estoque = 0;
+
+DELETE FROM promocao_verao
+WHERE produto_id IN (
+    SELECT produto_id FROM produtos WHERE estoque = 0
 );
 
+-- b) Delete promoções inativas
 
--- Desafio Final 3: Limpeza Segura
--- Remova itens de pedido de pedidos cancelados
+-- Verificar:
+-- SELECT * FROM promocao_verao WHERE ativo = false;
 
--- Primeiro: SELECT para verificar
-SELECT ip.*
-FROM itens_pedido ip
-INNER JOIN pedidos p ON ip.pedido_id = p.pedido_id
-WHERE p.status = 'cancelado';
+DELETE FROM promocao_verao
+WHERE ativo = false;
 
--- Contar quantos serão removidos:
-SELECT COUNT(*)
-FROM itens_pedido ip
-INNER JOIN pedidos p ON ip.pedido_id = p.pedido_id
-WHERE p.status = 'cancelado';
 
--- Depois: DELETE com a mesma condição
-DELETE FROM itens_pedido
-WHERE pedido_id IN (
-    SELECT pedido_id
-    FROM pedidos
-    WHERE status = 'cancelado'
+-- Desafio Final 6 (Boss Final!): Encerramento Completo
+-- A campanha acabou. Faça a limpeza completa:
+
+-- a) Criar uma tabela de backup chamada "promocao_verao_historico"
+CREATE TABLE promocao_verao_historico (
+    historico_id SERIAL PRIMARY KEY,
+    promocao_id INT,
+    produto_id INT,
+    desconto_percentual DECIMAL(5,2),
+    data_inicio DATE,
+    data_fim DATE,
+    ativo BOOLEAN,
+    data_backup TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- b) Copiar todos os dados da promocao_verao para o histórico
+INSERT INTO promocao_verao_historico (promocao_id, produto_id, desconto_percentual, data_inicio, data_fim, ativo)
+SELECT promocao_id, produto_id, desconto_percentual, data_inicio, data_fim, ativo
+FROM promocao_verao;
 
--- Desafio Final 4 (Boss Final!): Operação Completa
--- Cenário: Fim de um produto
--- a) Transfira o estoque do produto ID 5 para o produto ID 10 (UPDATE)
--- b) Atualize itens_pedido para usar o novo produto_id (UPDATE)
--- c) Delete o produto antigo (DELETE)
--- Faça tudo verificando antes com SELECT
+-- c) Drope a view vw_produtos_promocao
+DROP VIEW IF EXISTS vw_produtos_promocao;
 
--- a) Verificar estoques atuais:
-SELECT produto_id, nome, estoque
-FROM produtos
-WHERE produto_id IN (5, 10);
+-- d) Drope a tabela promocao_verao
+DROP TABLE IF EXISTS promocao_verao;
 
--- Transferir estoque:
-UPDATE produtos
-SET estoque = estoque + (SELECT estoque FROM produtos WHERE produto_id = 5)
-WHERE produto_id = 10;
-
--- Zerar estoque do produto antigo:
-UPDATE produtos
-SET estoque = 0
-WHERE produto_id = 5;
-
-
--- b) Verificar itens que serão atualizados:
-SELECT *
-FROM itens_pedido
-WHERE produto_id = 5;
-
--- Atualizar itens_pedido:
-UPDATE itens_pedido
-SET produto_id = 10
-WHERE produto_id = 5;
-
-
--- c) Verificar se o produto pode ser removido:
-SELECT *
-FROM produtos
-WHERE produto_id = 5;
-
--- Verificar se ainda há referências:
-SELECT COUNT(*)
-FROM itens_pedido
-WHERE produto_id = 5;
-
--- Deletar o produto antigo (somente se não houver mais referências):
-DELETE FROM produtos
-WHERE produto_id = 5;
+-- e) Confirme que o histórico foi salvo corretamente
+-- SELECT * FROM promocao_verao_historico;
+-- SELECT COUNT(*) FROM promocao_verao_historico;
