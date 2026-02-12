@@ -217,11 +217,17 @@ WHERE ativo = true AND estoque > 0;
 
 ```sql
 -- Aula 61 - Desafio 1: Criar uma tabela de cupons de desconto
--- Colunas: cupom_id (PK, SERIAL), codigo (VARCHAR UNIQUE), desconto (DECIMAL), validade (DATE), ativo (BOOLEAN)
+-- Crie uma tabela chamada "cupons_desconto" com as seguintes colunas:
+--   - cupom_id (SERIAL PRIMARY KEY)
+--   - codigo (VARCHAR(50) UNIQUE NOT NULL)
+--   - desconto_percentual (DECIMAL(5,2) entre 0 e 100)
+--   - data_validade (DATE)
+--   - ativo (BOOLEAN DEFAULT true)
 
 
--- Aula 61 - Desafio 2: Criar uma view de clientes VIP
--- Mostre clientes que já gastaram mais de R$ 5000 no total
+-- Aula 61 - Desafio 2: Criar uma view de cupons válidos
+-- Crie uma view chamada "vw_cupons_validos" que mostre apenas cupons ativos
+-- e com data de validade futura (maior que a data atual)
 
 ```
 
@@ -358,14 +364,23 @@ VALUES (DEFAULT, 'Produto', 99.90, 10, NULL, NULL, NULL);
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 62 - Desafio 1: Inserir um novo produto completo
--- Adicione um produto eletrônico à sua escolha (ex: "Fone de Ouvido Bluetooth")
--- Inclua: nome, preco (valor realista), estoque (quantidade), marca e categoria_id
+-- Aula 62 - Desafio 1: Inserir um cupom de desconto
+-- Insira um cupom com:
+--   - codigo: 'BEMVINDO10'
+--   - desconto_percentual: 10.00
+--   - data_validade: 30 dias a partir de hoje
+--   - ativo: true
 
 
--- Aula 62 - Desafio 2: Inserir 3 novos clientes de uma vez
--- Use um único comando INSERT com dados fictícios de 3 clientes
--- Inclua: nome completo, email, telefone (opcional), cidade e estado
+
+-- Aula 62 - Desafio 2: Inserir múltiplos cupons de uma vez
+-- Insira 5 cupons diferentes usando um único INSERT:
+--   - 'BLACKFRIDAY' - 50% de desconto, validade 7 dias
+--   - 'NATAL25' - 25% de desconto, validade 15 dias
+--   - 'FRETEGRATIS' - 100% de desconto (representa frete grátis), validade 60 dias
+--   - 'VOLTESEMPRE' - 15% de desconto, validade 90 dias
+--   - 'PRIMEIRACOMPRA' - 20% de desconto, validade 365 dias
+--   - 'ECO10' - 10% de desconto, validade de 45 dias negativos
 
 ```
 
@@ -526,16 +541,13 @@ WHERE p.produto_id = t.produto_id
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 63 - Desafio 1: Aumentar em 10% o preço de produtos da categoria "Eletrônicos"
--- Dica: Use WHERE com subconsulta para identificar a categoria
+-- Aula 63 - Desafio 1: Atualizar desconto de um cupom específico
+-- Aumente o desconto do cupom 'BEMVINDO10' de 10% para 15%
 
 
--- Aula 63 - Desafio 2: Adicionar 50 unidades ao estoque do produto com ID 1
--- Use UPDATE com cálculo
+-- Aula 63 - Desafio 3: Desativar cupons expirados
+-- Atualize o campo "ativo" para false de todos os cupons com data_validade no passado
 
-
--- Aula 63 - Desafio 3: Atualizar o status de pedidos antigos
--- Mude o status para "arquivado" de pedidos com data_pedido anterior a 2023-01-01
 
 ```
 
@@ -741,16 +753,12 @@ UPDATE clientes SET ativo = false WHERE cliente_id = 5;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 64 - Desafio 1: Remover produtos com estoque zerado
--- PRIMEIRO faça SELECT para verificar, depois DELETE
+-- Aula 64 - Desafio 1: Remover cupons expirados e inativos
+-- Delete cupons que estão inativos E com data de validade anterior a 30 dias atrás
 
 
--- Aula 64 - Desafio 2: Remover clientes que nunca fizeram pedidos
--- Use WHERE com subconsulta ou NOT EXISTS
-
-
--- Aula 64 - Desafio 3: Remover avaliações de produtos que não existem mais
--- Use subconsulta para identificar produtos inexistentes
+-- Aula 64 - Desafio 2: Remover um cupom específico
+-- Delete o cupom com código 'BLACKFRIDAY' (pois a campanha já acabou)
 
 ```
 
@@ -963,12 +971,12 @@ DROP TABLE produtos_antigos_BACKUP_2024;
 <summary><strong>Ver Desafios</strong></summary>
 
 ```sql
--- Aula 65 - Desafio 1: Criar e depois dropar uma tabela de teste
--- Crie uma tabela chamada teste_drop com 2 colunas, depois remova ela
+-- Aula 65 - Desafio 1: Dropar a view de cupons válidos
+-- Remova a view "vw_cupons_validos" criada na Aula 61
 
 
--- Aula 65 - Desafio 2: Criar e dropar uma view
--- Crie uma view vw_teste com uma consulta simples, depois remova
+-- Aula 65 - Desafio 2: Dropar a tabela de cupons de desconto
+-- Remova a tabela "cupons_desconto" criada na Aula 61
 
 
 ```
@@ -1108,6 +1116,11 @@ Você é o analista de dados responsável por criar uma estrutura temporária pa
 -- Escolha produtos reais da tabela produtos
 -- Use descontos entre 10% e 50%
 
+-- Primeiro, veja alguns produtos disponíveis:
+-- SELECT produto_id, nome, preco FROM produtos LIMIT 10;
+
+-- Inserir promoções (ajuste os IDs conforme seus dados):
+
 
 -- Desafio Final 3: Criar View de Análise
 -- Crie uma view chamada vw_produtos_promocao que mostre:
@@ -1120,38 +1133,65 @@ Você é o analista de dados responsável por criar uma estrutura temporária pa
 
 -- Desafio Final 4: Ajustes na Campanha
 -- a) Aumente em 5% o desconto de produtos com preço acima de R$ 1000
+
+-- Verificar:
+-- SELECT pv.promocao_id, p.nome, p.preco, pv.desconto_percentual,
+--        pv.desconto_percentual + 5 AS novo_desconto
+-- FROM promocao_verao pv
+-- INNER JOIN produtos p ON pv.produto_id = p.produto_id
+-- WHERE p.preco > 1000;
+
+
 -- b) Desative promoções que já passaram da data_fim
+
+-- Verificar:
+-- SELECT * FROM promocao_verao
+-- WHERE data_fim < CURRENT_DATE AND ativo = true;
 
 
 -- Desafio Final 5: Limpeza de Dados
 -- a) Remova da promoção os produtos que estão sem estoque
+
+-- Verificar:
+-- SELECT pv.*, p.nome, p.estoque
+-- FROM promocao_verao pv
+-- INNER JOIN produtos p ON pv.produto_id = p.produto_id
+-- WHERE p.estoque = 0;
+
+
 -- b) Delete promoções inativas
 
+-- Verificar:
+-- SELECT * FROM promocao_verao WHERE ativo = false;
 
 -- Desafio Final 6 (Boss Final!): Encerramento Completo
 -- A campanha acabou. Faça a limpeza completa:
--- a) Crie uma tabela de backup chamada "promocao_verao_historico"
--- b) Copie todos os dados da promocao_verao para o histórico
+
+-- a) Criar uma tabela de backup chamada "promocao_verao_historico"
+-- b) Copiar todos os dados da promocao_verao para o histórico
 -- c) Drope a view vw_produtos_promocao
 -- d) Drope a tabela promocao_verao
 -- e) Confirme que o histórico foi salvo corretamente
+-- SELECT * FROM promocao_verao_historico;
+-- SELECT COUNT(*) FROM promocao_verao_historico;
 
 ```
 
 ### Dicas
-- Use transações (BEGIN/COMMIT) para operações complexas
 - Sempre faça SELECT antes de UPDATE/DELETE
-- Use RETURNING para confirmar suas operações
 - Lembre-se do IF EXISTS ao usar DROP
 
 </details>
 
 ---
 
-## Como Usar Este Material
+## Próximos Passos na sua Jornada SQL
 
-1. Estude uma aula por vez
-2. Leia todos os conceitos com atenção
-3. Pratique os desafios antes de avançar
-4. Revise os conceitos quando necessário
-5. Use o resumo para consultas rápidas
+1. **Pratique** com dados reais do seu dia a dia
+2. **Explore** funções específicas do seu banco (PostgreSQL, MySQL, etc.)
+3. **Aprenda** sobre modelagem de dados e normalização
+4. **Estude** sobre otimização de queries (EXPLAIN, índices)
+5. **Investigue** sobre transações e controle de concorrência
+6. **Explore** ferramentas de BI e relatórios
+
+**Parabéns por completar a trilha!** 🎉

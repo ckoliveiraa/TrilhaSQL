@@ -1,14 +1,7 @@
--- =================================================================
--- AULA 59 - DESAFIO 1: RANKING DE PRODUTOS MAIS VENDIDOS
--- =================================================================
+-- Aula 59 - Desafio 1: Ranking de Produtos Mais Vendidos
 -- A gerência quer saber quais são os 10 produtos campeões de vendas.
---
 -- Crie uma consulta usando CTE que mostre o ranking dos 10 produtos
 -- mais vendidos, incluindo o nome do produto e a quantidade total vendida.
---
--- Dica: Pense em como organizar primeiro os dados de vendas e depois
--- juntar com as informações dos produtos.
-
 WITH produtos_vendidos AS (
     SELECT
         produto_id,
@@ -24,24 +17,12 @@ INNER JOIN produtos_vendidos pv ON p.produto_id = pv.produto_id
 ORDER BY pv.total_vendido DESC
 LIMIT 10;
 
-
--- =================================================================
--- AULA 59 - DESAFIO 2: IDENTIFICANDO CLIENTES VIP
--- =================================================================
+-- Aula 59 - Desafio 2: Identificando Clientes VIP
 -- O departamento de marketing precisa identificar os clientes VIP
 -- para criar uma campanha especial.
---
 -- Crie uma consulta com CTEs que mostre apenas os clientes que gastaram
 -- ACIMA DA MÉDIA GERAL de todos os clientes. O relatório deve incluir:
--- - Nome do cliente
--- - Quantidade de pedidos
--- - Total gasto
--- - A média geral (para comparação)
--- - Quanto cada cliente gastou acima da média
---
--- Desafio extra: Classifique os clientes em categorias (VIP Premium, VIP, etc.)
--- baseado em quanto eles superam a média.
-
+-- nome, quantidade de pedidos, total gasto, média geral e diferença para a média.
 WITH
 vendas_por_cliente AS (
     SELECT
@@ -72,18 +53,11 @@ CROSS JOIN media_geral m
 WHERE v.total_gasto > m.media
 ORDER BY v.total_gasto DESC;
 
-
--- =================================================================
--- AULA 60 - DESAFIO 1: GERADOR DE SEQUÊNCIAS
--- =================================================================
+-- Aula 60 - Desafio 1: Gerador de Sequências
 -- Você precisa gerar uma lista com os números de 1 a 100.
---
--- Use uma CTE recursiva para criar essa sequência. Lembre-se que
--- toda recursão precisa de:
--- - Um ponto de partida (caso base)
--- - Uma regra de repetição (caso recursivo)
--- - Uma condição de parada
-
+-- Use uma CTE recursiva para criar essa sequência.
+-- Lembre-se: toda recursão precisa de um ponto de partida,
+-- uma regra de repetição e uma condição de parada.
 WITH RECURSIVE add_numeros AS (
     -- Caso base: começa com 1
     SELECT 1 AS numero
@@ -98,35 +72,23 @@ WITH RECURSIVE add_numeros AS (
 SELECT numero
 FROM add_numeros;
 
-
--- =================================================================
--- AULA 60 - DESAFIO 2: RELATÓRIO DE VENDAS DIÁRIAS COMPLETO
--- =================================================================
+-- Aula 60 - Desafio 2: Relatório de Vendas Diárias Completo
 -- O diretor financeiro precisa de um relatório de vendas que mostre
--- TODOS OS DIAS de janeiro de 2024, mesmo os dias que não tiveram
--- nenhuma venda (mostrando 0).
---
--- Use CTE recursiva para gerar um calendário completo do mês e depois
--- combine com os dados de vendas. O relatório deve mostrar:
--- - A data
--- - O dia da semana
--- - Total de vendas do dia (ou 0 se não houve vendas)
--- - Quantidade de pedidos do dia (ou 0 se não houve)
---
--- Desafio extra: Adicione uma coluna que identifique se o dia
--- é fim de semana ou dia útil.
-
+-- TODOS OS DIAS de janeiro de 2026, mesmo os dias que não tiveram vendas.
+-- Use CTE recursiva para gerar um calendário completo do mês e combine
+-- com os dados de vendas. Mostre: data, dia da semana, total de vendas
+-- e quantidade de pedidos (use 0 para dias sem vendas).
 WITH RECURSIVE
 calendario_janeiro AS (
     -- Caso base: primeiro dia de janeiro
-    SELECT DATE '2024-01-01' AS data
+    SELECT DATE '2026-01-01' AS data
 
     UNION ALL
 
     -- Caso recursivo: adiciona 1 dia
     SELECT CAST(data + INTERVAL '1 day' AS DATE)
     FROM calendario_janeiro
-    WHERE data < '2024-01-31'
+    WHERE data < '2026-01-31'
 ),
 vendas_diarias AS (
     SELECT
@@ -134,19 +96,17 @@ vendas_diarias AS (
         SUM(valor_total) AS total_vendas,
         COUNT(*) AS qtd_pedidos
     FROM pedidos
-    WHERE data_pedido >= '2024-01-01'
-      AND data_pedido < '2024-02-01'
+    WHERE data_pedido >= '2026-01-01'
+      AND data_pedido < '2026-02-01'
     GROUP BY CAST(data_pedido AS DATE)
 )
 SELECT
     c.data,
     TO_CHAR(c.data, 'Day') AS dia_semana,
     COALESCE(v.total_vendas, 0) AS total_vendas,
-    COALESCE(v.qtd_pedidos, 0) AS qtd_pedidos,
-    CASE
-        WHEN EXTRACT(DOW FROM c.data) IN (0, 6) THEN 'Fim de semana'
-        ELSE 'Dia útil'
-    END AS tipo_dia
+    COALESCE(v.qtd_pedidos, 0) AS qtd_pedidos
 FROM calendario_janeiro c
 LEFT JOIN vendas_diarias v ON c.data = v.data
 ORDER BY c.data;
+
+

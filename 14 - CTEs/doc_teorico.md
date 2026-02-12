@@ -344,7 +344,7 @@ SELECT * FROM finito;
 
 -- Aula 60 - Desafio 2: Relatório de Vendas Diárias Completo
 -- O diretor financeiro precisa de um relatório de vendas que mostre
--- TODOS OS DIAS de janeiro de 2024, mesmo os dias que não tiveram vendas.
+-- TODOS OS DIAS de janeiro de 2026, mesmo os dias que não tiveram vendas.
 -- Use CTE recursiva para gerar um calendário completo do mês e combine
 -- com os dados de vendas. Mostre: data, dia da semana, total de vendas
 -- e quantidade de pedidos (use 0 para dias sem vendas).
@@ -377,6 +377,17 @@ SELECT * FROM finito;
 - [ ] Sei gerar sequências de números com recursão
 - [ ] Sei gerar sequências de datas com recursão
 - [ ] Consigo trabalhar com hierarquias usando CTEs recursivas
+
+---
+
+### Dicas Gerais
+
+1. **Teste incrementalmente**: Construa uma CTE por vez e teste com `SELECT * FROM nome_cte`
+2. **Use comentários**: Documente cada CTE para facilitar a manutenção
+3. **Formatação**: Quebre linhas longas para melhor legibilidade
+4. **COALESCE**: Use para lidar com NULLs em LEFT JOINs e divisões
+5. **CAST**: Use para converter tipos quando necessário (especialmente em UNION ALL)
+6. **Window Functions**: Combine com CTEs para análises poderosas (LAG, LEAD, etc.)
 
 ---
 
@@ -524,26 +535,8 @@ Você é o analista de dados do e-commerce e precisa criar relatórios complexos
 
 ```
 
-### Dicas Gerais
 
-1. **Teste incrementalmente**: Construa uma CTE por vez e teste com `SELECT * FROM nome_cte`
-2. **Use comentários**: Documente cada CTE para facilitar a manutenção
-3. **Formatação**: Quebre linhas longas para melhor legibilidade
-4. **COALESCE**: Use para lidar com NULLs em LEFT JOINs e divisões
-5. **CAST**: Use para converter tipos quando necessário (especialmente em UNION ALL)
-6. **Window Functions**: Combine com CTEs para análises poderosas (LAG, LEAD, etc.)
 
 </details>
 
 ---
-
-## Próximos Passos na sua Jornada SQL
-
-1. **Pratique** com dados reais do seu dia a dia
-2. **Explore** funções específicas do seu banco (PostgreSQL, MySQL, etc.)
-3. **Aprenda** sobre modelagem de dados e normalização
-4. **Estude** sobre otimização de queries (EXPLAIN, índices)
-5. **Investigue** sobre transações e controle de concorrência
-6. **Explore** ferramentas de BI e relatórios
-
-**Parabéns por completar a trilha!** 🎉
