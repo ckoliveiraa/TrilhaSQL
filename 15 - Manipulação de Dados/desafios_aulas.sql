@@ -1,13 +1,3 @@
--- =================================================================
--- MODULO 15 - MANIPULACAO DE DADOS - DESAFIOS DAS AULAS
--- =================================================================
--- IMPORTANTE: Estes são exercícios de DDL (CREATE, DROP) e DML (INSERT, UPDATE, DELETE)
--- Sempre faça backup ou use transações antes de executar em produção!
-
--- =================================================================
--- AULA 61 - CREATE - Criando Tabelas e Views
--- =================================================================
-
 -- Aula 61 - Desafio 1: Criar uma tabela de cupons de desconto
 -- Crie uma tabela chamada "cupons_desconto" com as seguintes colunas:
 --   - cupom_id (SERIAL PRIMARY KEY)
@@ -15,7 +5,6 @@
 --   - desconto_percentual (DECIMAL(5,2) entre 0 e 100)
 --   - data_validade (DATE)
 --   - ativo (BOOLEAN DEFAULT true)
-
 CREATE TABLE cupons_desconto (
     cupom_id SERIAL PRIMARY KEY,
     codigo VARCHAR(50) UNIQUE NOT NULL,
@@ -24,11 +13,9 @@ CREATE TABLE cupons_desconto (
     ativo BOOLEAN DEFAULT true
 );
 
-
 -- Aula 61 - Desafio 2: Criar uma view de cupons válidos
 -- Crie uma view chamada "vw_cupons_validos" que mostre apenas cupons ativos
 -- e com data de validade futura (maior que a data atual)
-
 CREATE VIEW vw_cupons_validos AS
 SELECT
     cupom_id,
@@ -39,10 +26,8 @@ FROM cupons_desconto
 WHERE ativo = true
   AND data_validade >= CURRENT_DATE;
 
-
--- =================================================================
--- AULA 62 - INSERT - Inserindo Dados
--- =================================================================
+-- SELECT * FROM vw_cupons_validos 
+-- Rodou mas sem dados
 
 -- Aula 62 - Desafio 1: Inserir um cupom de desconto
 -- Insira um cupom com:
@@ -50,11 +35,10 @@ WHERE ativo = true
 --   - desconto_percentual: 10.00
 --   - data_validade: 30 dias a partir de hoje
 --   - ativo: true
-
 INSERT INTO cupons_desconto (codigo, desconto_percentual, data_validade, ativo)
 VALUES ('BEMVINDO10', 10.00, CURRENT_DATE + INTERVAL '30 days', true);
 
-
+SELECT * FROM cupons_desconto
 -- Aula 62 - Desafio 2: Inserir múltiplos cupons de uma vez
 -- Insira 5 cupons diferentes usando um único INSERT:
 --   - 'BLACKFRIDAY' - 50% de desconto, validade 7 dias
@@ -63,91 +47,56 @@ VALUES ('BEMVINDO10', 10.00, CURRENT_DATE + INTERVAL '30 days', true);
 --   - 'VOLTESEMPRE' - 15% de desconto, validade 90 dias
 --   - 'PRIMEIRACOMPRA' - 20% de desconto, validade 365 dias
 --   - 'ECO10' - 10% de desconto, validade de 45 dias negativos
-
 INSERT INTO cupons_desconto (codigo, desconto_percentual, data_validade, ativo)
 VALUES
     ('BLACKFRIDAY', 50.00, CURRENT_DATE + INTERVAL '7 days', true),
     ('NATAL25', 25.00, CURRENT_DATE + INTERVAL '15 days', true),
     ('FRETEGRATIS', 100.00, CURRENT_DATE + INTERVAL '60 days', true),
     ('VOLTESEMPRE', 15.00, CURRENT_DATE + INTERVAL '90 days', true),
-    ('PRIMEIRACOMPRA', 20.00, CURRENT_DATE + INTERVAL '365 days', true);
+    ('PRIMEIRACOMPRA', 20.00, CURRENT_DATE + INTERVAL '365 days', true),
     ('ECO10', 10.00, CURRENT_DATE - INTERVAL '45 days', true);
-
-
--- =================================================================
--- AULA 63 - UPDATE - Atualizando Dados
--- =================================================================
 
 -- Aula 63 - Desafio 1: Atualizar desconto de um cupom específico
 -- Aumente o desconto do cupom 'BEMVINDO10' de 10% para 15%
-
--- Primeiro, verificar o cupom:
--- SELECT * FROM cupons_desconto WHERE codigo = 'BEMVINDO10';
-
--- Executar o UPDATE:
 UPDATE cupons_desconto
 SET desconto_percentual = 15.00
 WHERE codigo = 'BEMVINDO10';
 
+SELECT * FROM cupons_desconto
 
--- Aula 63 - Desafio 3: Desativar cupons expirados
+-- Aula 63 - Desafio 2: Desativar cupons expirados
 -- Atualize o campo "ativo" para false de todos os cupons com data_validade no passado
-
--- Verificar quais cupons serão desativados:
--- SELECT codigo, data_validade, ativo
--- FROM cupons_desconto
--- WHERE data_validade < CURRENT_DATE AND ativo = true;
-
--- Executar o UPDATE:
 UPDATE cupons_desconto
-SET ativo = false
+SET ativo = FALSE
 WHERE data_validade < CURRENT_DATE;
 
+SELECT * FROM cupons_desconto
 
--- =================================================================
--- AULA 64 - DELETE - Removendo Dados com Segurança
--- =================================================================
 
 -- Aula 64 - Desafio 1: Remover cupons expirados e inativos
 -- Delete cupons que estão inativos E com data de validade anterior a 30 dias atrás
-
--- Verificar quais cupons serão removidos:
--- SELECT * FROM cupons_desconto
--- WHERE ativo = false AND data_validade < CURRENT_DATE - INTERVAL '30 days';
-
--- Executar o DELETE:
 DELETE FROM cupons_desconto
 WHERE ativo = false
   AND data_validade < CURRENT_DATE - INTERVAL '30 days';
 
+SELECT * FROM cupons_desconto
 
 -- Aula 64 - Desafio 2: Remover um cupom específico
 -- Delete o cupom com código 'BLACKFRIDAY' (pois a campanha já acabou)
-
--- Verificar antes:
--- SELECT * FROM cupons_desconto WHERE codigo = 'BLACKFRIDAY';
-
--- Executar o DELETE:
 DELETE FROM cupons_desconto
 WHERE codigo = 'BLACKFRIDAY';
 
 
--- =================================================================
--- AULA 65 - DROP - Removendo Estruturas
--- =================================================================
-
 -- Aula 65 - Desafio 1: Dropar a view de cupons válidos
 -- Remova a view "vw_cupons_validos" criada na Aula 61
+SELECT * FROM vw_cupons_validos
 
 DROP VIEW IF EXISTS vw_cupons_validos;
 
-
 -- Aula 65 - Desafio 2: Dropar a tabela de cupons de desconto
 -- Remova a tabela "cupons_desconto" criada na Aula 61
--- ATENÇÃO: Isso vai apagar todos os dados da tabela!
+SELECT * FROM cupons_desconto
 
--- Verificar antes de dropar:
--- SELECT COUNT(*) FROM cupons_desconto;
-
--- Executar o DROP:
 DROP TABLE IF EXISTS cupons_desconto;
+
+
