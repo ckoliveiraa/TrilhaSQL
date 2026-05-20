@@ -461,7 +461,7 @@ No próximo módulo, você aprenderá sobre:
 
 ---
 
-## Desafio Final do Módulo 5
+## Desafio Final do Módulo 6
 
 <details>
 <summary><strong>Expandir Desafio Final</strong></summary>
